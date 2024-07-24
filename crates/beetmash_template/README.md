@@ -1,3 +1,6 @@
-# Beetmash Demo
+# Beetmash Template
 
-This crate is a demonstration of the workflow for publishing Bevy apps and scenes to [beetmash](https://beetmash.com).
+A demonstration of the workflow for publishing Bevy apps and scenes to [beetmash](https://beetmash.com).
+
+- [docs](https://beetmash.com/docs/beetmash)
+- [github](https://github.com/mrchantey/beetmash)

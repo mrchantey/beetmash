@@ -19,7 +19,7 @@ publish = false
 
 [workspace]
 resolver = "2"
-members = ["crates/beetmash_template"]
+members = ["crates/beetmash_template", "crates/cli"]
 
 [workspace.dependencies]
 

@@ -6,4 +6,4 @@ The number one bevy scene registry.
 
 ### [beetmash_template](./crates/beetmash_template/README.md)
 
-An example project demonstrating how to declare beetmash Apps, Scenes and Demos in a `Cargo.toml`.
+A demonstration of the workflow for publishing Bevy apps and scenes to [beetmash](https://beetmash.com).
