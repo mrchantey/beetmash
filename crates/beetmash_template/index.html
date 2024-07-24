@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>A Cool Site</title>
+	<meta name="description" content="An amazing website">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		body {
+			margin: 0;
+			background-color: black;
+			overflow: hidden;
+		}
+
+		/* canvas {
+			width: 100dvw;
+			height: 100dvh;
+		} */
+	</style>
+</head>
+
+<body>
+	<script type="module">
+		// import init from 'https://storage.googleapis.com/beet-examples/app_full/main.js'
+		import init from './target/wasm-apps/simple_app/main.js'
+		// init('https://storage.googleapis.com/beet-examples/app_full/main_bg.wasm')
+		init('./target/wasm-apps/simple_app/main_bg.wasm')
+			.catch((error) => {
+				if (!error.message.startsWith("Using exceptions for control flow,"))
+					throw error
+			})
+
+
+		const replicationRegistry =
+		{
+			"beet_net::events::common_events::AppStartup": 0,
+			"beet_net::events::common_events::AppReady": 1,
+			"beet_net::events::spawn_scene_file::SpawnSceneFile": 2,
+			"beet_net::events::spawn_scene_file::SpawnSceneFileResponse": 3,
+			"beet_net::events::common_events::OnUserMessage": 4,
+			"beet_net::events::common_events::OnAppMessage": 5,
+			"beet_net::events::screenshot::SaveScreenshot": 6,
+		}
+
+		async function loadScene(name) {
+			const response = await fetch(`/scenes/${name}.ron`)
+			const json = await response.text()
+			console.log('sending')
+			let hashmap = await sendMessage(
+				"beet_net::events::spawn_scene_file::SpawnSceneFile",
+				json,
+				"beet_net::events::spawn_scene_file::SpawnSceneFileResponse"
+			)
+			console.log('hashmap received')
+			console.dir(hashmap)
+		}
+
+		function sendUserMessage(message) {
+			sendMessage("beet_examples::net::example_replicate_plugin::OnUserMessage", message)
+		}
+
+		async function sendMessage(key, payload, awaitKey) {
+			const detail = JSON.stringify([{
+				SendEvent: {
+					reg_id: replicationRegistry[key],
+					payload: {
+						Json: JSON.stringify(payload)
+					}
+				}
+			}])
+			let awaiter = awaitKey
+				? awaitMessage(awaitKey)
+				: null
+			window.dispatchEvent(new CustomEvent('js-message', { detail }))
+			if (awaiter) {
+				return await awaiter
+			}
+		}
+
+		function awaitMessage(key) {
+			return new Promise((resolve) => {
+				const listener = (event) => {
+					const messages = JSON.parse(event.detail)
+					for (const message of messages) {
+						if (message?.SendEvent?.reg_id === replicationRegistry[key]) {
+							resolve(message.SendEvent.payload.Json)
+							window.removeEventListener('wasm-message', listener)
+						}
+					}
+				}
+				window.addEventListener('wasm-message', listener)
+			})
+		}
+
+		window.addEventListener('wasm-message', async (event) => {
+			console.log("msg!")
+			const messages = JSON.parse(event.detail)
+			for (const message of messages) {
+				if (message?.SendEvent?.reg_id === replicationRegistry["beet_net::events::common_events::AppStartup"]) {
+					console.log('AppStartup')
+					await loadScene('simple_scene')
+					console.log('All scenes sent')
+					sendUserMessage('loud and clear')
+				}
+			}
+		})
+
+	</script>
+</body>
+
+</html>

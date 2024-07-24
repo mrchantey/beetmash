@@ -1,0 +1,51 @@
+[package]
+name = "beetmash_template"
+version = "0.0.3"
+edition = "2021"
+description = "An example workflow for publishing Bevy apps and scenes to Beetmash."
+homepage = "https://beetmash.com/docs/beetmash"
+repository = "https://github.com/mrchantey/beetmash_template"
+keywords = ["bevy", "beet", "beetmash", "template", "demo"]
+categories = [
+	"science::robotics",
+	"game-development",
+	"simulation",
+	"wasm",
+	"embedded",
+]
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+
+[dependencies]
+beet = "0.0.3"
+bevy = "0.14.0"
+
+
+[[package.metadata.app]]
+name = "simple_app"
+description = "Simply the Bevy Default Plugins with some serialization & IO helpers."
+js_url = "gs://beet-misc/beetmash_template/simple_app/main.js"
+wasm_url = "gs://beet-misc/beetmash_template/simple_app/main_bg.wasm"
+
+
+[[package.metadata.scene]]
+name = "simple_environment"
+description = "Simply a light and a 3d camera with a sensible offset."
+path = "./scenes/simple_environment.ron"
+
+[[package.metadata.scene]]
+name = "simple_scene"
+description = "Simply a cube sitting on a circular platform."
+path = "./scenes/simple_scene.ron"
+# any scenes that should be included alongside this one
+dependencies = ["simple_environment"]
+
+[[package.metadata.demo]]
+name = "simple_demo"
+app = "simple_app"
+scenes = [
+	# any internal scene
+	"simple_environment",
+	# any scene for a crate in your `Cargo.lock`
+	{ crate_name = "beetmash_template", scene_name = "simple_environment" },
+]

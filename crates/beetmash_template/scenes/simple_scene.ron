@@ -1,0 +1,71 @@
+(
+  resources: {},
+  entities: {
+    4294967296: (
+      components: {
+        "beetmash_template::placeholders::PbrPlaceholder": (
+          material: Color(LinearRgba((
+            red: 1.0,
+            green: 1.0,
+            blue: 1.0,
+            alpha: 1.0,
+          ))),
+          mesh: Circle((
+            radius: 4.0,
+          )),
+          transform: (
+            translation: (
+              x: 0.0,
+              y: 0.0,
+              z: 0.0,
+            ),
+            rotation: (
+              x: -0.70710677,
+              y: 0.0,
+              z: 0.0,
+              w: 0.70710677,
+            ),
+            scale: (
+              x: 1.0,
+              y: 1.0,
+              z: 1.0,
+            ),
+          ),
+        ),
+      },
+    ),
+    4294967297: (
+      components: {
+        "beetmash_template::placeholders::PbrPlaceholder": (
+          material: Color(Srgba((
+            red: 0.4862745,
+            green: 0.5647059,
+            blue: 1.0,
+            alpha: 1.0,
+          ))),
+          mesh: Cuboid((
+            half_size: (0.5, 0.5, 0.5),
+          )),
+          transform: (
+            translation: (
+              x: 0.0,
+              y: 0.5,
+              z: 0.0,
+            ),
+            rotation: (
+              x: 0.0,
+              y: 0.0,
+              z: 0.0,
+              w: 1.0,
+            ),
+            scale: (
+              x: 1.0,
+              y: 1.0,
+              z: 1.0,
+            ),
+          ),
+        ),
+      },
+    ),
+  },
+)

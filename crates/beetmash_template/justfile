@@ -1,0 +1,50 @@
+wasm-dir:= './target/wasm-apps'
+web-examples:= 'simple_app'
+
+publish:
+	cargo publish --allow-dirty
+
+patch:
+	cargo set-version --bump patch
+
+build-scenes:
+	cargo run --example build_scenes
+
+run:
+	cargo run --example simple_app simple_scene
+
+pkg *args:
+	cargo package --no-verify --allow-dirty {{args}}
+
+
+web-example-build example *args:
+	mkdir -p {{wasm-dir}}/{{example}} || true
+	cargo build --example {{example}} --target wasm32-unknown-unknown --release {{args}}
+	wasm-bindgen \
+	--out-name main \
+	--out-dir {{wasm-dir}}/{{example}} \
+	--target web \
+	$CARGO_TARGET_DIR/wasm32-unknown-unknown/release/examples/{{example}}.wasm \
+	--no-typescript \
+
+web-example-deploy example:
+	just with-version _web-example-deploy {{example}}
+
+_web-example-deploy example version:
+	gsutil -m rsync -c -d -r {{wasm-dir}}/{{example}} \
+	gs://beet-misc/beetmash_template/{{example}}
+
+web-examples:
+	rm -rf {{wasm-dir}} || true
+	for file in {{web-examples}}; do \
+		just web-example-build ${file}; \
+		just wothweb-example-deploy ${file}; \
+	done
+
+echo *args:
+	@echo {{args}}
+
+
+with-version *args:
+	@version=$(grep '^version' Cargo.toml | head -1 | awk -F '"' '{print $2}') \
+	&& just {{args}} $version

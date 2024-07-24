@@ -1,0 +1,9 @@
+[workspace.package]
+version = "0.0.1"
+edition = "2021"
+publish = false
+
+[workspace]
+members = ["crates/beetmash_template"]
+
+[workspace.dependencies]
