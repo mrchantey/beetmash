@@ -1,9 +1,46 @@
 [workspace.package]
-version = "0.0.1"
+version = "0.0.4"
 edition = "2021"
+description = "The number one bevy scene registry."
+documentation = "https://beetmash.com/docs/beetmash"
+readme = "README.md"
+homepage = "https://beetmash.com"
+repository = "https://github.com/mrchantey/beetmash"
+license = "MIT OR Apache-2.0"
+keywords = ["beet", "beetmash", "behavior", "game-ai", "robotics"]
+categories = [
+	"science::robotics",
+	"game-development",
+	"simulation",
+	"wasm",
+	"embedded",
+]
 publish = false
 
 [workspace]
+resolver = "2"
 members = ["crates/beetmash_template"]
 
 [workspace.dependencies]
+
+
+# Enable a small amount of optimization in debug mode
+[profile.dev]
+opt-level = 1
+
+# Enable high optimizations for dependencies (incl. Bevy), but not for our code:
+[profile.dev.package."*"]
+opt-level = 3
+
+[package]
+name = "beetmash"
+version.workspace = true
+edition.workspace = true
+description.workspace = true
+documentation.workspace = true
+readme.workspace = true
+homepage.workspace = true
+repository.workspace = true
+license.workspace = true
+keywords.workspace = true
+categories.workspace = true

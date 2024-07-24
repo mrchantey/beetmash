@@ -1,20 +1,16 @@
 [package]
 name = "beetmash_template"
-version = "0.0.3"
-edition = "2021"
+version.workspace = true
+edition.workspace = true
 description = "An example workflow for publishing Bevy apps and scenes to Beetmash."
-homepage = "https://beetmash.com/docs/beetmash"
-repository = "https://github.com/mrchantey/beetmash_template"
-keywords = ["bevy", "beet", "beetmash", "template", "demo"]
-categories = [
-	"science::robotics",
-	"game-development",
-	"simulation",
-	"wasm",
-	"embedded",
-]
-license = "MIT OR Apache-2.0"
+documentation.workspace = true
 readme = "README.md"
+homepage.workspace = true
+repository.workspace = true
+license.workspace = true
+keywords.workspace = true
+categories.workspace = true
+publish = true
 
 [dependencies]
 beet = "0.0.3"
@@ -24,8 +20,8 @@ bevy = "0.14.0"
 [[package.metadata.app]]
 name = "simple_app"
 description = "Simply the Bevy Default Plugins with some serialization & IO helpers."
-js_url = "gs://beet-misc/beetmash_template/simple_app/main.js"
-wasm_url = "gs://beet-misc/beetmash_template/simple_app/main_bg.wasm"
+js_url = "https://beetmash-apps.s3.amazonaws.com/temp/simple_app/main.js"
+wasm_url = "https://beetmash-apps.s3.amazonaws.com/temp/simple_app/main_bg.wasm"
 
 
 [[package.metadata.scene]]
@@ -37,15 +33,14 @@ path = "./scenes/simple_environment.ron"
 name = "simple_scene"
 description = "Simply a cube sitting on a circular platform."
 path = "./scenes/simple_scene.ron"
-# any scenes that should be included alongside this one
+# list of scene dependencies, can be string or table specifying `crate_name` and `scene_name`
 dependencies = ["simple_environment"]
 
 [[package.metadata.demo]]
 name = "simple_demo"
+description = "Simply a demo of the `simple_app` and `simple_scene`."
 app = "simple_app"
+# list of scene dependencies
 scenes = [
-	# any internal scene
-	"simple_environment",
-	# any scene for a crate in your `Cargo.lock`
-	{ crate_name = "beetmash_template", scene_name = "simple_environment" },
+	{ crate_name = "beetmash_template", scene_name = "simple_scene" }
 ]
