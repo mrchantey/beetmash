@@ -12,35 +12,48 @@ keywords.workspace = true
 categories.workspace = true
 publish = true
 
+default-run = "simple_app"
+
+[[bin]]
+name = "simple_app"
+path = "examples/simple_app.rs"
+
 [dependencies]
 beet = "0.0.3"
 bevy = "0.14.0"
 
 
-[[package.metadata.app]]
-name = "simple_app"
-description = "Simply the Bevy Default Plugins with some serialization & IO helpers."
-js_url = "https://beetmash-apps.s3.amazonaws.com/temp/simple_app/main.js"
-wasm_url = "https://beetmash-apps.s3.amazonaws.com/temp/simple_app/main_bg.wasm"
+### 👋 EXAMPLE 1 - HELLO WORLD
+
+[[package.metadata.project]]
+# yep, this is a valid project! 
+# project names follow github naming conventions: alphanumeric and dashes only
+name = "my-empty-project"
 
 
-[[package.metadata.scene]]
-name = "simple_environment"
-description = "Simply a light and a 3d camera with a sensible offset."
-path = "./scenes/simple_environment.ron"
+### ⛰️ EXAMPLE 2 - A BASE PROJECT
 
-[[package.metadata.scene]]
-name = "simple_scene"
-description = "Simply a cube sitting on a circular platform."
-path = "./scenes/simple_scene.ron"
-# list of scene dependencies, can be string or table specifying `crate_name` and `scene_name`
-dependencies = ["simple_environment"]
+# you may like to create base projects upon which others can build
+[[package.metadata.project]]
+name = "my-base-project"
+description = "Simply default plugins, a light and a 3d camera with a sensible offset."
+# specifying a scene makes this project a valid scene dependency
+scene-path = "./scenes/simple_environment.ron"
+# specifying the location of a wasm build makes it a valid app dependency, dont forget to enable cors 🙃
+js-url = "https://beetmash-apps.s3.amazonaws.com/temp/simple_app/main.js"
+wasm-url = "https://beetmash-apps.s3.amazonaws.com/temp/simple_app/main_bg.wasm"
 
-[[package.metadata.demo]]
-name = "simple_demo"
-description = "Simply a demo of the `simple_app` and `simple_scene`."
-app = "simple_app"
-# list of scene dependencies
-scenes = [
-	{ crate_name = "beetmash_template", scene_name = "simple_scene" }
-]
+
+### 🚀 EXAMPLE 3 - A DEMO
+
+# this example includes a scene and demo configuration
+[[package.metadata.project]]
+name = "my-awesome-demo"
+description = "A beautiful cube gloriously perched upon a circular platform!"
+### this scene will be included in the demo
+scene-path = "./scenes/simple_scene.ron"
+# scene dependencies can be a string or table specifying `crate-name` and `scene-name`
+scene-dependencies = ["my-base-project"]
+### specifying an app dependency makes this a valid demo
+app = "my-awesome-app"
+canvas-id = "beetmash-canvas"

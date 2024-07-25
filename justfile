@@ -11,8 +11,9 @@ publish crate *args:
 	sleep 2
 
 publish-all *args:
-	just publish beetmash {{args}}					|| true
+	just publish beetmash 				 {{args}} || true
 	just publish beetmash_template {{args}}	|| true
+	just publish beetmash-cli 		 {{args}}	|| true
 
 
 patch:
