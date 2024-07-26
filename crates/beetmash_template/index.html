@@ -34,13 +34,13 @@
 
 		const replicationRegistry =
 		{
-			"beet_net::events::common_events::AppStartup": 0,
-			"beet_net::events::common_events::AppReady": 1,
-			"beet_net::events::spawn_scene_file::SpawnSceneFile": 2,
-			"beet_net::events::spawn_scene_file::SpawnSceneFileResponse": 3,
-			"beet_net::events::common_events::OnUserMessage": 4,
-			"beet_net::events::common_events::OnAppMessage": 5,
-			"beet_net::events::screenshot::SaveScreenshot": 6,
+			"beetmash_net::events::common_events::AppStartup": 0,
+			"beetmash_net::events::common_events::AppReady": 1,
+			"beetmash_net::events::spawn_scene_file::SpawnSceneFile": 2,
+			"beetmash_net::events::spawn_scene_file::SpawnSceneFileResponse": 3,
+			"beetmash_net::events::common_events::OnUserMessage": 4,
+			"beetmash_net::events::common_events::OnAppMessage": 5,
+			"beetmash_net::events::screenshot::SaveScreenshot": 6,
 		}
 
 		async function loadScene(name) {
@@ -48,9 +48,9 @@
 			const json = await response.text()
 			console.log('sending')
 			let hashmap = await sendMessage(
-				"beet_net::events::spawn_scene_file::SpawnSceneFile",
+				"beetmash_net::events::spawn_scene_file::SpawnSceneFile",
 				json,
-				"beet_net::events::spawn_scene_file::SpawnSceneFileResponse"
+				"beetmash_net::events::spawn_scene_file::SpawnSceneFileResponse"
 			)
 			console.log('hashmap received')
 			console.dir(hashmap)
@@ -97,7 +97,7 @@
 			console.log("msg!")
 			const messages = JSON.parse(event.detail)
 			for (const message of messages) {
-				if (message?.SendEvent?.reg_id === replicationRegistry["beet_net::events::common_events::AppStartup"]) {
+				if (message?.SendEvent?.reg_id === replicationRegistry["beetmash_net::events::common_events::AppStartup"]) {
 					console.log('AppStartup')
 					await loadScene('simple_scene')
 					console.log('All scenes sent')

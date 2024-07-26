@@ -20,7 +20,7 @@ path = "examples/simple_app.rs"
 
 [dependencies]
 beet = "0.0.3"
-bevy = "0.14.0"
+bevy = "0.14"
 
 
 ### 👋 EXAMPLE 1 - HELLO WORLD

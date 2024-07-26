@@ -1,3 +1,11 @@
+# Enable a small amount of optimization in debug mode
+[profile.dev]
+opt-level = 1
+
+#💡 Enable high optimizations for dependencies (incl. Bevy), but not for our code:
+[profile.dev.package."*"]
+opt-level = 3
+
 [workspace.package]
 version = "0.0.5"
 edition = "2021"
@@ -17,23 +25,72 @@ categories = [
 ]
 publish = false
 
+
 [workspace]
 resolver = "2"
-members = ["crates/beetmash_template", "crates/cli"]
+members = [
+	"crates/beetmash_core",
+	"crates/beetmash_net",
+	"crates/beetmash_server",
+	"crates/beetmash_template",
+	"crates/cli",
+]
+exclude = ["crates/beetmash_esp"]
+
 
 [workspace.dependencies]
+#💡 internal
+beetmash_core = { path = "crates/beetmash_core", version = "0.0.5" }
+beetmash_net = { path = "crates/beetmash_net", version = "0.0.5" }
+beetmash_server = { path = "crates/beetmash_server", version = "0.0.5" }
+
+#💡 local-relative
+# forky_core = { path = "../forky/crates/forky/forky_core" }
+# forky_bevy = { path = "../forky/crates/forky/forky_bevy" }
+# forky_web = { path = "../forky/crates/forky/forky_web", default-features = false }
+# sweet = { path = "../forky/crates/sweet", features = ["bevy"] }
+
+#💡 local-published
+forky_core = "0.1.50"
+forky_bevy = "0.1.50"
+forky_web = "0.1.50"
+sweet = { version = "0.1.50", features = ["bevy"] }
+
+#💡 Utility
+log = "0.4"
+pretty_env_logger = "0.4"
+console_log = { version = "1.0", features = ["color"] }
+anyhow = "1.0.75"
+extend = "1.1.2"
+strum = { version = "0.26.0", features = ["derive"] }
+strum_macros = "0.26.0"
+rand = "0.8"
+
+#💡 IO
+serde = { version = "1", features = ["derive"] }
 
 
-# Enable a small amount of optimization in debug mode
-[profile.dev]
-opt-level = 1
+#💡 Async
+tokio = { version = "1.35", features = ["full"] }
+futures-util = { version = "0.3", default-features = false, features = [
+	"sink",
+	"std",
+] }
+tokio-tungstenite = { version = "0.21" }
+futures = "0.3"
 
-# Enable high optimizations for dependencies (incl. Bevy), but not for our code:
-[profile.dev.package."*"]
-opt-level = 3
+
+#💡 Web
+js-sys = "0.3"
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+
+#💡 Game
+bevy = "0.14"
 
 [package]
 name = "beetmash"
+publish = true
 version.workspace = true
 edition.workspace = true
 description.workspace = true
@@ -44,3 +101,85 @@ repository.workspace = true
 license.workspace = true
 keywords.workspace = true
 categories.workspace = true
+
+
+[features]
+default = ["net"]
+net = ["dep:beetmash_net"]
+tokio = ["beetmash_net/tokio"]
+
+
+[dependencies]
+beetmash_net = { workspace = true, optional = true }
+
+[workspace.dependencies.web-sys]
+# [target.'cfg(target_arch = "wasm32")'.dependencies.web-sys]
+version = "0.3"
+features = [
+	# HTML
+	'Headers',
+	'Document',
+	'Element',
+	'Window',
+	"Cache",
+	"CacheStorage",
+	'HtmlIFrameElement',
+	'DomRectReadOnly',
+	# Style
+	'MediaQueryList',
+	# Events
+	'MouseEvent',
+	'KeyboardEvent',
+	'CustomEvent',
+	'CustomEventInit',
+	# JS
+	'Gpu',
+	'console',
+	'Navigator',
+	'Performance',
+	# Fetch
+	'Request',
+	'RequestInit',
+	'RequestMode',
+	'Response',
+	# Blob
+	'Blob',
+	'BlobEvent',
+	'BlobEventInit',
+	'BlobPropertyBag',
+	# Elements
+	'HtmlAnchorElement',
+	'HtmlCanvasElement',
+	'HtmlInputElement',
+	'File',
+	'FileList',
+	# Url
+	'Url',
+	'History',
+	'Location',
+	'UrlSearchParams',
+	# indexedDB
+	"IdbCursor",
+	"IdbCursorDirection",
+	"IdbCursorWithValue",
+	"IdbDatabase",
+	"IdbFactory",
+	"IdbFileHandle",
+	"IdbFileMetadataParameters",
+	"IdbFileRequest",
+	"IdbIndex",
+	"IdbIndexParameters",
+	"IdbKeyRange",
+	"IdbLocaleAwareKeyRange",
+	"IdbMutableFile",
+	"IdbObjectStore",
+	"IdbObjectStoreParameters",
+	"IdbOpenDbOptions",
+	"IdbOpenDbRequest",
+	"IdbRequest",
+	"IdbRequestReadyState",
+	"IdbTransaction",
+	"IdbTransactionMode",
+	"IdbVersionChangeEvent",
+	"IdbVersionChangeEventInit",
+]

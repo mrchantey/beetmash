@@ -1,0 +1,86 @@
+[package]
+name = "beetmash_net"
+version.workspace = true
+edition.workspace = true
+description.workspace = true
+documentation.workspace = true
+homepage.workspace = true
+repository.workspace = true
+license.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[features]
+default = ["serde_json"]
+serde_json = ["dep:serde_json"]
+tokio = ["dep:tokio", "dep:tokio-tungstenite", "dep:futures-util"]
+# default = ["bevy_replicon"]
+# bevy_replicon = ["dep:bevy_replicon"]
+
+[dependencies]
+beetmash_core.workspace = true
+forky_core.workspace = true
+log.workspace = true
+anyhow.workspace = true
+extend.workspace = true
+
+#💡io
+serde.workspace = true
+serde_json = { version = "1", optional = true }
+bincode = "1"
+ron = "0.8"
+flume = "0.11"
+
+strum.workspace = true
+strum_macros.workspace = true
+# futures.workspace = true
+# parking_lot.workspace = true
+
+# strum.workspace = true
+# strum_macros.workspace = true
+
+bevy = { version = "0.14", default-features = false, features = [
+	# "bevy_scene",
+] }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+tokio = { workspace = true, optional = true }
+tokio-tungstenite = { workspace = true, optional = true }
+futures-util = { workspace = true, optional = true }
+
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+forky_web.workspace = true
+web-sys.workspace = true
+js-sys.workspace = true
+wasm-bindgen.workspace = true
+wasm-bindgen-futures.workspace = true
+
+# tokio = { workspace = true, optional = true }
+# [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+
+[dev-dependencies]
+beetmash_core = { workspace = true, features = ["test"] }
+pretty_env_logger.workspace = true
+sweet.workspace = true
+rand.workspace = true
+[target.'cfg(not(target_arch = "wasm32"))'.dev-dependencies]
+tokio.workspace = true
+
+[[example]]
+name = "client"
+path = "examples/client.rs"
+required-features = ["tokio"]
+
+[[example]]
+name = "two_clients"
+path = "examples/two_clients.rs"
+required-features = ["tokio"]
+
+
+[[package.metadata.project]]
+name = "hello-net"
+description = "A simple behavior demonstrating triggering and reacting to network events."
+thumb-url = "https://storage.googleapis.com/beet-examples/screenshots/hello-net.png"
+scene.path = "scenes/hello-net.ron"
+scene.dependencies = ["beet-debug", "camera-2d", "ui-terminal"]
