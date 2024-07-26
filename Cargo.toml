@@ -1,5 +1,5 @@
 [workspace.package]
-version = "0.0.4"
+version = "0.0.5"
 edition = "2021"
 description = "The number one bevy scene registry."
 documentation = "https://beetmash.com/docs/beetmash"

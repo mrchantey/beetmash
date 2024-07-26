@@ -493,15 +493,15 @@ dependencies = [
 
 [[package]]
 name = "beetmash"
-version = "0.0.4"
+version = "0.0.5"
 
 [[package]]
 name = "beetmash-cli"
-version = "0.0.4"
+version = "0.0.5"
 
 [[package]]
 name = "beetmash_template"
-version = "0.0.4"
+version = "0.0.5"
 dependencies = [
  "beet",
  "bevy",

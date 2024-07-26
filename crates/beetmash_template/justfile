@@ -1,6 +1,9 @@
 wasm-dir:= './target/web-examples'
 web-examples:= 'simple_app'
 
+default:
+	just --list --unsorted
+
 build-scenes:
 	cargo run --example build_scenes
 
