@@ -94,7 +94,7 @@ wasm-bindgen-futures = "0.4"
 # 	# "bevy_color",
 # ] }
 #💡 observer reflect attributes, required until 0.14.1
-bevy = { git = "https://github.com/bevyengine/bevy.git", rev = "b8416b3043eb5d2a49c6044e9680f0c5f189f243", default-features = false, features = [
+bevy = { path = "../bevy", default-features = false, features = [
 	"bevy_scene",
 	"serialize",
 	# "bevy_color",
