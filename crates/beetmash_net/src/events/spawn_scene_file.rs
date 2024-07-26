@@ -59,7 +59,6 @@ pub fn write_ron_to_world(
 	Ok(entity_map)
 }
 
-
 #[cfg(test)]
 mod test {
 	use crate::prelude::*;
@@ -71,7 +70,6 @@ mod test {
 	#[derive(Debug, Component, Reflect, PartialEq)]
 	#[reflect(Component)]
 	struct MyStruct(pub u32);
-
 
 	#[test]
 	fn works() -> Result<()> {

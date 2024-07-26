@@ -46,16 +46,16 @@ beetmash_net = { path = "crates/beetmash_net", version = "0.0.5" }
 beetmash_server = { path = "crates/beetmash_server", version = "0.0.5" }
 
 #💡 local-relative
-# forky_core = { path = "../forky/crates/forky/forky_core" }
-# forky_bevy = { path = "../forky/crates/forky/forky_bevy" }
-# forky_web = { path = "../forky/crates/forky/forky_web", default-features = false }
-# sweet = { path = "../forky/crates/sweet", features = ["bevy"] }
+forky_core = { path = "../forky/crates/forky_core" }
+forky_bevy = { path = "../forky/crates/forky_bevy" }
+forky_web = { path = "../forky/crates/forky_web", default-features = false }
+sweet = { path = "../sweet", features = ["bevy"] }
 
 #💡 local-published
-forky_core = "0.1.50"
-forky_bevy = "0.1.50"
-forky_web = "0.1.50"
-sweet = { version = "0.1.50", features = ["bevy"] }
+# forky_core = "0.1.50"
+# forky_bevy = "0.1.50"
+# forky_web = "0.1.50"
+# sweet = { version = "0.1.50", features = ["bevy"] }
 
 #💡 Utility
 log = "0.4"
@@ -88,11 +88,18 @@ wasm-bindgen-futures = "0.4"
 
 
 #💡 Game
-bevy = { version = "0.14", default-features = false, features = [
+# bevy = { version = "0.14", default-features = false, features = [
+# 	"bevy_scene",
+# 	"serialize",
+# 	# "bevy_color",
+# ] }
+#💡 observer reflect attributes, required until 0.14.1
+bevy = { git = "https://github.com/bevyengine/bevy.git", rev = "b8416b3043eb5d2a49c6044e9680f0c5f189f243", default-features = false, features = [
 	"bevy_scene",
 	"serialize",
 	# "bevy_color",
 ] }
+
 
 [package]
 name = "beetmash"
@@ -114,8 +121,10 @@ default = ["net"]
 net = ["dep:beetmash_net"]
 tokio = ["beetmash_net/tokio"]
 test = ["beetmash_core/test"]
+render = ["bevy/bevy_render", "beetmash_net/render"]
 
 [dependencies]
+bevy.workspace = true
 beetmash_core.workspace = true
 beetmash_net = { workspace = true, optional = true }
 

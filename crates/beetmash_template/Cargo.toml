@@ -20,7 +20,7 @@ path = "examples/simple_app.rs"
 
 [dependencies]
 beetmash.workspace = true
-bevy.workspace = true
+bevy = { workspace = true, default-features = true }
 
 ### 👋 EXAMPLE 1 - HELLO WORLD
 

@@ -12,6 +12,7 @@ categories.workspace = true
 
 [features]
 default = ["serde_json"]
+render = ["bevy/bevy_render"]
 serde_json = ["dep:serde_json"]
 tokio = ["dep:tokio", "dep:tokio-tungstenite", "dep:futures-util"]
 # default = ["bevy_replicon"]
@@ -39,9 +40,7 @@ strum_macros.workspace = true
 # strum.workspace = true
 # strum_macros.workspace = true
 
-bevy = { version = "0.14", default-features = false, features = [
-	# "bevy_scene",
-] }
+bevy = { workspace = true, default-features = false }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 tokio = { workspace = true, optional = true }
