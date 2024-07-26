@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use beet::prelude::*;
+use beetmash::prelude::*;
 use bevy::prelude::*;
 
 /// In scene-based workflows apps are mainly for adding plugins and systems.

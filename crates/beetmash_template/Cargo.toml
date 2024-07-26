@@ -19,9 +19,8 @@ name = "simple_app"
 path = "examples/simple_app.rs"
 
 [dependencies]
-beet = "0.0.3"
-bevy = "0.14"
-
+beetmash.workspace = true
+bevy.workspace = true
 
 ### 👋 EXAMPLE 1 - HELLO WORLD
 

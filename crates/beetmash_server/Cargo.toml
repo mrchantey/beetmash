@@ -1,5 +1,5 @@
 [package]
-name = "beet_server"
+name = "beetmash_server"
 publish = { workspace = true }
 version = { workspace = true }
 edition = { workspace = true }

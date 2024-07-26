@@ -67,6 +67,6 @@ impl Server {
 	}
 
 	async fn handle_root() -> Html<&'static str> {
-		Html("Welcome to the beet server.")
+		Html("Welcome to the beetmash server.")
 	}
 }
