@@ -1,6 +1,6 @@
 use anyhow::Result;
 use bevy::audio::DefaultSpatialScale;
-use bevy::ecs::observer::ObserverState;
+use bevy::ecs::query::QueryFilter;
 use bevy::pbr::DirectionalLightShadowMap;
 use bevy::pbr::PointLightShadowMap;
 use bevy::prelude::*;
@@ -9,16 +9,17 @@ use std::fs;
 use std::path::Path;
 
 
-fn get_save_entities(world: &mut World) -> Vec<Entity> {
+fn get_save_entities<Q: QueryFilter>(world: &mut World) -> Vec<Entity> {
 	// TODO removed ,Without<Observer<OnUserMessage,()>>), check thats ok
-	world
-		.query_filtered::<Entity, Without<ObserverState>>()
-		.iter(world)
-		.collect()
+	world.query_filtered::<Entity, Q>().iter(world).collect()
 }
 
-pub fn save_scene(world: &mut World, path: &Path) -> Result<()> {
-	let entities = get_save_entities(world);
+/// Saves scenes,attempting to deny any unintended resources and entities.
+pub fn save_scene<Q: QueryFilter>(
+	world: &mut World,
+	path: &Path,
+) -> Result<()> {
+	let entities = get_save_entities::<Q>(world);
 	// let scene = DynamicScene::from_world(world);
 	let scene = DynamicSceneBuilder::from_world(world)
 		// render plugin
@@ -40,7 +41,7 @@ pub fn save_scene(world: &mut World, path: &Path) -> Result<()> {
 		.extract_resources()
 		.build();
 
-	assert_scene_match(path, world, &scene)?;
+	assert_scene_match::<Q>(path, world, &scene)?;
 
 	let type_registry = world.resource::<AppTypeRegistry>();
 	let serialized_scene = scene.serialize(&type_registry.read())?;
@@ -55,27 +56,27 @@ pub fn save_scene(world: &mut World, path: &Path) -> Result<()> {
 
 
 const ALLOWED_IGNORES: &[&str] = &[
-	"bevy_ui::ui_node::BorderRadius",
-	"bevy_animation::transition::AnimationTransitions",
+	"bevy_text::text::CosmicBuffer",
 	"beet_flow::observers::action_observer_map::ActionObserverMap",
 	"bevy_ecs::observer::entity_observer::ObservedBy",
 ];
 
-fn assert_scene_match(
+fn assert_scene_match<Q: QueryFilter>(
 	path: &Path,
 	world: &mut World,
 	scene: &DynamicScene,
 ) -> Result<()> {
-	const NUM_IGNORED_RESOURCES: usize = 158;
+	const NUM_IGNORED_RESOURCES: usize = 134;
 
 	let mut issues = Vec::<String>::new();
 
-	let num_entities_world = get_save_entities(world).len();
+	let num_entities_world = get_save_entities::<Q>(world).len();
 	let num_entities_scene = scene.entities.len();
 	if num_entities_world != num_entities_scene {
 		issues.push(
 		format!("Entity count mismatch: Expected {num_entities_world}, got {num_entities_scene}"));
 	}
+
 	let num_resources_world =
 		world.iter_resources().count() - NUM_IGNORED_RESOURCES;
 	let num_resources_scene = scene.resources.len();

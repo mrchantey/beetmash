@@ -12,9 +12,16 @@ categories.workspace = true
 
 
 [features]
-default = ["scene"]
+default = ["render"]
+render = [
+	"scene",
+	# TODO being more granular will speed up compile times
+	"bevy/default",
+	# "bevy/bevy_asset",
+	# "bevy/animation",
+	# "bevy/bevy_core_pipeline",
+]
 scene = ["bevy/bevy_scene", "bevy/serialize"]
-render = []
 test = ["dep:sweet"]
 
 

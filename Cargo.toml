@@ -115,18 +115,22 @@ categories.workspace = true
 
 
 [features]
-default = ["render", "net"]
+default = ["net", "render"]
 net = ["dep:beetmash_net"]
+render = ["scene", "beetmash_core/render"]
 tokio = ["beetmash_net/tokio"]
 test = ["beetmash_core/test"]
 scene = ["dep:beetmash_scene", "beetmash_core/scene"]
-render = ["scene", "beetmash_core/render", "bevy/bevy_render"]
 
 [dependencies]
-bevy.workspace = true
 beetmash_core.workspace = true
 beetmash_scene = { workspace = true, optional = true }
 beetmash_net = { workspace = true, optional = true }
+
+[dev-dependencies]
+bevy.workspace = true
+anyhow.workspace = true
+forky_bevy.workspace = true
 
 [workspace.dependencies.web-sys]
 # [target.'cfg(target_arch = "wasm32")'.dependencies.web-sys]
@@ -199,3 +203,40 @@ features = [
 	"IdbVersionChangeEvent",
 	"IdbVersionChangeEventInit",
 ]
+
+
+[[package.metadata.project]]
+name = "ui-terminal"
+thumb-text = "🖥️"
+description = "On-screen terminal outputs beet-debug messages."
+scene.path = "scenes/ui-terminal.ron"
+
+[[package.metadata.project]]
+name = "ui-terminal-input"
+thumb-text = "🖥️"
+description = "On-screen terminal with support for user input."
+scene.path = "scenes/ui-terminal-input.ron"
+
+[[package.metadata.project]]
+name = "camera-2d"
+thumb-text = "📸"
+description = "2D camera for rendering 2D scenes."
+scene.path = "scenes/camera-2d.ron"
+
+[[package.metadata.project]]
+name = "camera-3d"
+thumb-text = "📸"
+description = "3D camera for rendering 3D scenes."
+scene.path = "scenes/camera-3d.ron"
+
+[[package.metadata.project]]
+name = "ground-3d"
+thumb-text = "🏝️"
+description = "A simple 3D ground plane."
+scene.path = "scenes/ground-3d.ron"
+
+[[package.metadata.project]]
+name = "lighting-3d"
+thumb-text = "💡"
+description = "A directional light configured with shadows."
+scene.path = "scenes/lighting-3d.ron"

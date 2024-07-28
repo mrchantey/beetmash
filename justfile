@@ -4,6 +4,17 @@ set dotenv-load
 default:
 	just --list --unsorted
 
+build-scenes *args:
+	cargo run --example build_scenes {{args}}
+
+app *scenes:
+	cargo run --example app -- {{scenes}}
+
+
+app-terminal:
+	just app \
+	crates/beetmash_core/scenes/camera-2d.ron						\
+	crates/beetmash_core/scenes/ui-terminal-input.ron		\
 
 
 test-all *args:

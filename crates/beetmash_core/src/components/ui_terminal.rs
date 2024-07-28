@@ -7,11 +7,13 @@ use bevy::ui::UiSystem;
 use bevy::window::WindowResized;
 use std::borrow::Cow;
 
+#[derive(Clone)]
 pub struct UiTerminalPlugin;
 
 impl Plugin for UiTerminalPlugin {
 	fn build(&self, app: &mut App) {
 		app
+		.observe(log_user_message)
 		.observe(
 			|trigger: Trigger<OnLogMessage>,	commands: Commands,
 			terminals: Query<Entity, With<UiTerminal>>| {
@@ -41,7 +43,7 @@ impl Plugin for UiTerminalPlugin {
 }
 
 /// An 'stdout observer', triggering this will log to the ui terminal.
-#[derive(Event, Deref)]
+#[derive(Debug, Event, Deref)]
 pub struct OnLogMessage(pub Cow<'static, str>);
 
 impl OnLogMessage {
@@ -306,4 +308,8 @@ fn parse_text_input(
 			}
 		}
 	}
+}
+
+fn log_user_message(trigger: Trigger<OnUserMessage>, mut commands: Commands) {
+	commands.trigger(OnLogMessage::new(format!("User: {}", &trigger.event().0)))
 }

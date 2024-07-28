@@ -12,11 +12,11 @@ keywords.workspace = true
 categories.workspace = true
 publish = true
 
-default-run = "simple_app"
+# default-run = "simple_app"
 
-[[bin]]
-name = "simple_app"
-path = "examples/simple_app.rs"
+# [[bin]]
+# name = "simple_app"
+# path = "examples/simple_app.rs"
 
 [dependencies]
 beetmash.workspace = true
