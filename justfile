@@ -9,6 +9,8 @@ default:
 test-all *args:
 	just watch 'cargo test --workspace --lib -- {{args}}'
 
+test-core *args:
+	just watch 'cargo test -p beetmash_core --lib -- {{args}}'
 test-net *args:
 	just watch 'cargo test -p beetmash_net --lib -- {{args}}'
 
@@ -21,6 +23,7 @@ publish crate *args:
 	sleep 2
 
 publish-all *args:
+	just publish beetmash_core 		 {{args}} || true
 	just publish beetmash_net 		 {{args}} || true
 	just publish beetmash_server 	 {{args}} || true
 	just publish beetmash 				 {{args}} || true

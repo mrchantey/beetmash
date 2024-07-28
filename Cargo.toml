@@ -7,7 +7,7 @@ opt-level = 1
 opt-level = 3
 
 [workspace.package]
-version = "0.0.5"
+version = "0.0.6-rc.1"
 edition = "2021"
 description = "The number one bevy scene registry."
 documentation = "https://beetmash.com/docs/beetmash"
@@ -29,6 +29,7 @@ publish = false
 [workspace]
 resolver = "2"
 members = [
+	"crates/beetmash_scene",
 	"crates/beetmash_core",
 	"crates/beetmash_net",
 	"crates/beetmash_server",
@@ -40,16 +41,17 @@ exclude = ["crates/beetmash_esp"]
 
 [workspace.dependencies]
 #💡 internal
-beetmash = { path = "./", version = "0.0.5" }
-beetmash_core = { path = "crates/beetmash_core", version = "0.0.5" }
-beetmash_net = { path = "crates/beetmash_net", version = "0.0.5" }
-beetmash_server = { path = "crates/beetmash_server", version = "0.0.5" }
+beetmash = { path = "./", version = "0.0.6-rc.1" }
+beetmash_core = { path = "crates/beetmash_core", version = "0.0.6-rc.1" }
+beetmash_net = { path = "crates/beetmash_net", version = "0.0.6-rc.1" }
+beetmash_scene = { path = "crates/beetmash_scene", version = "0.0.6-rc.1" }
+beetmash_server = { path = "crates/beetmash_server", version = "0.0.6-rc.1" }
 
 #💡 local-relative
-forky_core = { path = "../forky/crates/forky_core" }
-forky_bevy = { path = "../forky/crates/forky_bevy" }
-forky_web = { path = "../forky/crates/forky_web", default-features = false }
-sweet = { path = "../sweet", features = ["bevy"] }
+forky_core = { version = "0.1.51", path = "../forky/crates/forky_core" }
+forky_bevy = { version = "0.1.51", path = "../forky/crates/forky_bevy" }
+forky_web = { version = "0.1.51", path = "../forky/crates/forky_web", default-features = false }
+sweet = { version = "0.1.51", path = "../sweet", features = ["bevy"] }
 
 #💡 local-published
 # forky_core = "0.1.50"
@@ -94,11 +96,7 @@ wasm-bindgen-futures = "0.4"
 # 	# "bevy_color",
 # ] }
 #💡 observer reflect attributes, required until 0.14.1
-bevy = { path = "../bevy", default-features = false, features = [
-	"bevy_scene",
-	"serialize",
-	# "bevy_color",
-] }
+bevy = { version = "0.14", path = "../bevy", default-features = false }
 
 
 [package]
@@ -117,15 +115,17 @@ categories.workspace = true
 
 
 [features]
-default = ["net"]
+default = ["render", "net"]
 net = ["dep:beetmash_net"]
 tokio = ["beetmash_net/tokio"]
 test = ["beetmash_core/test"]
-render = ["bevy/bevy_render", "beetmash_net/render"]
+scene = ["dep:beetmash_scene", "beetmash_core/scene"]
+render = ["scene", "beetmash_core/render", "bevy/bevy_render"]
 
 [dependencies]
 bevy.workspace = true
 beetmash_core.workspace = true
+beetmash_scene = { workspace = true, optional = true }
 beetmash_net = { workspace = true, optional = true }
 
 [workspace.dependencies.web-sys]

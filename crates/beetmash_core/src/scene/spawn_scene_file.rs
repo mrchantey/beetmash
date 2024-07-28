@@ -1,10 +1,9 @@
 use anyhow::Result;
+use beetmash_scene::prelude::*;
 use bevy::ecs::entity::EntityHashMap;
 use bevy::ecs::system::SystemState;
 use bevy::prelude::*;
-use bevy::scene::serde::SceneDeserializer;
 use forky_core::ResultTEExt;
-use serde::de::DeserializeSeed;
 use serde::Deserialize;
 use serde::Serialize;
 
@@ -16,6 +15,7 @@ pub struct SpawnSceneFile(pub String);
 #[derive(Debug, Clone, Serialize, Deserialize, Event, Reflect)]
 pub struct SpawnSceneFileResponse(pub EntityHashMap<Entity>);
 
+// TODO use observers when we get exclusive observer systems
 pub fn handle_spawn_scene(
 	world: &mut World,
 	events: &mut SystemState<(
@@ -39,24 +39,6 @@ pub fn handle_spawn_scene(
 				responses.send(SpawnSceneFileResponse(map));
 			}
 		});
-}
-
-pub fn write_ron_to_world(
-	ron_str: &str,
-	world: &mut World,
-) -> Result<EntityHashMap<Entity>> {
-	let type_registry = world.resource::<AppTypeRegistry>().clone();
-	let mut deserializer =
-		bevy::scene::ron::de::Deserializer::from_str(ron_str)?;
-	let scene_deserializer = SceneDeserializer {
-		type_registry: &type_registry.read(),
-	};
-	let scene = scene_deserializer
-		.deserialize(&mut deserializer)
-		.map_err(|e| deserializer.span_error(e))?;
-	let mut entity_map = Default::default();
-	scene.write_to_world(world, &mut entity_map)?;
-	Ok(entity_map)
 }
 
 #[cfg(test)]
@@ -83,14 +65,10 @@ mod test {
 
 		let mut app2 = App::new();
 
-		app2.add_plugins((
-			LogPlugin::default(),
-			ReplicatePlugin,
-			CommonEventsPlugin,
-		))
-		.add_systems(Update, handle_spawn_scene)
-		.add_event::<SpawnSceneFileResponse>()
-		.register_type::<MyStruct>();
+		app2.add_plugins((LogPlugin::default(), DefaultReplicatePlugin))
+			.add_systems(Update, handle_spawn_scene)
+			.add_event::<SpawnSceneFileResponse>()
+			.register_type::<MyStruct>();
 
 		app2.world_mut().send_event(SpawnSceneFile(str.into()));
 

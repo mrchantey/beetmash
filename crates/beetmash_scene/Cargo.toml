@@ -1,5 +1,5 @@
 [package]
-name = "beetmash_core"
+name = "beetmash_scene"
 version.workspace = true
 edition.workspace = true
 description.workspace = true
@@ -12,15 +12,13 @@ categories.workspace = true
 
 
 [features]
-default = ["render"]
-scene = ["bevy/bevy_scene", "bevy/serialize", "dep:beetmash_scene"]
-render = ["scene", "bevy/bevy_render"]
+default = ["scene"]
+scene = ["bevy/bevy_scene", "bevy/serialize"]
+render = []
 test = ["dep:sweet"]
 
+
 [dependencies]
-forky_core.workspace = true
-beetmash_net.workspace = true
-beetmash_scene = { workspace = true, optional = true }
 bevy.workspace = true
 log.workspace = true
 anyhow.workspace = true

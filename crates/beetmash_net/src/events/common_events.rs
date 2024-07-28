@@ -26,24 +26,9 @@ impl Plugin for CommonEventsPlugin {
             // AppReady
             .add_event::<AppReady>()
             .replicate_observer_outgoing::<AppReady>()
-            // SpawnSceneFile
-            .add_event::<SpawnSceneFile>()
-            .replicate_event_incoming::<SpawnSceneFile>()
-            .add_event::<SpawnSceneFileResponse>()
-            .replicate_event_outgoing::<SpawnSceneFileResponse>()
-            .add_systems(Update, handle_spawn_scene)
             .replicate_observer_incoming::<OnUserMessage>()
             .replicate_observer_outgoing::<OnAppMessage>();
         // Screenshot
-
-        #[cfg(feature="render")]
-		app.add_event::<SaveScreenshot>()
-		.replicate_event_incoming::<SaveScreenshot>()
-		.add_systems(Update,screenshot_on_event)
-		.add_systems(Update,screenshot_on_keypress)
-		// .observe(screenshot_on_event)
-		// .observe(screenshot_on_keypress)
-			/*-*/;
     }
 }
 

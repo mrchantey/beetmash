@@ -2,7 +2,7 @@
 name = "beetmash_net"
 version.workspace = true
 edition.workspace = true
-description.workspace = true
+description = "A lightweight Bevy replication library."
 documentation.workspace = true
 homepage.workspace = true
 repository.workspace = true
@@ -12,14 +12,12 @@ categories.workspace = true
 
 [features]
 default = ["serde_json"]
-render = ["bevy/bevy_render"]
 serde_json = ["dep:serde_json"]
 tokio = ["dep:tokio", "dep:tokio-tungstenite", "dep:futures-util"]
 # default = ["bevy_replicon"]
 # bevy_replicon = ["dep:bevy_replicon"]
 
 [dependencies]
-beetmash_core.workspace = true
 forky_core.workspace = true
 log.workspace = true
 anyhow.workspace = true

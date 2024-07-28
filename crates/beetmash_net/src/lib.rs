@@ -17,6 +17,4 @@ pub mod prelude {
 	pub use crate::tokio_client::*;
 	#[cfg(target_arch = "wasm32")]
 	pub use crate::web_transport::*;
-	#[cfg(feature = "render")]
-	pub use crate::events::screenshot::screenshot::*;
 }
