@@ -1,0 +1,34 @@
+(
+  resources: {},
+  entities: {
+    4294967298: (
+      components: {
+        "beetmash_core::render::block_app_ready::AssetLoadBlockAppReady": (),
+        "bevy_transform::components::transform::Transform": (
+          translation: (
+            x: 0.0,
+            y: 0.0,
+            z: -1.0,
+          ),
+          rotation: (
+            x: 0.0,
+            y: 0.0,
+            z: 0.0,
+            w: 1.0,
+          ),
+          scale: (
+            x: 100.0,
+            y: 100.0,
+            z: 100.0,
+          ),
+        ),
+        "beetmash_scene::utils::bundle_placeholder::BundlePlaceholder": Sprite("space_background/Space_Stars2.png"),
+        "bevy_sprite::sprite::ImageScaleMode": Tiled(
+          tile_x: true,
+          tile_y: true,
+          stretch_value: 0.01,
+        ),
+      },
+    ),
+  },
+)

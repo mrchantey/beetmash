@@ -8,6 +8,9 @@ use bevy::time::TimeUpdateStrategy;
 use std::fs;
 use std::path::Path;
 
+// such a hack
+const NUM_IGNORED_RESOURCES: usize = 137;
+
 
 fn get_save_entities<Q: QueryFilter>(world: &mut World) -> Vec<Entity> {
 	// TODO removed ,Without<Observer<OnUserMessage,()>>), check thats ok
@@ -66,8 +69,6 @@ fn assert_scene_match<Q: QueryFilter>(
 	world: &mut World,
 	scene: &DynamicScene,
 ) -> Result<()> {
-	const NUM_IGNORED_RESOURCES: usize = 134;
-
 	let mut issues = Vec::<String>::new();
 
 	let num_entities_world = get_save_entities::<Q>(world).len();

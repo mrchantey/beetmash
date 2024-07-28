@@ -30,7 +30,9 @@ fn load_scenes(world: &mut World, args: Vec<String>) -> Result<()> {
 	// The first argument is the path to the program
 	for path in args.iter().skip(1) {
 		log::info!("Loading scene from: {path}");
-		let scene = std::fs::read_to_string(path)?;
+		let scene = std::fs::read_to_string(path).map_err(|e| {
+			anyhow::anyhow!("\nError reading scene file:\n{path}\n{e}\n")
+		})?;
 		write_ron_to_world(&scene, world)?;
 	}
 	Ok(())

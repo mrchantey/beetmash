@@ -1,5 +1,4 @@
 use bevy::prelude::*;
-use bevy::text::CosmicBuffer;
 
 
 #[derive(Debug, Clone, Reflect)]
@@ -52,22 +51,10 @@ pub enum BundlePlaceholder {
 #[derive(Debug, Default, Clone)]
 pub struct BundlePlaceholderPlugin;
 
-impl Plugin for BundlePlaceholderPlugin {
-	fn build(&self, app: &mut App) {
-		app.add_systems(PreUpdate, init_bundle)
-			.register_type::<BundlePlaceholder>();
-		// temp, something like this will probs be in 0.14.1
-		app.world_mut().register_component_hooks::<Text>().on_add(
-			|mut world, entity, _| {
-				world
-					.commands()
-					.entity(entity)
-					.insert(CosmicBuffer::default());
-			},
-		);
-	}
+pub fn bundle_placeholder_plugin(app:&mut App){
+	app.add_systems(PreUpdate, init_bundle)
+		.register_type::<BundlePlaceholder>();
 }
-
 
 fn init_bundle(
 	asset_server: Res<AssetServer>,
