@@ -7,30 +7,35 @@ use bevy::prelude::*;
 use std::path::Path;
 use std::path::PathBuf;
 
-pub struct BeetmashSceneBuilder<P, M, Q = ()> {
+/// A helper for exporting scenes.
+/// By default this **will clear the target directory**.
+pub struct SceneExporter<P, M, Q = ()> {
 	plugin: P,
 	dir: PathBuf,
 	scenes: Vec<BeetmashScene>,
 	phantom: std::marker::PhantomData<(M, Q)>,
+	clear_target_dir: bool,
 }
 
-impl<P: Clone + Plugins<M>, M> BeetmashSceneBuilder<P, M, ()> {
+impl<P: Clone + Plugins<M>, M> SceneExporter<P, M, ()> {
 	pub fn new(plugin: P) -> Self {
 		Self {
 			plugin,
 			dir: PathBuf::from("target/scenes"),
 			scenes: Vec::new(),
 			phantom: std::marker::PhantomData,
+			clear_target_dir: true,
 		}
 	}
 }
-impl<P: Clone + Plugins<M>, M, Q: QueryFilter> BeetmashSceneBuilder<P, M, Q> {
-	pub fn with_query<Q2: QueryFilter>(self) -> BeetmashSceneBuilder<P, M, Q2> {
-		BeetmashSceneBuilder {
+impl<P: Clone + Plugins<M>, M, Q: QueryFilter> SceneExporter<P, M, Q> {
+	pub fn with_query<Q2: QueryFilter>(self) -> SceneExporter<P, M, Q2> {
+		SceneExporter {
 			plugin: self.plugin,
 			dir: self.dir,
 			scenes: self.scenes,
 			phantom: std::marker::PhantomData,
+			clear_target_dir: self.clear_target_dir,
 		}
 	}
 
@@ -49,6 +54,10 @@ impl<P: Clone + Plugins<M>, M, Q: QueryFilter> BeetmashSceneBuilder<P, M, Q> {
 	}
 
 	pub fn build(self) -> Result<()> {
+		if self.clear_target_dir {
+			std::fs::remove_dir_all(&self.dir).ok();
+		}
+
 		self.scenes
 			.into_iter()
 			.map(|scene| scene.save::<Q, _>(self.plugin.clone(), &self.dir))

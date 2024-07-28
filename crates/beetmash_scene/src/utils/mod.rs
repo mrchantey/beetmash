@@ -4,9 +4,9 @@ pub use self::animation_graph_placeholder::*;
 pub mod asset_placeholder;
 #[allow(unused_imports)]
 pub use self::asset_placeholder::*;
-pub mod beetmash_scene_builder;
+pub mod scene_exporter;
 #[allow(unused_imports)]
-pub use self::beetmash_scene_builder::*;
+pub use self::scene_exporter::*;
 pub mod bundle_placeholder;
 #[allow(unused_imports)]
 pub use self::bundle_placeholder::*;

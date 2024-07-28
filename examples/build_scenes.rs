@@ -5,15 +5,17 @@ use bevy::ecs::observer::ObserverState;
 use bevy::prelude::*;
 use std::fs;
 
+const DIR: &str = "scenes";
+
 fn main() -> Result<()> {
-	BeetmashSceneBuilder::new((
+	SceneExporter::new((
 		MostDefaultPlugins,
 		DefaultPlaceholderPlugin,
 		UiTerminalPlugin,
 	))
 	.with_query::<(Without<ObserverState>, Without<Observer<OnLogMessage, ()>>)>(
 	)
-	.with_dir("crates/beetmash_core/scenes")
+	.with_dir(DIR)
 	.add_scene("empty", || {})
 	// ui
 	.add_scene("ui-terminal", core::scenes::ui_terminal)

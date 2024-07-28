@@ -9,7 +9,7 @@ use std::fs;
 use std::path::Path;
 
 // such a hack
-const NUM_IGNORED_RESOURCES: usize = 137;
+const NUM_IGNORED_RESOURCES: usize = 138;
 
 
 fn get_save_entities<Q: QueryFilter>(world: &mut World) -> Vec<Entity> {

@@ -10,12 +10,18 @@ impl Plugin for DefaultPlaceholderPlugin {
 	fn build(&self, app: &mut App) {
 		app.add_plugins((
 			bundle_placeholder_plugin,
+			// sprites
 			AssetPlaceholderPlugin::<Image>::default(),
 			ReadyOnAssetLoadPlugin::<Image>::default(),
+			// 3d
 			AssetPlaceholderPlugin::<Mesh>::default(),
 			ReadyOnAssetLoadPlugin::<Mesh>::default(),
 			AssetPlaceholderPlugin::<StandardMaterial>::default(),
 			ReadyOnAssetLoadPlugin::<StandardMaterial>::default(),
+			// animation
+			AnimationGraphPlaceholderPlugin,
+			AssetPlaceholderPlugin::<AnimationClip>::default(),
+			ReadyOnAssetLoadPlugin::<AnimationClip>::default(),
 		))
 		.register_type::<AssetLoadBlockAppReady>();
 
