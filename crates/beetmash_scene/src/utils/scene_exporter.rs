@@ -42,6 +42,11 @@ impl<P: Clone + Plugins<M>, M, Q: QueryFilter> SceneExporter<P, M, Q> {
 		}
 	}
 
+	pub fn without_clear_target(mut self) -> Self {
+		self.clear_target_dir = false;
+		self
+	}
+
 	pub fn with_dir(mut self, dir: impl Into<PathBuf>) -> Self {
 		self.dir = dir.into();
 		self

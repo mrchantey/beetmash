@@ -7,6 +7,8 @@ use forky_bevy::systems::close_on_esc;
 
 const DEFAULT_ASSETS_PATH: &str = "assets";
 
+/// Opinionated [DefaultPlugins] to work well with scene-based workflows
+/// and uploading to [beetmash.com](https://beetmash.com)
 pub struct BeetmashDefaultPlugins {
 	#[allow(unused)]
 	wasm_asset_path: String,

@@ -31,7 +31,6 @@ fn outgoing_send<T: Event + Serialize>(
 	registrations: Res<ReplicateRegistry>,
 	mut outgoing: ResMut<MessageOutgoing>,
 ) {
-	println!("HERE!");
 	let Some(payload) =
 		MessagePayload::new(trigger.event()).ok_or(|e| log::error!("{e}"))
 	else {
