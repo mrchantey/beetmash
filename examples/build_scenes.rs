@@ -30,7 +30,7 @@ fn main() -> Result<()> {
 	.build()?;
 
 	// check empty is empty
-	let empty = fs::read_to_string("crates/beetmash_core/scenes/empty.ron")?;
+	let empty = fs::read_to_string("scenes/empty.ron")?;
 	assert_eq!(
 		empty,
 		"(

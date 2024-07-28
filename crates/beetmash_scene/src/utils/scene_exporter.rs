@@ -15,6 +15,7 @@ pub struct SceneExporter<P, M, Q = ()> {
 	scenes: Vec<BeetmashScene>,
 	phantom: std::marker::PhantomData<(M, Q)>,
 	clear_target_dir: bool,
+	checks: DynamicSceneChecks,
 }
 
 impl<P: Clone + Plugins<M>, M> SceneExporter<P, M, ()> {
@@ -25,6 +26,7 @@ impl<P: Clone + Plugins<M>, M> SceneExporter<P, M, ()> {
 			scenes: Vec::new(),
 			phantom: std::marker::PhantomData,
 			clear_target_dir: true,
+			checks: default(),
 		}
 	}
 }
@@ -36,11 +38,16 @@ impl<P: Clone + Plugins<M>, M, Q: QueryFilter> SceneExporter<P, M, Q> {
 			scenes: self.scenes,
 			phantom: std::marker::PhantomData,
 			clear_target_dir: self.clear_target_dir,
+			checks: self.checks,
 		}
 	}
 
 	pub fn with_dir(mut self, dir: impl Into<PathBuf>) -> Self {
 		self.dir = dir.into();
+		self
+	}
+	pub fn with_checks(mut self, checks: DynamicSceneChecks) -> Self {
+		self.checks = checks;
 		self
 	}
 
@@ -60,7 +67,9 @@ impl<P: Clone + Plugins<M>, M, Q: QueryFilter> SceneExporter<P, M, Q> {
 
 		self.scenes
 			.into_iter()
-			.map(|scene| scene.save::<Q, _>(self.plugin.clone(), &self.dir))
+			.map(|scene| {
+				scene.save::<Q, _>(self.plugin.clone(), &self.checks, &self.dir)
+			})
 			.collect::<Result<Vec<_>>>()?;
 		Ok(())
 	}
@@ -85,6 +94,7 @@ impl BeetmashScene {
 	pub fn save<Q: QueryFilter, M>(
 		self,
 		plugins: impl Plugins<M>,
+		checks: &DynamicSceneChecks,
 		dir: &Path,
 	) -> Result<()> {
 		let mut app = App::new();
@@ -99,6 +109,6 @@ impl BeetmashScene {
 		let filename = format!("{}.ron", self.name);
 		let path = dir.join(filename);
 
-		save_scene::<Q>(app.world_mut(), &path)
+		save_scene::<Q>(app.world_mut(), checks, &path)
 	}
 }
