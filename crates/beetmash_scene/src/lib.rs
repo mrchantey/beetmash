@@ -1,5 +1,5 @@
-pub mod scene_utils;
+pub mod utils;
 
 pub mod prelude {
-	pub use crate::scene_utils::*;
+	pub use crate::utils::*;
 }

@@ -19,6 +19,7 @@ test = ["dep:sweet"]
 
 
 [dependencies]
+forky_core.workspace = true
 bevy.workspace = true
 log.workspace = true
 anyhow.workspace = true

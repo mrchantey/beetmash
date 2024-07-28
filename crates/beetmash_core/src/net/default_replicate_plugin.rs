@@ -1,5 +1,6 @@
 use crate::prelude::*;
 use beetmash_net::prelude::*;
+use beetmash_scene::prelude::*;
 use bevy::prelude::*;
 
 /// Includes default transports for native and wasm targets, as well as
@@ -13,12 +14,10 @@ impl Plugin for DefaultReplicatePlugin {
 		app.add_plugins((ReplicatePlugin, CommonEventsPlugin));
 
 		#[cfg(feature = "scene")]
-		// SpawnSceneFile
-		app.add_event::<SpawnSceneFile>()
+		app.add_plugins(spawn_scene_file_plugin)
 			.replicate_event_incoming::<SpawnSceneFile>()
-			.add_event::<SpawnSceneFileResponse>()
-			.replicate_event_outgoing::<SpawnSceneFileResponse>()
-			.add_systems(Update, handle_spawn_scene);
+			.replicate_event_outgoing::<SpawnSceneFileResponse>();
+		// SpawnSceneFile
 
 		// .add_event::<SomeCustomEvent>()
 		// .replicate_event_incoming::<SomeCustomEvent>()
@@ -31,6 +30,5 @@ impl Plugin for DefaultReplicatePlugin {
 			// .observe(screenshot_on_event)
 			// .observe(screenshot_on_keypress)
 				/*-*/;
-
 	}
 }

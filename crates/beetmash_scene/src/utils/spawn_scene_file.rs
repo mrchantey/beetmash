@@ -1,11 +1,18 @@
+use crate::prelude::*;
 use anyhow::Result;
-use beetmash_scene::prelude::*;
 use bevy::ecs::entity::EntityHashMap;
 use bevy::ecs::system::SystemState;
 use bevy::prelude::*;
 use forky_core::ResultTEExt;
 use serde::Deserialize;
 use serde::Serialize;
+
+
+pub fn spawn_scene_file_plugin(app: &mut App) {
+	app.add_event::<SpawnSceneFile>()
+		.add_event::<SpawnSceneFileResponse>()
+		.add_systems(Update, handle_spawn_scene);
+}
 
 /// Received by this app, containing the raw text of a ron file for
 /// deserialization and spawning
@@ -65,7 +72,9 @@ mod test {
 
 		let mut app2 = App::new();
 
-		app2.add_plugins((LogPlugin::default(), DefaultReplicatePlugin))
+		// DefaultReplicatePlugin removed, why was it here?
+
+		app2.add_plugins((LogPlugin::default(), spawn_scene_file_plugin))
 			.add_systems(Update, handle_spawn_scene)
 			.add_event::<SpawnSceneFileResponse>()
 			.register_type::<MyStruct>();

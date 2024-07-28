@@ -5,11 +5,8 @@ use bevy::pbr::DirectionalLightShadowMap;
 use bevy::pbr::PointLightShadowMap;
 use bevy::prelude::*;
 use bevy::time::TimeUpdateStrategy;
-use std::fs::File;
-use std::fs::{
-	self,
-};
-use std::io::Write;
+use std::fs;
+use std::path::Path;
 
 
 fn get_save_entities(world: &mut World) -> Vec<Entity> {
@@ -20,12 +17,8 @@ fn get_save_entities(world: &mut World) -> Vec<Entity> {
 		.collect()
 }
 
-pub fn save_scene(
-	world: &mut World,
-	filename: impl Into<String>,
-) -> Result<()> {
+pub fn save_scene(world: &mut World, path: &Path) -> Result<()> {
 	let entities = get_save_entities(world);
-	let filename = filename.into();
 	// let scene = DynamicScene::from_world(world);
 	let scene = DynamicSceneBuilder::from_world(world)
 		// render plugin
@@ -47,17 +40,15 @@ pub fn save_scene(
 		.extract_resources()
 		.build();
 
-	assert_scene_match(&filename, world, &scene)?;
+	assert_scene_match(path, world, &scene)?;
 
 	let type_registry = world.resource::<AppTypeRegistry>();
 	let serialized_scene = scene.serialize(&type_registry.read())?;
 
-	if let Some(dir_path) = std::path::Path::new(&filename).parent() {
+	if let Some(dir_path) = path.parent() {
 		fs::create_dir_all(dir_path)?;
 	}
-
-	let mut file = File::create(filename)?;
-	file.write(serialized_scene.as_bytes())?;
+	fs::write(path, serialized_scene.as_bytes())?;
 
 	Ok(())
 }
@@ -71,7 +62,7 @@ const ALLOWED_IGNORES: &[&str] = &[
 ];
 
 fn assert_scene_match(
-	filename: &str,
+	path: &Path,
 	world: &mut World,
 	scene: &DynamicScene,
 ) -> Result<()> {
@@ -139,7 +130,11 @@ fn assert_scene_match(
 		}
 	}
 	if issues.len() > 0 {
-		anyhow::bail!("{filename}: issues found:\n{}", issues.join("\n"))
+		anyhow::bail!(
+			"{}: issues found:\n{}",
+			path.display(),
+			issues.join("\n")
+		)
 	} else {
 		Ok(())
 	}
