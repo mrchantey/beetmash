@@ -22,44 +22,39 @@ publish = true
 beetmash.workspace = true
 bevy = { workspace = true, default-features = true }
 
-### 👋 EXAMPLE 1 - HELLO WORLD
+### 👋 1 - An empty scene
 
-[[package.metadata.project]]
-# yep, this is a valid project! 
-# project names follow github naming conventions: alphanumeric and dashes only
+# yep, this is a valid scene!
+[[package.metadata.scene]]
+# beetmash scene names follow github naming conventions: alphanumeric and dashes only
+# dont worry, plenty of room for personalization and flair in the description and thumb-url fields 😄
 name = "hello-world"
 
 
-### ⛰️ EXAMPLE 2 - A BASE PROJECT
+### ⛰️ 2 - A base scene
 
-# you may like to create base projects upon which others can build
-[[package.metadata.project]]
-name = "my-base-project"
+# you may like to create base sceness upon which others can build
+[[package.metadata.scene]]
+name = "my-base-scene"
+# add some metadata so it looks great on beetmash.com
 description = "Simply default plugins, a light and a 3d camera with a sensible offset."
 thumb-url = "https://www.svgrepo.com/show/405251/drum.svg"
-# specifying a scene makes this project a valid scene dependency
-scene.path = "./scenes/simple_environment.ron"
-# specifying the location of a wasm build makes it a valid app dependency, dont forget to enable cors
-# app = { js-url = "", wasm-url = "" }
+# here we can specify the path to the scene file
+ron-path = "scenes/simple_environment.ron"
+# specifying the path to a wasm app is a great way to share a demo of your scene
 app.js-url = "https://beetmash-apps.s3.amazonaws.com/temp/simple_app/main.js"
 app.wasm-url = "https://beetmash-apps.s3.amazonaws.com/temp/simple_app/main_bg.wasm"
-# app.replication.send-events = []
-# app.replication.recv-events = []
-# keep this field in sync with your WindowPlugin, `beetmash-canvas` is the default value
-# app.canvas-id = "beetmash-canvas"
 
-### 🚀 EXAMPLE 3 - A DEMO
+
+### 🚀 3 - A demo scene
 
 # this example includes a scene and demo configuration
-[[package.metadata.project]]
-name = "my-awesome-demo"
+[[package.metadata.scene]]
+name = "my-beautiful-scene"
 description = "A beautiful cube gloriously perched upon a circular platform!"
 thumb-url = "https://bevyengine.org/processed_images/3d_scene.303294348e55980f.png"
-# this scene will be included in the demo
-scene.path = "./scenes/simple_scene.ron"
-# dependencies are used by scenes to create hierachies, and demos to specify the runtime app
-# can be a string or table specifying `crate-name` and `project-name`
-# ie dependencies = [{crate-name = "my-other-crate", project-name = "some-project"}]
-scene.dependencies = ["my-base-project"]
-# specifying an app dependency makes this a valid demo, it also functions as a re-export
-app = "my-base-project"
+ron-path = "scenes/simple_scene.ron"
+# we can specify another scene here to use its app
+app = "my-base-scene"
+# include other scenes to have them and all of their includes also loaded
+include = ["hello-world"]

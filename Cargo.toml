@@ -7,7 +7,7 @@ opt-level = 1
 opt-level = 3
 
 [workspace.package]
-version = "0.0.6-rc.1"
+version = "0.0.6-rc.2"
 edition = "2021"
 description = "The number one bevy scene registry."
 documentation = "https://beetmash.com/docs/beetmash"
@@ -41,11 +41,11 @@ exclude = ["crates/beetmash_esp"]
 
 [workspace.dependencies]
 #💡 internal
-beetmash = { path = "./", version = "0.0.6-rc.1" }
-beetmash_core = { path = "crates/beetmash_core", version = "0.0.6-rc.1" }
-beetmash_net = { path = "crates/beetmash_net", version = "0.0.6-rc.1" }
-beetmash_scene = { path = "crates/beetmash_scene", version = "0.0.6-rc.1" }
-beetmash_server = { path = "crates/beetmash_server", version = "0.0.6-rc.1" }
+beetmash = { path = "./", version = "0.0.6-rc.2" }
+beetmash_core = { path = "crates/beetmash_core", version = "0.0.6-rc.2" }
+beetmash_net = { path = "crates/beetmash_net", version = "0.0.6-rc.2" }
+beetmash_scene = { path = "crates/beetmash_scene", version = "0.0.6-rc.2" }
+beetmash_server = { path = "crates/beetmash_server", version = "0.0.6-rc.2" }
 
 #💡 local-relative
 forky_core = { version = "0.1.51", path = "../forky/crates/forky_core" }
@@ -204,53 +204,67 @@ features = [
 	"IdbVersionChangeEventInit",
 ]
 
-[[package.metadata.project]]
+[[package.metadata.scene]]
 name = "app"
 thumb-text = "🖥️"
 description = "A basic beetmash app, supports spawning objects and a terminal."
 app.js-url = "https://beetmash-apps.s3.amazonaws.com/temp/app/main.js"
 app.wasm-url = "https://beetmash-apps.s3.amazonaws.com/temp/app/main_bg.wasm"
 
-[[package.metadata.project]]
+[[package.metadata.scene]]
+name = "hello-terminal"
+thumb-text = "🖥️"
+description = "Simple camera and on-screen terminal."
+app = "app"
+ron-path = "scenes/ui-terminal-input.ron"
+include = ["camera-2d"]
+
+[[package.metadata.scene]]
 name = "ui-terminal"
 thumb-text = "🖥️"
-description = "On-screen terminal outputs beet-debug messages."
-scene.path = "scenes/ui-terminal.ron"
+description = "On-screen terminal."
+ron-path = "scenes/ui-terminal.ron"
 
-[[package.metadata.project]]
+[[package.metadata.scene]]
 name = "ui-terminal-input"
 thumb-text = "🖥️"
 description = "On-screen terminal with support for user input."
-scene.path = "scenes/ui-terminal-input.ron"
+ron-path = "scenes/ui-terminal-input.ron"
 
-[[package.metadata.project]]
+[[package.metadata.scene]]
 name = "camera-2d"
 thumb-text = "📸"
 description = "2D camera for rendering 2D scenes."
-scene.path = "scenes/camera-2d.ron"
+ron-path = "scenes/camera-2d.ron"
 
-[[package.metadata.project]]
+[[package.metadata.scene]]
 name = "camera-3d"
 thumb-text = "📸"
 description = "3D camera for rendering 3D scenes."
-scene.path = "scenes/camera-3d.ron"
+ron-path = "scenes/camera-3d.ron"
 
-[[package.metadata.project]]
+[[package.metadata.scene]]
 name = "ground-3d"
 thumb-text = "🏝️"
 description = "A simple 3D ground plane."
-scene.path = "scenes/ground-3d.ron"
+ron-path = "scenes/ground-3d.ron"
 
-[[package.metadata.project]]
+[[package.metadata.scene]]
 name = "lighting-3d"
 thumb-text = "💡"
 description = "A directional light configured with shadows."
-scene.path = "scenes/lighting-3d.ron"
+ron-path = "scenes/lighting-3d.ron"
+
+[[package.metadata.scene]]
+name = "space-scene"
+thumb-text = "🌌"
+description = "A starry background."
+ron-path = "scenes/space-scene.ron"
 
 
-[[package.metadata.project]]
-name = "hello-net"
-description = "A simple behavior demonstrating triggering and reacting to network events."
-thumb-url = "https://storage.googleapis.com/beet-examples/screenshots/hello-net.png"
-scene.path = "scenes/hello-net.ron"
-scene.dependencies = ["beet-debug", "camera-2d", "ui-terminal"]
+# [[package.metadata.scene]]
+# name = "hello-net"
+# description = "A simple behavior demonstrating triggering and reacting to network events."
+# thumb-url = "https://storage.googleapis.com/beet-examples/screenshots/hello-net.png"
+# ron-path = "scenes/hello-net.ron"
+# include = ["camera-2d", "ui-terminal"]
