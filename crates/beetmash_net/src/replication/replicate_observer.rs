@@ -49,7 +49,8 @@ fn outgoing_send<T: Event + Serialize>(
 mod test {
 	use crate::prelude::*;
 	use anyhow::Result;
-	use beetmash_core::prelude::*;
+	use beetmash_scene::test::*;
+	use beetmash_scene::prelude::*;
 	use bevy::prelude::*;
 	use serde::Deserialize;
 	use serde::Serialize;

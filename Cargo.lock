@@ -538,6 +538,7 @@ name = "beetmash_net"
 version = "0.0.6-rc.2"
 dependencies = [
  "anyhow",
+ "beetmash_scene",
  "bevy",
  "bincode",
  "extend",

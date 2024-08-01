@@ -57,6 +57,7 @@ wasm-bindgen-futures.workspace = true
 # [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 
 [dev-dependencies]
+beetmash_scene = { workspace = true, features = ["test"] }
 pretty_env_logger.workspace = true
 sweet.workspace = true
 rand.workspace = true

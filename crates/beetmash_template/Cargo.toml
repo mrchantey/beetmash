@@ -26,19 +26,17 @@ bevy = { workspace = true, default-features = true }
 
 # yep, this is a valid scene!
 [[package.metadata.scene]]
-# beetmash scene names follow github naming conventions: alphanumeric and dashes only
-# dont worry, plenty of room for personalization and flair in the description and thumb-url fields 😄
 name = "hello-world"
 
 
-### ⛰️ 2 - A base scene
+### 🎥 2 - A base scene
 
 # you may like to create base sceness upon which others can build
 [[package.metadata.scene]]
 name = "my-base-scene"
 # add some metadata so it looks great on beetmash.com
 description = "Simply default plugins, a light and a 3d camera with a sensible offset."
-thumb-url = "https://www.svgrepo.com/show/405251/drum.svg"
+thumb-text = "🎥"
 # here we can specify the path to the scene file
 ron-path = "scenes/simple_environment.ron"
 # specifying the path to a wasm app is a great way to share a demo of your scene
