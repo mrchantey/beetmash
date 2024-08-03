@@ -7,6 +7,14 @@ default:
 build-scenes *args:
 	cargo run --example build_scenes {{args}}
 
+build-types *args:
+	cargo run --example build_types
+	rm -rf ../beetmash-site/packages/editor/src/serdeTypes || true
+	mkdir -p ../beetmash-site/packages/editor/src/serdeTypes
+	cp -r target/type_registry/* ../beetmash-site/packages/editor/src/serdeTypes
+
+
+
 app *scenes:
 	cargo run --example app -- {{scenes}}
 

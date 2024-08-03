@@ -3,15 +3,6 @@ use bevy::ecs::query::QueryFilter;
 use bevy::prelude::*;
 use std::path::Path;
 
-// such a hack
-const NUM_IGNORED_RESOURCES: usize = 138;
-
-const ALLOWED_IGNORES: &[&str] = &[
-	"bevy_text::text::CosmicBuffer",
-	"beet_flow::observers::action_observer_map::ActionObserverMap",
-	"bevy_ecs::observer::entity_observer::ObservedBy",
-];
-
 
 pub fn get_save_entities<Q: QueryFilter>(world: &mut World) -> Vec<Entity> {
 	// TODO removed ,Without<Observer<OnUserMessage,()>>), check thats ok
@@ -20,22 +11,38 @@ pub fn get_save_entities<Q: QueryFilter>(world: &mut World) -> Vec<Entity> {
 
 #[derive(Debug, Clone)]
 pub struct DynamicSceneChecks {
+	/// Check resource count and types
 	pub resource_checks: bool,
+	/// Check entity count
 	pub entity_checks: bool,
+	/// Check component count and types
 	pub component_checks: bool,
+	/// Allow n number of resources to not be present
+	/// in the exported scenes [DefaultPlugins]
+	pub num_ignored_resources: usize,
+	/// List of components that are allowed to be missing
+	pub allowed_ignores: Vec<String>,
 }
 impl Default for DynamicSceneChecks {
-	fn default() -> Self { Self::new() }
-}
-
-impl DynamicSceneChecks {
-	pub fn new() -> Self {
+	fn default() -> Self {
 		Self {
 			resource_checks: true,
 			entity_checks: true,
 			component_checks: true,
+			// hacky way to ignore resources pulled in by [DefaultPlugins]
+			num_ignored_resources: 138,
+			allowed_ignores: vec![
+				"bevy_text::text::CosmicBuffer".to_string(),
+				"beet_flow::observers::action_observer_map::ActionObserverMap"
+					.to_string(),
+				"bevy_ecs::observer::entity_observer::ObservedBy".to_string(),
+			],
 		}
 	}
+}
+
+impl DynamicSceneChecks {
+	pub fn new() -> Self { Self::default() }
 
 	pub fn with_asset_checks(mut self, checks: bool) -> Self {
 		self.resource_checks = checks;
@@ -43,6 +50,21 @@ impl DynamicSceneChecks {
 	}
 	pub fn with_entity_checks(mut self, checks: bool) -> Self {
 		self.entity_checks = checks;
+		self
+	}
+
+	pub fn with_component_checks(mut self, checks: bool) -> Self {
+		self.component_checks = checks;
+		self
+	}
+
+	pub fn with_allowed_ignores(mut self, ignores: Vec<String>) -> Self {
+		self.allowed_ignores = ignores;
+		self
+	}
+
+	pub fn with_num_ignored_resources(mut self, num: usize) -> Self {
+		self.num_ignored_resources = num;
 		self
 	}
 
@@ -124,7 +146,8 @@ impl DynamicSceneChecks {
 						.expect("found component without typeid")
 				});
 				if component_scene.is_none()
-					&& !ALLOWED_IGNORES
+					&& !self
+						.allowed_ignores
 						.iter()
 						.any(|i| component.name().starts_with(i))
 				{
@@ -143,8 +166,13 @@ impl DynamicSceneChecks {
 		scene: &DynamicScene,
 	) -> Vec<String> {
 		let mut issues = Vec::new();
-		let num_resources_world =
-			world.iter_resources().count() - NUM_IGNORED_RESOURCES;
+		let Some(num_resources_world) = world
+			.iter_resources()
+			.count()
+			.checked_sub(self.num_ignored_resources)
+		else {
+			return vec!["DynamicSceneChecks::num_ignored_resources exeeds those found in the World".to_string()];
+		};
 		let num_resources_scene = scene.resources.len();
 		if num_resources_world != num_resources_scene {
 			issues.push(

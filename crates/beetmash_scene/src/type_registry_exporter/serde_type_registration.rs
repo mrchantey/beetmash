@@ -55,6 +55,10 @@ fn map_default(
 			// 	reg.type_info().type_path_table().path(),
 			// 	err
 			// );
+			eprintln!(
+				"Failed to serialize default value for type: {}",
+				reg.type_info().type_path_table().path(),
+			);
 			None
 		}
 		Ok(val) => Some(val),

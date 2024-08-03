@@ -1,4 +1,3 @@
-use crate::prelude::*;
 use anyhow::Result;
 use bevy::utils::hashbrown::HashSet;
 use std::path::Path;
@@ -6,12 +5,11 @@ use ts_rs::Dependency;
 use ts_rs::TypeVisitor;
 use ts_rs::TS;
 
-pub fn export_ts(path: &Path) -> Result<()> {
-	SerdeTypeRegistration::export_all_to(path)?;
-	let mut paths = collect::<SerdeTypeRegistration>()
+pub fn export_ts<T: 'static + TS>(path: &Path) -> Result<()> {
+	T::export_all_to(path)?;
+	let mut paths = collect::<T>()
 		.into_iter()
 		.map(|p| {
-			// p.de
 			format!("export * from './{}';", p.output_path.display())
 		})
 		.collect::<HashSet<_>>()
