@@ -71,7 +71,7 @@ rand = "0.8"
 
 #💡 IO
 serde = { version = "1", features = ["derive"] }
-
+serde_json = { version = "1" }
 
 #💡 Async
 tokio = { version = "1.35", features = ["full"] }
@@ -97,7 +97,7 @@ wasm-bindgen-futures = "0.4"
 # ] }
 #💡 observer reflect attributes, required until 0.14.1
 bevy = { version = "0.14", path = "../bevy", default-features = false }
-
+bevy_reflect = { version = "0.14", path = "../bevy/crates/bevy_reflect" }
 
 [package]
 name = "beetmash"
@@ -119,7 +119,7 @@ default = ["net", "render"]
 net = ["dep:beetmash_net"]
 render = ["scene", "beetmash_core/render"]
 tokio = ["beetmash_net/tokio"]
-test = ["beetmash_core/test"]
+test = ["beetmash_core/test", "beetmash_scene/test"]
 scene = ["dep:beetmash_scene", "beetmash_core/scene"]
 
 [dependencies]

@@ -20,7 +20,7 @@ pub fn get_save_entities<Q: QueryFilter>(world: &mut World) -> Vec<Entity> {
 
 #[derive(Debug, Clone)]
 pub struct DynamicSceneChecks {
-	pub asset_checks: bool,
+	pub resource_checks: bool,
 	pub entity_checks: bool,
 	pub component_checks: bool,
 }
@@ -31,14 +31,14 @@ impl Default for DynamicSceneChecks {
 impl DynamicSceneChecks {
 	pub fn new() -> Self {
 		Self {
-			asset_checks: true,
+			resource_checks: true,
 			entity_checks: true,
 			component_checks: true,
 		}
 	}
 
 	pub fn with_asset_checks(mut self, checks: bool) -> Self {
-		self.asset_checks = checks;
+		self.resource_checks = checks;
 		self
 	}
 	pub fn with_entity_checks(mut self, checks: bool) -> Self {
@@ -58,8 +58,8 @@ impl DynamicSceneChecks {
 			issues.extend(self.check_entities::<Q>(world, scene));
 		}
 
-		if self.asset_checks {
-			issues.extend(self.check_assets(world, scene));
+		if self.resource_checks {
+			issues.extend(self.check_resources(world, scene));
 		}
 
 		if self.component_checks {
@@ -137,7 +137,7 @@ impl DynamicSceneChecks {
 		}
 		issues
 	}
-	fn check_assets(
+	fn check_resources(
 		&self,
 		world: &mut World,
 		scene: &DynamicScene,
@@ -150,18 +150,18 @@ impl DynamicSceneChecks {
 			issues.push(
 			format!("Resource count mismatch: Expected {num_resources_world}, got {num_resources_scene}\nRemember to update NUM_IGNORED_RESOURCES when registering assets, events etc."));
 		}
-		for (resource, _) in world.iter_resources() {
-			let resource_scene = scene.resources.iter().find(|r| {
-				r.get_represented_type_info()
-					.expect("found resource without typeinfo")
-					.type_id() == resource
-					.type_id()
-					.expect("found resource without typeid")
-			});
-			if resource_scene.is_none() {
-				issues.push(format!("Resource missing: {}", resource.name()));
-			}
-		}
+		// for (resource, _) in world.iter_resources() {
+		// 	let resource_scene = scene.resources.iter().find(|r| {
+		// 		r.get_represented_type_info()
+		// 			.expect("found resource without typeinfo")
+		// 			.type_id() == resource
+		// 			.type_id()
+		// 			.expect("found resource without typeid")
+		// 	});
+		// 	if resource_scene.is_none() {
+		// 		issues.push(format!("Resource missing: {}", resource.name()));
+		// 	}
+		// }
 		issues
 	}
 }

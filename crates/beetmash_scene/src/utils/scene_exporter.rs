@@ -65,7 +65,7 @@ impl<P: Clone + Plugins<M>, M, Q: QueryFilter> SceneExporter<P, M, Q> {
 		self
 	}
 
-	pub fn build(self) -> Result<()> {
+	pub fn export(self) -> Result<()> {
 		if self.clear_target_dir {
 			std::fs::remove_dir_all(&self.dir).ok();
 		}
@@ -73,7 +73,7 @@ impl<P: Clone + Plugins<M>, M, Q: QueryFilter> SceneExporter<P, M, Q> {
 		self.scenes
 			.into_iter()
 			.map(|scene| {
-				scene.save::<Q, _>(self.plugin.clone(), &self.checks, &self.dir)
+				scene.export::<Q, _>(self.plugin.clone(), &self.checks, &self.dir)
 			})
 			.collect::<Result<Vec<_>>>()?;
 		Ok(())
@@ -96,7 +96,7 @@ impl BeetmashScene {
 			system: system.into_configs(),
 		}
 	}
-	pub fn save<Q: QueryFilter, M>(
+	pub fn export<Q: QueryFilter, M>(
 		self,
 		plugins: impl Plugins<M>,
 		checks: &DynamicSceneChecks,

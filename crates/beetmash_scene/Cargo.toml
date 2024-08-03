@@ -12,7 +12,10 @@ categories.workspace = true
 
 
 [features]
-default = ["render"]
+default = ["render", "export_types"]
+# reflect
+export_types = ["dep:ts-rs", "dep:bevy_reflect", "bevy_reflect/documentation"]
+# documentation = ["bevy_reflect/documentation"]
 render = [
 	"scene",
 	# TODO being more granular will speed up compile times
@@ -26,11 +29,14 @@ test = ["dep:sweet"]
 
 
 [dependencies]
+ts-rs = { version = "9.0.1", optional = true }
 forky_core.workspace = true
 bevy.workspace = true
+bevy_reflect = { workspace = true, optional = true }
 log.workspace = true
 anyhow.workspace = true
 serde.workspace = true
+serde_json.workspace = true
 extend.workspace = true
 sweet = { workspace = true, optional = true }
 
