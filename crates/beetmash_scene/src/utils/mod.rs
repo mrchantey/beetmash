@@ -7,21 +7,12 @@ pub use self::asset_placeholder::*;
 pub mod bundle_placeholder;
 #[allow(unused_imports)]
 pub use self::bundle_placeholder::*;
-pub mod dynamic_scene_checks;
-#[allow(unused_imports)]
-pub use self::dynamic_scene_checks::*;
 pub mod load_scenes;
 #[allow(unused_imports)]
 pub use self::load_scenes::*;
 pub mod most_default_plugins;
 #[allow(unused_imports)]
 pub use self::most_default_plugins::*;
-pub mod save_scene;
-#[allow(unused_imports)]
-pub use self::save_scene::*;
-pub mod scene_exporter;
-#[allow(unused_imports)]
-pub use self::scene_exporter::*;
 pub mod spawn_scene_file;
 #[allow(unused_imports)]
 pub use self::spawn_scene_file::*;

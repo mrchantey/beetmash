@@ -1,4 +1,4 @@
-//! Test the output of the [SceneExporter] and [TypeRegistryExporter]
+//! Test the output of the [SceneGroupExporter] and [TypeRegistryExporter]
 //! Files are exported to `target/scenes` and `target/type_registry`
 use anyhow::Result;
 use beetmash_scene::prelude::*;
@@ -6,7 +6,7 @@ use bevy::prelude::*;
 use std::borrow::Cow;
 
 fn main() -> Result<()> {
-	SceneExporter::new(plugin)
+	SceneGroupExporter::new(plugin)
 		.with_checks(
 			DynamicSceneChecks::default().with_num_ignored_resources(6),
 		)

@@ -8,7 +8,7 @@ use std::fs;
 const DIR: &str = "scenes";
 
 fn main() -> Result<()> {
-	SceneExporter::new((
+	SceneGroupExporter::new((
 		MostDefaultPlugins,
 		DefaultPlaceholderPlugin,
 		UiTerminalPlugin,
