@@ -1,6 +1,6 @@
-pub mod export_ts;
+pub mod typescript_exporter;
 #[allow(unused_imports)]
-pub use self::export_ts::*;
+pub use self::typescript_exporter::*;
 pub mod serde_type_info;
 #[allow(unused_imports)]
 pub use self::serde_type_info::*;

@@ -4,16 +4,20 @@ set dotenv-load
 default:
 	just --list --unsorted
 
-build-scenes *args:
-	cargo run --example build_scenes {{args}}
+export-scenes *args:
+	cargo run --example export_scenes {{args}}
 
-build-types *args:
-	cargo run --example build_types
+export-type-registry *args:
+	cargo run --example export_type_registry
+
+export-typescript *args:
+	cargo run --example export_typescript
 	rm -rf ../beetmash-site/packages/editor/src/serdeTypes || true
 	mkdir -p ../beetmash-site/packages/editor/src/serdeTypes
-	cp -r target/type_registry/* ../beetmash-site/packages/editor/src/serdeTypes
+	cp -r target/typescript/* ../beetmash-site/packages/editor/src/serdeTypes
 
-
+export-test-scene:
+	cargo run -p beetmash_scene --example export_test_scene
 
 app *scenes:
 	cargo run --example app -- {{scenes}}

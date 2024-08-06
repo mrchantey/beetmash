@@ -1,5 +1,5 @@
 //! Test the output of the [SceneGroupExporter] and [TypeRegistryExporter]
-//! Files are exported to `target/scenes` and `target/type_registry`
+//! Files are exported to `target/scenes` and `target/type_registries`
 use anyhow::Result;
 use beetmash_scene::prelude::*;
 use bevy::prelude::*;
@@ -10,9 +10,11 @@ fn main() -> Result<()> {
 		.with_checks(
 			DynamicSceneChecks::default().with_num_ignored_resources(6),
 		)
-		.add_scene("my_scene", scene)
+		.add_scene("test_scene", scene)
 		.export()?;
-	TypeRegistryExporter::new(plugin).export()?;
+	TypeRegistryExporter::new(plugin)
+		.with_name("test_scene_registry")
+		.export()?;
 
 	Ok(())
 }
