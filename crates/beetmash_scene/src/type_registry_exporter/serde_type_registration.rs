@@ -1,5 +1,7 @@
 use crate::prelude::*;
+use bevy::prelude::ReflectComponent;
 use bevy::prelude::ReflectDefault;
+use bevy::prelude::ReflectResource;
 use bevy::reflect::TypePathTable;
 use bevy::reflect::TypeRegistration;
 use bevy_reflect::serde::ReflectSerializer;
@@ -15,6 +17,7 @@ pub struct SerdeTypeRegistration {
 	path_table: SerdeTypePathTable,
 	default: Option<String>,
 	docs: Option<String>,
+	traits: SerdeTypeTraits,
 }
 
 
@@ -33,6 +36,7 @@ impl SerdeTypeRegistration {
 			path_table: type_info.type_path_table().into(),
 			docs,
 			default,
+			traits: SerdeTypeTraits::from_registration(reg),
 		}
 	}
 }
@@ -64,6 +68,23 @@ fn map_default(
 		Ok(val) => Some(val),
 	}
 }
+
+
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+pub struct SerdeTypeTraits {
+	component: bool,
+	resource: bool,
+}
+
+impl SerdeTypeTraits {
+	pub fn from_registration(reg: &TypeRegistration) -> Self {
+		Self {
+			component: reg.data::<ReflectComponent>().is_some(),
+			resource: reg.data::<ReflectResource>().is_some(),
+		}
+	}
+}
+
 
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeTypePathTable {

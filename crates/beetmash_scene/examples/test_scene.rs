@@ -113,17 +113,18 @@ struct MyNamedStruct {
 
 
 /// An enum with lots of variants
-#[derive(Default, Component, Reflect)]
+#[derive(Component, Reflect)]
 #[reflect(Default, Component)]
 enum MyEnum {
 	/// A variant with no fields
-	#[default]
 	Unit,
 	/// A variant with a f32 field
 	NewType(
 		/// NewType structs can have docs too
 		f32,
 	),
+	/// Identical to NewType
+	AnotherNewType(f32),
 	/// A variant with a tuple struct
 	Tuple(f32, f32),
 	/// A variant with named fields
@@ -133,6 +134,10 @@ enum MyEnum {
 		/// A field that is a f32
 		field2: f32,
 	},
+}
+
+impl Default for MyEnum {
+	fn default() -> Self { MyEnum::AnotherNewType(0.3) }
 }
 
 
