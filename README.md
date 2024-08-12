@@ -1,6 +1,6 @@
 # beetmash
-The number one bevy scene registry.
 
+Beetmash helps you create, share and deploy your Bevy apps.
 
 ## Crates
 
