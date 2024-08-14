@@ -8,6 +8,7 @@ fn main() -> Result<()> {
 		DefaultPlaceholderPlugin,
 		UiTerminalPlugin,
 	))
+	.with_name("all_types")
 	.export()?;
 
 	// SerdeTypeRegistration::
