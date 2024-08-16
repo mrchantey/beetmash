@@ -8,6 +8,31 @@ pub enum MeshPlaceholder {
 		width: f32,
 		height: f32,
 	},
+	Circle {
+		radius: f32,
+	},
+	Cuboid {
+		width: f32,
+		height: f32,
+		depth: f32,
+	},
+}
+
+impl From<Circle> for MeshPlaceholder {
+	fn from(circle: Circle) -> Self {
+		MeshPlaceholder::Circle {
+			radius: circle.radius,
+		}
+	}
+}
+impl From<Cuboid> for MeshPlaceholder {
+	fn from(cuboid: Cuboid) -> Self {
+		MeshPlaceholder::Cuboid {
+			width: cuboid.half_size.x * 2.,
+			height: cuboid.half_size.y * 2.,
+			depth: cuboid.half_size.z * 2.,
+		}
+	}
 }
 
 impl Into<Mesh> for MeshPlaceholder {
@@ -18,6 +43,12 @@ impl Into<Mesh> for MeshPlaceholder {
 				width,
 				height,
 			} => plane.mesh().size(width, height).into(),
+			MeshPlaceholder::Circle { radius } => Circle::new(radius).into(),
+			MeshPlaceholder::Cuboid {
+				width,
+				height,
+				depth,
+			} => Cuboid::new(width, height, depth).into(),
 		}
 	}
 }
@@ -35,11 +66,16 @@ impl Into<StandardMaterial> for MaterialPlaceholder {
 	}
 }
 
+impl Into<MaterialPlaceholder> for Color {
+	fn into(self) -> MaterialPlaceholder { MaterialPlaceholder::Color(self) }
+}
+
 #[derive(Debug, Clone, Component, Reflect)]
 #[reflect(Component)]
 pub enum BundlePlaceholder {
 	Camera2d,
 	Camera3d,
+	PointLight,
 	Sprite(String),
 	Scene(String),
 	Pbr {
@@ -48,10 +84,7 @@ pub enum BundlePlaceholder {
 	},
 }
 
-#[derive(Debug, Default, Clone)]
-pub struct BundlePlaceholderPlugin;
-
-pub fn bundle_placeholder_plugin(app:&mut App){
+pub fn bundle_placeholder_plugin(app: &mut App) {
 	app.add_systems(PreUpdate, init_bundle)
 		.register_type::<BundlePlaceholder>();
 }
@@ -80,6 +113,16 @@ fn init_bundle(
 			}
 			BundlePlaceholder::Camera3d => {
 				entity_commands.insert(Camera3dBundle {
+					transform,
+					..default()
+				});
+			}
+			BundlePlaceholder::PointLight => {
+				entity_commands.insert(PointLightBundle {
+					point_light: PointLight {
+						shadows_enabled: true,
+						..default()
+					},
 					transform,
 					..default()
 				});

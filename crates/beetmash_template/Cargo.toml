@@ -12,11 +12,15 @@ keywords.workspace = true
 categories.workspace = true
 publish = true
 
-# default-run = "simple_app"
+default-run = "base_app"
 
-# [[bin]]
-# name = "simple_app"
-# path = "examples/simple_app.rs"
+[[bin]]
+name = "base_app"
+path = "src/base_app.rs"
+
+[[bin]]
+name = "export_scenes"
+path = "src/export_scenes.rs"
 
 [dependencies]
 beetmash.workspace = true

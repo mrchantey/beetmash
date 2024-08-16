@@ -1,8 +1,6 @@
+use crate::prelude::*;
 use anyhow::Result;
-use bevy::ecs::entity::EntityHashMap;
 use bevy::prelude::*;
-use bevy::scene::serde::SceneDeserializer;
-use serde::de::DeserializeSeed;
 
 /// Pass scene paths as arguments to load them on startup.
 /// ```sh
@@ -33,27 +31,9 @@ fn load_scenes(world: &mut World, args: Vec<String>) -> Result<()> {
 		let scene = std::fs::read_to_string(path).map_err(|e| {
 			anyhow::anyhow!("\nError reading scene file:\n{path}\n{e}\n")
 		})?;
-		write_ron_to_world(&scene, world)?;
+		let format = SceneFormat::from_path(path)?;
+		let event = SpawnSceneFile::new(format, scene);
+		event.spawn(world)?;
 	}
 	Ok(())
-}
-
-
-/// Convenience wrapper for writing ron strings to the world.
-pub fn write_ron_to_world(
-	ron_str: &str,
-	world: &mut World,
-) -> Result<EntityHashMap<Entity>> {
-	let type_registry = world.resource::<AppTypeRegistry>().clone();
-	let mut deserializer =
-		bevy::scene::ron::de::Deserializer::from_str(ron_str)?;
-	let scene_deserializer = SceneDeserializer {
-		type_registry: &type_registry.read(),
-	};
-	let scene = scene_deserializer
-		.deserialize(&mut deserializer)
-		.map_err(|e| deserializer.span_error(e))?;
-	let mut entity_map = Default::default();
-	scene.write_to_world(world, &mut entity_map)?;
-	Ok(entity_map)
 }

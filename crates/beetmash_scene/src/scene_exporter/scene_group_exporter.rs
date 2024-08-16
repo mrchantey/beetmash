@@ -49,6 +49,11 @@ impl<P: Clone + Plugins<M>, M, Q: QueryFilter> SceneGroupExporter<P, M, Q> {
 		self
 	}
 
+	pub fn with_config(mut self, config: SceneExportConfig) -> Self {
+		self.config = config;
+		self
+	}
+
 	pub fn add_scene<Marker>(
 		mut self,
 		name: impl Into<String>,

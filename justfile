@@ -33,7 +33,7 @@ app-space:
 	crates/beetmash_core/scenes/space-scene.ron	\
 
 
-test-all *args:
+test *args:
 	just watch 'cargo test --workspace --lib -- {{args}}'
 
 test-core *args:

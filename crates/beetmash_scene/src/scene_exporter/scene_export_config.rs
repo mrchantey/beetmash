@@ -1,40 +1,12 @@
 use crate::prelude::*;
-use anyhow::Result;
-use bevy::scene::ron;
-use serde::Serialize;
 use std::path::PathBuf;
 
-/// The format to export to, currently beetmash.com only supports json.
-#[derive(Default)]
-pub enum SceneExportFormat {
-	#[default]
-	Json,
-	Ron,
-}
-
-impl SceneExportFormat {
-	pub fn extension(&self) -> &'static str {
-		match self {
-			SceneExportFormat::Json => "json",
-			SceneExportFormat::Ron => "ron",
-		}
-	}
-
-	pub fn to_string<T: Serialize>(&self, value: &T) -> Result<String> {
-		match self {
-			SceneExportFormat::Json => Ok(serde_json::to_string_pretty(value)?),
-			SceneExportFormat::Ron => {
-				Ok(ron::ser::to_string_pretty(value, Default::default())?)
-			}
-		}
-	}
-}
 
 
-
-
+#[derive(Debug, Clone)]
 pub struct SceneExportConfig {
-	pub format: SceneExportFormat,
+	/// The format to export to, currently beetmash.com only supports json.
+	pub format: SceneFormat,
 	pub dir: PathBuf,
 	pub clear_target_dir: bool,
 	pub checks: DynamicSceneChecks,
@@ -44,8 +16,8 @@ pub struct SceneExportConfig {
 impl Default for SceneExportConfig {
 	fn default() -> Self {
 		Self {
-			format: SceneExportFormat::Json,
-			dir: PathBuf::from("target/scenes"),
+			format: SceneFormat::Json,
+			dir: PathBuf::from("scenes"),
 			clear_target_dir: true,
 			checks: Default::default(),
 		}

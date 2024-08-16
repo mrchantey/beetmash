@@ -5,9 +5,12 @@
 
 A demonstration of the workflow for publishing Bevy apps and scenes to [beetmash](https://beetmash.com).
 
-## Scenes are the future!
+
+
+
+## Getting started
 
 Running `cargo run` won't do much, the app is a blank canvas 🖌️
-This crate uses cli args to specify the scenes to load, try adding a few:
 
-`cargo run simple environment simple_scene`
+1. Export scenes: `cargo run --bin export_scenes`
+2. Run the app: `cargo run scenes/my_base_scene.json scenes/my_beautiful_scene.json`

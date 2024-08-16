@@ -3,8 +3,11 @@ use anyhow::Result;
 use bevy::ecs::entity::EntityHashMap;
 use bevy::ecs::system::SystemState;
 use bevy::prelude::*;
+use bevy::scene::serde::SceneDeserializer;
 use forky_core::ResultTEExt;
+use serde::de::DeserializeSeed;
 use serde::Deserialize;
+use serde::Deserializer;
 use serde::Serialize;
 
 
@@ -14,10 +17,43 @@ pub fn spawn_scene_file_plugin(app: &mut App) {
 		.add_systems(Update, handle_spawn_scene);
 }
 
-/// Received by this app, containing the raw text of a ron file for
+/// Received by this app, containing the raw text of a file for
 /// deserialization and spawning
 #[derive(Debug, Clone, Serialize, Deserialize, Event, Reflect)]
-pub struct SpawnSceneFile(pub String);
+pub struct SpawnSceneFile {
+	pub format: SceneFormat,
+	pub payload: String,
+}
+
+impl SpawnSceneFile {
+	pub fn new(format: SceneFormat, payload: String) -> Self {
+		Self { format, payload }
+	}
+	pub fn ron(payload: String) -> Self { Self::new(SceneFormat::Ron, payload) }
+	pub fn json(payload: String) -> Self {
+		Self::new(SceneFormat::Json, payload)
+	}
+	pub fn spawn(&self, world: &mut World) -> Result<EntityHashMap<Entity>> {
+		match self.format {
+			SceneFormat::Ron => {
+				let mut deserializer =
+					bevy::scene::ron::de::Deserializer::from_str(
+						&self.payload,
+					)?;
+				return write_to_world(world, &mut deserializer);
+			}
+			SceneFormat::Json => {
+				let mut deserializer =
+					serde_json::Deserializer::from_str(&self.payload);
+				return write_to_world(world, &mut deserializer);
+			}
+		}
+	}
+}
+
+
+
+
 /// Sent by this app, containing the entity hash map for the spawned scene
 #[derive(Debug, Clone, Serialize, Deserialize, Event, Reflect)]
 pub struct SpawnSceneFileResponse(pub EntityHashMap<Entity>);
@@ -34,10 +70,10 @@ pub fn handle_spawn_scene(
 		.get_mut(world)
 		.0
 		.read()
-		.map(|e| e.0.clone())
+		.map(|e| e.clone())
 		.collect::<Vec<_>>()
 		.into_iter()
-		.map(|scene| write_ron_to_world(&scene, world))
+		.map(|scene| scene.spawn(world))
 		.collect::<Result<Vec<_>>>()
 		.ok_or(|e| log::error!("{e}"))
 		.map(|entity_maps| {
@@ -79,7 +115,7 @@ mod test {
 			.add_event::<SpawnSceneFileResponse>()
 			.register_type::<MyStruct>();
 
-		app2.world_mut().send_event(SpawnSceneFile(str.into()));
+		app2.world_mut().send_event(SpawnSceneFile::ron(str));
 
 		expect(
 			app2.world_mut()
@@ -99,4 +135,20 @@ mod test {
 
 		Ok(())
 	}
+}
+
+fn write_to_world<'de, D: Deserializer<'de>>(
+	world: &mut World,
+	deserializer: D,
+) -> Result<EntityHashMap<Entity>> {
+	let type_registry = world.resource::<AppTypeRegistry>().clone();
+	let scene_deserializer = SceneDeserializer {
+		type_registry: &type_registry.read(),
+	};
+	let scene = scene_deserializer
+		.deserialize(deserializer)
+		.map_err(|e| anyhow::anyhow!("{}", e))?;
+	let mut entity_map = Default::default();
+	scene.write_to_world(world, &mut entity_map)?;
+	Ok(entity_map)
 }

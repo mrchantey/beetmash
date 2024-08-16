@@ -23,9 +23,9 @@
 <body>
 	<script type="module">
 		// import init from 'https://storage.googleapis.com/beet-examples/app_full/main.js'
-		import init from './target/wasm-apps/simple_app/main.js'
+		import init from './target/web-examples/simple_app/main.js'
 		// init('https://storage.googleapis.com/beet-examples/app_full/main_bg.wasm')
-		init('./target/wasm-apps/simple_app/main_bg.wasm')
+		init('./target/web-examples/simple_app/main_bg.wasm')
 			.catch((error) => {
 				if (!error.message.startsWith("Using exceptions for control flow,"))
 					throw error

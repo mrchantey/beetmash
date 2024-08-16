@@ -1,41 +1,29 @@
-wasm-dir:= './target/web-examples'
-web-examples:= 'simple_app'
 
 default:
 	just --list --unsorted
 
 build-scenes:
-	cargo run --example build_scenes
+	cargo run --bin export_scenes
 
 run:
-	cargo run --example simple_app simple_scene
+	cargo run scenes/my_base_scene.json scenes/my_beautiful_scene.json
 
 pkg *args:
 	cargo package --no-verify --allow-dirty {{args}}
 
-web-example-build example *args:
-	cargo build --example {{example}} --target wasm32-unknown-unknown --release {{args}}
-	mkdir -p {{wasm-dir}}/{{example}} || true
+wasm-dir:= './target/wasm'
+
+build-web *args:
+	cargo build --target wasm32-unknown-unknown --release {{args}}
+	rm -rf {{wasm-dir}} || true
+	mkdir -p {{wasm-dir}} || true
 	wasm-bindgen \
 	--out-name main \
-	--out-dir {{wasm-dir}}/{{example}} \
+	--out-dir {{wasm-dir}} \
 	--target web \
-	$CARGO_TARGET_DIR/wasm32-unknown-unknown/release/examples/{{example}}.wasm \
 	--no-typescript \
 
-web-example-deploy example:
-	aws s3 sync {{wasm-dir}}/{{example}} \
-	s3://beetmash-apps/temp/{{example}} \
+deploy-web:
+	aws s3 sync {{wasm-dir}} \
+	s3://beetmash-apps/temp/beetmash_template \
 	--delete
-
-
-web-examples:
-	rm -rf {{wasm-dir}} || true
-	for file in {{web-examples}}; do \
-		just web-example-build ${file}; \
-		just web-example-deploy ${file}; \
-	done
-
-# with-version *args:
-# 	@version=$(grep '^version' Cargo.toml | head -1 | awk -F '"' '{print $2}') \
-# 	&& just {{args}} $version

@@ -13,6 +13,9 @@ pub use self::load_scenes::*;
 pub mod most_default_plugins;
 #[allow(unused_imports)]
 pub use self::most_default_plugins::*;
+pub mod spawn_scene;
+#[allow(unused_imports)]
+pub use self::spawn_scene::*;
 pub mod spawn_scene_file;
 #[allow(unused_imports)]
 pub use self::spawn_scene_file::*;

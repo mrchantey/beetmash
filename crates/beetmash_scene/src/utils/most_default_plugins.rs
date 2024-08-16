@@ -10,7 +10,7 @@ use bevy::input::InputPlugin;
 use bevy::log::LogPlugin;
 use bevy::pbr::PbrPlugin;
 use bevy::prelude::*;
-use bevy::render::pipelined_rendering::PipelinedRenderingPlugin;
+// use bevy::render::pipelined_rendering::PipelinedRenderingPlugin;
 use bevy::render::RenderPlugin;
 use bevy::scene::ScenePlugin;
 use bevy::sprite::SpritePlugin;
