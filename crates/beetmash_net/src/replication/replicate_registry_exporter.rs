@@ -17,7 +17,7 @@ impl<P: Clone + Plugins<M>, M> ReplicateRegistryExporter<P, M> {
 	pub fn new(plugin: P) -> Self {
 		Self {
 			plugin,
-			path: PathBuf::from("target/replication_registry.json"),
+			path: PathBuf::from("target/type_registries/replication_registry.json"),
 			phantom: std::marker::PhantomData,
 		}
 	}

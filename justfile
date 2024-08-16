@@ -9,6 +9,8 @@ export-scenes *args:
 
 export-type-registry *args:
 	cargo run --example export_type_registry
+	cp ./target/type_registries/replication_registry.json \
+	../beetmash-site/packages/comp-solid/src/demo/default-replication-registry.json
 
 export-typescript *args:
 	cargo run --example export_typescript

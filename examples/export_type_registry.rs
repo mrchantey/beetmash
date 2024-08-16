@@ -11,6 +11,8 @@ fn main() -> Result<()> {
 	.with_name("all_types")
 	.export()?;
 
+	ReplicateRegistryExporter::new(DefaultReplicatePlugin).export()?;
+
 	// SerdeTypeRegistration::
 
 	Ok(())

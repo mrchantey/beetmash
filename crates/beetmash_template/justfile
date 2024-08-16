@@ -22,7 +22,9 @@ build-wasm *args:
 	--out-dir {{wasm-dir}} \
 	--target web \
 	$CARGO_TARGET_DIR/wasm32-unknown-unknown/release/base_app.wasm \
-	--no-typescript \
+	--no-typescript
+	mkdir -p ../../../beetmash-api/target/storage/apps/beetmash_template || true
+	cp -r {{wasm-dir}}/* ../../../beetmash-api/target/storage/apps/beetmash_template
 
 deploy-wasm:
 	aws s3 sync {{wasm-dir}} \
