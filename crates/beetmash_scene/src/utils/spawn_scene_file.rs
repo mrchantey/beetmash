@@ -10,7 +10,8 @@ use serde::Deserialize;
 use serde::Deserializer;
 use serde::Serialize;
 
-
+// we use events because observers are not allowed world access
+// https://github.com/bevyengine/bevy/issues/14507
 pub fn spawn_scene_file_plugin(app: &mut App) {
 	app.add_event::<SpawnSceneFile>()
 		.add_event::<SpawnSceneFileResponse>()
