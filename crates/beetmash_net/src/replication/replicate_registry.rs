@@ -34,7 +34,6 @@ pub struct ReplicateRegistry {
 
 	types: HashMap<TypeId, RegistrationId>,
 
-	#[cfg(debug_assertions)]
 	type_names: HashMap<RegistrationId, String>,
 
 	/// Map of remote to local entity ids
@@ -56,7 +55,6 @@ impl ReplicateRegistry {
 		}
 	}
 
-	#[cfg(debug_assertions)]
 	pub fn types_to_json(&self) -> String {
 		let mut types = self.types.values().collect::<Vec<_>>();
 		types.sort();

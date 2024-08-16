@@ -3,7 +3,7 @@ use crate::prelude::*;
 use bevy::prelude::*;
 
 
-pub struct DefaultTransportPlugin {}
+pub struct DefaultTransportPlugin;
 impl Plugin for DefaultTransportPlugin {
 	#[allow(unused)]
 	fn build(&self, app: &mut App) {

@@ -64,6 +64,7 @@ impl Drop for WebWsClient {
 /// Converts the [`MessageEvent::data`] field into a vec of bytes.
 /// If the data is a string, it will be converted to bytes using `serde_json`.
 pub fn js_value_to_messages(data: &JsValue) -> Result<Vec<Message>> {
+	log::info!("js_value_to_messages: {:?}", data);
 	if let Some(array_buffer) = data.dyn_ref::<ArrayBuffer>() {
 		let array = Uint8Array::new(&array_buffer);
 		let bytes = array.to_vec();

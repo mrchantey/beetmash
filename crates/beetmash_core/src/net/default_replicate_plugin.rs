@@ -4,6 +4,7 @@ use beetmash_scene::prelude::*;
 use bevy::prelude::*;
 
 /// Includes default transports for native and wasm targets, as well as
+#[derive(Debug, Clone)]
 pub struct DefaultReplicatePlugin;
 
 
@@ -11,7 +12,11 @@ impl Plugin for DefaultReplicatePlugin {
 	fn build(&self, app: &mut App) {
 		let _ = app;
 
-		app.add_plugins((ReplicatePlugin, CommonEventsPlugin));
+		app.add_plugins((
+			ReplicatePlugin,
+			CommonEventsPlugin,
+			DefaultTransportPlugin,
+		));
 
 		#[cfg(feature = "scene")]
 		app.add_plugins(spawn_scene_file_plugin)

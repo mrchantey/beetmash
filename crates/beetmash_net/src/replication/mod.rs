@@ -22,6 +22,9 @@ pub use self::replicate_plugin::*;
 pub mod replicate_registry;
 #[allow(unused_imports)]
 pub use self::replicate_registry::*;
+pub mod replicate_registry_exporter;
+#[allow(unused_imports)]
+pub use self::replicate_registry_exporter::*;
 pub mod replicate_resource;
 #[allow(unused_imports)]
 pub use self::replicate_resource::*;

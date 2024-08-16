@@ -55,7 +55,7 @@ impl BeetmashDefaultPlugins {
 		#[cfg(target_arch = "wasm32")]
 		// return "/wasm/assets".into();
 		// return "https://demo.beetmash.com/wasm/assets".into();
-		return self.remote_asset_server.clone();
+		return self.wasm_asset_path.clone();
 		#[cfg(not(target_arch = "wasm32"))]
 		return DEFAULT_ASSETS_PATH.into();
 	}
@@ -71,6 +71,7 @@ impl BeetmashDefaultPlugins {
 	pub fn assert_local_assets(&self) {
 		#[cfg(target_arch = "wasm32")]
 		return;
+		#[allow(unreachable_code)]
 		if self.assert_local_assets
 			&& !std::path::Path::new("assets/README.md").exists()
 		{
@@ -104,7 +105,7 @@ pub fn beetmash_window_plugin() -> WindowPlugin {
 	WindowPlugin {
 		primary_window: Some(Window {
 			fit_canvas_to_parent: true,
-			canvas: Some("beetmash-canvas".to_string()),
+			canvas: Some("#beetmash-canvas".to_string()),
 			resizable: true,
 			..default()
 		}),

@@ -2,7 +2,7 @@
 default:
 	just --list --unsorted
 
-build-scenes:
+export-scenes:
 	cargo run --bin export_scenes
 
 run:
@@ -13,7 +13,7 @@ pkg *args:
 
 wasm-dir:= './target/wasm'
 
-build-web *args:
+build-wasm *args:
 	cargo build --target wasm32-unknown-unknown --release {{args}}
 	rm -rf {{wasm-dir}} || true
 	mkdir -p {{wasm-dir}} || true
@@ -21,9 +21,10 @@ build-web *args:
 	--out-name main \
 	--out-dir {{wasm-dir}} \
 	--target web \
+	$CARGO_TARGET_DIR/wasm32-unknown-unknown/release/base_app.wasm \
 	--no-typescript \
 
-deploy-web:
+deploy-wasm:
 	aws s3 sync {{wasm-dir}} \
 	s3://beetmash-apps/temp/beetmash_template \
 	--delete

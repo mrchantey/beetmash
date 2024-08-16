@@ -10,6 +10,10 @@ fn main() {
 		.with_checks(DynamicSceneChecks::new().with_num_ignored_resources(6))
 		.export()
 		.unwrap();
+
+	ReplicateRegistryExporter::new(DefaultReplicatePlugin)
+		.export()
+		.unwrap();
 }
 
 fn register_types(app: &mut App) {
