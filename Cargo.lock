@@ -503,7 +503,7 @@ checksum = "72b3254f16251a8381aa12e40e3c4d2f0199f8c6508fbecb9d91f575e0fbb8c6"
 
 [[package]]
 name = "beetmash"
-version = "0.0.6-rc.1"
+version = "0.0.6-rc.2"
 dependencies = [
  "anyhow",
  "beetmash_core",
@@ -515,11 +515,11 @@ dependencies = [
 
 [[package]]
 name = "beetmash-cli"
-version = "0.0.6-rc.1"
+version = "0.0.6-rc.2"
 
 [[package]]
 name = "beetmash_core"
-version = "0.0.6-rc.1"
+version = "0.0.6-rc.2"
 dependencies = [
  "anyhow",
  "beetmash_net",
@@ -535,7 +535,7 @@ dependencies = [
 
 [[package]]
 name = "beetmash_net"
-version = "0.0.6-rc.1"
+version = "0.0.6-rc.2"
 dependencies = [
  "anyhow",
  "beetmash_scene",
@@ -565,7 +565,7 @@ dependencies = [
 
 [[package]]
 name = "beetmash_scene"
-version = "0.0.6-rc.1"
+version = "0.0.6-rc.2"
 dependencies = [
  "anyhow",
  "bevy",
@@ -581,7 +581,7 @@ dependencies = [
 
 [[package]]
 name = "beetmash_server"
-version = "0.0.6-rc.1"
+version = "0.0.6-rc.2"
 dependencies = [
  "anyhow",
  "axum",
@@ -607,7 +607,7 @@ dependencies = [
 
 [[package]]
 name = "beetmash_template"
-version = "0.0.6-rc.1"
+version = "0.0.6-rc.2"
 dependencies = [
  "beetmash",
  "bevy",
