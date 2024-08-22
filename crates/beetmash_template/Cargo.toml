@@ -42,7 +42,7 @@ name = "my-base-scene"
 description = "Simply default plugins, a light and a 3d camera with a sensible offset."
 thumb-text = "🎥"
 # here we can specify the path to the scene file
-ron-path = "scenes/my_base_scene.json"
+path = "scenes/my_base_scene.json"
 # specifying the path to a wasm app is a great way to share a demo of your scene
 app.js-url = "https://beetmash-apps.s3.amazonaws.com/temp/beetmash_template/main.js"
 app.wasm-url = "https://beetmash-apps.s3.amazonaws.com/temp/beetmash_template/main_bg.wasm"
@@ -54,8 +54,8 @@ app.wasm-url = "https://beetmash-apps.s3.amazonaws.com/temp/beetmash_template/ma
 [[package.metadata.scene]]
 name = "my-beautiful-scene"
 description = "A beautiful cube gloriously perched upon a circular platform!"
+path = "scenes/my_beautiful_scene.json"
 thumb-url = "https://bevyengine.org/processed_images/3d_scene.303294348e55980f.png"
-ron-path = "scenes/my_beautiful_scene.json"
 # we can specify another scene here to use its app
 app = "my-base-scene"
 # include other scenes to have them and all of their includes also loaded
