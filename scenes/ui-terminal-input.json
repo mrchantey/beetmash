@@ -1,0 +1,1066 @@
+{
+  "resources": {},
+  "entities": {
+    "4294967298": {
+      "components": {
+        "bevy_ui::ui_node::Node": {
+          "stack_index": 0,
+          "calculated_size": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "outline_width": 0.0,
+          "outline_offset": 0.0,
+          "unrounded_size": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "bevy_ui::ui_node::Style": {
+          "display": "Flex",
+          "position_type": "Relative",
+          "overflow": {
+            "x": "Visible",
+            "y": "Visible"
+          },
+          "direction": "Inherit",
+          "left": "Auto",
+          "right": "Auto",
+          "top": "Auto",
+          "bottom": "Auto",
+          "width": {
+            "Percent": 100.0
+          },
+          "height": {
+            "Percent": 100.0
+          },
+          "min_width": "Auto",
+          "min_height": "Auto",
+          "max_width": "Auto",
+          "max_height": "Auto",
+          "aspect_ratio": null,
+          "align_items": "Default",
+          "justify_items": "Default",
+          "align_self": "Auto",
+          "justify_self": "Auto",
+          "align_content": "Default",
+          "justify_content": "SpaceBetween",
+          "margin": {
+            "left": {
+              "Px": 0.0
+            },
+            "right": {
+              "Px": 0.0
+            },
+            "top": {
+              "Px": 0.0
+            },
+            "bottom": {
+              "Px": 0.0
+            }
+          },
+          "padding": {
+            "left": {
+              "Px": 0.0
+            },
+            "right": {
+              "Px": 0.0
+            },
+            "top": {
+              "Px": 0.0
+            },
+            "bottom": {
+              "Px": 0.0
+            }
+          },
+          "border": {
+            "left": {
+              "Px": 0.0
+            },
+            "right": {
+              "Px": 0.0
+            },
+            "top": {
+              "Px": 0.0
+            },
+            "bottom": {
+              "Px": 0.0
+            }
+          },
+          "flex_direction": "Column",
+          "flex_wrap": "NoWrap",
+          "flex_grow": 0.0,
+          "flex_shrink": 1.0,
+          "flex_basis": "Auto",
+          "row_gap": {
+            "Px": 0.0
+          },
+          "column_gap": {
+            "Px": 0.0
+          },
+          "grid_auto_flow": "Row",
+          "grid_template_rows": [],
+          "grid_template_columns": [],
+          "grid_auto_rows": [],
+          "grid_auto_columns": [],
+          "grid_row": {
+            "start": null,
+            "span": 1,
+            "end": null
+          },
+          "grid_column": {
+            "start": null,
+            "span": 1,
+            "end": null
+          }
+        },
+        "bevy_ui::ui_node::BackgroundColor": {
+          "LinearRgba": {
+            "red": 0.0,
+            "green": 0.0,
+            "blue": 0.0,
+            "alpha": 0.0
+          }
+        },
+        "bevy_ui::ui_node::BorderColor": {
+          "LinearRgba": {
+            "red": 0.0,
+            "green": 0.0,
+            "blue": 0.0,
+            "alpha": 0.0
+          }
+        },
+        "bevy_ui::ui_node::BorderRadius": {
+          "top_left": {
+            "Px": 0.0
+          },
+          "top_right": {
+            "Px": 0.0
+          },
+          "bottom_left": {
+            "Px": 0.0
+          },
+          "bottom_right": {
+            "Px": 0.0
+          }
+        },
+        "bevy_ui::focus::FocusPolicy": "Pass",
+        "bevy_transform::components::transform::Transform": {
+          "translation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "bevy_transform::components::global_transform::GlobalTransform": [
+          {
+            "matrix3": {
+              "x_axis": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "y_axis": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+              },
+              "z_axis": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+              }
+            },
+            "translation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ],
+        "bevy_render::view::visibility::Visibility": "Inherited",
+        "bevy_render::view::visibility::InheritedVisibility": [
+          false
+        ],
+        "bevy_render::view::visibility::ViewVisibility": [
+          false
+        ],
+        "bevy_ui::ui_node::ZIndex": {
+          "Local": 0
+        },
+        "bevy_hierarchy::components::children::Children": [
+          [
+            4294967299,
+            4294967301
+          ]
+        ]
+      }
+    },
+    "4294967299": {
+      "components": {
+        "bevy_ui::ui_node::Node": {
+          "stack_index": 0,
+          "calculated_size": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "outline_width": 0.0,
+          "outline_offset": 0.0,
+          "unrounded_size": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "bevy_ui::ui_node::Style": {
+          "display": "Flex",
+          "position_type": "Relative",
+          "overflow": {
+            "x": "Clip",
+            "y": "Clip"
+          },
+          "direction": "Inherit",
+          "left": "Auto",
+          "right": "Auto",
+          "top": "Auto",
+          "bottom": "Auto",
+          "width": {
+            "Percent": 100.0
+          },
+          "height": {
+            "Percent": 80.0
+          },
+          "min_width": "Auto",
+          "min_height": "Auto",
+          "max_width": "Auto",
+          "max_height": "Auto",
+          "aspect_ratio": null,
+          "align_items": "Default",
+          "justify_items": "Default",
+          "align_self": "Auto",
+          "justify_self": "Auto",
+          "align_content": "Default",
+          "justify_content": "Default",
+          "margin": {
+            "left": {
+              "Px": 0.0
+            },
+            "right": {
+              "Px": 0.0
+            },
+            "top": {
+              "Px": 0.0
+            },
+            "bottom": {
+              "Px": 0.0
+            }
+          },
+          "padding": {
+            "left": {
+              "Px": 0.0
+            },
+            "right": {
+              "Px": 0.0
+            },
+            "top": {
+              "Px": 0.0
+            },
+            "bottom": {
+              "Px": 0.0
+            }
+          },
+          "border": {
+            "left": {
+              "Px": 0.0
+            },
+            "right": {
+              "Px": 0.0
+            },
+            "top": {
+              "Px": 0.0
+            },
+            "bottom": {
+              "Px": 0.0
+            }
+          },
+          "flex_direction": "Column",
+          "flex_wrap": "NoWrap",
+          "flex_grow": 0.0,
+          "flex_shrink": 1.0,
+          "flex_basis": "Auto",
+          "row_gap": {
+            "Px": 0.0
+          },
+          "column_gap": {
+            "Px": 0.0
+          },
+          "grid_auto_flow": "Row",
+          "grid_template_rows": [],
+          "grid_template_columns": [],
+          "grid_auto_rows": [],
+          "grid_auto_columns": [],
+          "grid_row": {
+            "start": null,
+            "span": 1,
+            "end": null
+          },
+          "grid_column": {
+            "start": null,
+            "span": 1,
+            "end": null
+          }
+        },
+        "bevy_ui::ui_node::BackgroundColor": {
+          "LinearRgba": {
+            "red": 0.0,
+            "green": 0.0,
+            "blue": 0.0,
+            "alpha": 0.0
+          }
+        },
+        "bevy_ui::ui_node::BorderColor": {
+          "LinearRgba": {
+            "red": 0.0,
+            "green": 0.0,
+            "blue": 0.0,
+            "alpha": 0.0
+          }
+        },
+        "bevy_ui::ui_node::BorderRadius": {
+          "top_left": {
+            "Px": 0.0
+          },
+          "top_right": {
+            "Px": 0.0
+          },
+          "bottom_left": {
+            "Px": 0.0
+          },
+          "bottom_right": {
+            "Px": 0.0
+          }
+        },
+        "bevy_ui::focus::FocusPolicy": "Pass",
+        "bevy_transform::components::transform::Transform": {
+          "translation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "bevy_transform::components::global_transform::GlobalTransform": [
+          {
+            "matrix3": {
+              "x_axis": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "y_axis": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+              },
+              "z_axis": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+              }
+            },
+            "translation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ],
+        "bevy_render::view::visibility::Visibility": "Inherited",
+        "bevy_render::view::visibility::InheritedVisibility": [
+          false
+        ],
+        "bevy_render::view::visibility::ViewVisibility": [
+          false
+        ],
+        "bevy_ui::ui_node::ZIndex": {
+          "Local": 0
+        },
+        "beetmash_core::components::ui_terminal::OutputContainer": {},
+        "bevy_hierarchy::components::parent::Parent": [
+          4294967298
+        ],
+        "bevy_hierarchy::components::children::Children": [
+          [
+            4294967300
+          ]
+        ]
+      }
+    },
+    "4294967300": {
+      "components": {
+        "beetmash_core::components::ui_terminal::UiTerminal": {},
+        "bevy_ui::ui_node::Node": {
+          "stack_index": 0,
+          "calculated_size": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "outline_width": 0.0,
+          "outline_offset": 0.0,
+          "unrounded_size": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "bevy_ui::ui_node::Style": {
+          "display": "Flex",
+          "position_type": "Relative",
+          "overflow": {
+            "x": "Visible",
+            "y": "Visible"
+          },
+          "direction": "Inherit",
+          "left": "Auto",
+          "right": "Auto",
+          "top": "Auto",
+          "bottom": "Auto",
+          "width": "Auto",
+          "height": "Auto",
+          "min_width": "Auto",
+          "min_height": "Auto",
+          "max_width": "Auto",
+          "max_height": "Auto",
+          "aspect_ratio": null,
+          "align_items": "Default",
+          "justify_items": "Default",
+          "align_self": "Auto",
+          "justify_self": "Auto",
+          "align_content": "Default",
+          "justify_content": "Default",
+          "margin": {
+            "left": {
+              "Px": 0.0
+            },
+            "right": {
+              "Px": 0.0
+            },
+            "top": {
+              "Px": 0.0
+            },
+            "bottom": {
+              "Px": 0.0
+            }
+          },
+          "padding": {
+            "left": {
+              "Px": 10.0
+            },
+            "right": {
+              "Px": 10.0
+            },
+            "top": {
+              "Px": 10.0
+            },
+            "bottom": {
+              "Px": 10.0
+            }
+          },
+          "border": {
+            "left": {
+              "Px": 0.0
+            },
+            "right": {
+              "Px": 0.0
+            },
+            "top": {
+              "Px": 0.0
+            },
+            "bottom": {
+              "Px": 0.0
+            }
+          },
+          "flex_direction": "Column",
+          "flex_wrap": "NoWrap",
+          "flex_grow": 0.0,
+          "flex_shrink": 1.0,
+          "flex_basis": "Auto",
+          "row_gap": {
+            "Px": 0.0
+          },
+          "column_gap": {
+            "Px": 0.0
+          },
+          "grid_auto_flow": "Row",
+          "grid_template_rows": [],
+          "grid_template_columns": [],
+          "grid_auto_rows": [],
+          "grid_auto_columns": [],
+          "grid_row": {
+            "start": null,
+            "span": 1,
+            "end": null
+          },
+          "grid_column": {
+            "start": null,
+            "span": 1,
+            "end": null
+          }
+        },
+        "bevy_ui::ui_node::BackgroundColor": {
+          "LinearRgba": {
+            "red": 0.0,
+            "green": 0.0,
+            "blue": 0.0,
+            "alpha": 0.0
+          }
+        },
+        "bevy_ui::ui_node::BorderColor": {
+          "LinearRgba": {
+            "red": 0.0,
+            "green": 0.0,
+            "blue": 0.0,
+            "alpha": 0.0
+          }
+        },
+        "bevy_ui::ui_node::BorderRadius": {
+          "top_left": {
+            "Px": 0.0
+          },
+          "top_right": {
+            "Px": 0.0
+          },
+          "bottom_left": {
+            "Px": 0.0
+          },
+          "bottom_right": {
+            "Px": 0.0
+          }
+        },
+        "bevy_ui::focus::FocusPolicy": "Pass",
+        "bevy_transform::components::transform::Transform": {
+          "translation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "bevy_transform::components::global_transform::GlobalTransform": [
+          {
+            "matrix3": {
+              "x_axis": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "y_axis": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+              },
+              "z_axis": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+              }
+            },
+            "translation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ],
+        "bevy_render::view::visibility::Visibility": "Inherited",
+        "bevy_render::view::visibility::InheritedVisibility": [
+          false
+        ],
+        "bevy_render::view::visibility::ViewVisibility": [
+          false
+        ],
+        "bevy_ui::ui_node::ZIndex": {
+          "Local": 0
+        },
+        "bevy_hierarchy::components::parent::Parent": [
+          4294967299
+        ]
+      }
+    },
+    "4294967301": {
+      "components": {
+        "bevy_ui::ui_node::Node": {
+          "stack_index": 0,
+          "calculated_size": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "outline_width": 0.0,
+          "outline_offset": 0.0,
+          "unrounded_size": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "bevy_ui::ui_node::Style": {
+          "display": "Flex",
+          "position_type": "Relative",
+          "overflow": {
+            "x": "Visible",
+            "y": "Visible"
+          },
+          "direction": "Inherit",
+          "left": "Auto",
+          "right": "Auto",
+          "top": "Auto",
+          "bottom": "Auto",
+          "width": {
+            "Percent": 100.0
+          },
+          "height": {
+            "Px": 50.0
+          },
+          "min_width": "Auto",
+          "min_height": "Auto",
+          "max_width": "Auto",
+          "max_height": "Auto",
+          "aspect_ratio": null,
+          "align_items": "Default",
+          "justify_items": "Default",
+          "align_self": "Auto",
+          "justify_self": "Auto",
+          "align_content": "Default",
+          "justify_content": "Default",
+          "margin": {
+            "left": {
+              "Px": 0.0
+            },
+            "right": {
+              "Px": 0.0
+            },
+            "top": {
+              "Px": 0.0
+            },
+            "bottom": {
+              "Px": 0.0
+            }
+          },
+          "padding": {
+            "left": {
+              "Px": 10.0
+            },
+            "right": {
+              "Px": 10.0
+            },
+            "top": {
+              "Px": 10.0
+            },
+            "bottom": {
+              "Px": 10.0
+            }
+          },
+          "border": {
+            "left": {
+              "Px": 0.0
+            },
+            "right": {
+              "Px": 0.0
+            },
+            "top": {
+              "Px": 0.0
+            },
+            "bottom": {
+              "Px": 0.0
+            }
+          },
+          "flex_direction": "Row",
+          "flex_wrap": "NoWrap",
+          "flex_grow": 0.0,
+          "flex_shrink": 1.0,
+          "flex_basis": "Auto",
+          "row_gap": {
+            "Px": 0.0
+          },
+          "column_gap": {
+            "Px": 0.0
+          },
+          "grid_auto_flow": "Row",
+          "grid_template_rows": [],
+          "grid_template_columns": [],
+          "grid_auto_rows": [],
+          "grid_auto_columns": [],
+          "grid_row": {
+            "start": null,
+            "span": 1,
+            "end": null
+          },
+          "grid_column": {
+            "start": null,
+            "span": 1,
+            "end": null
+          }
+        },
+        "bevy_ui::ui_node::BackgroundColor": {
+          "Srgba": {
+            "red": 0.0,
+            "green": 0.0,
+            "blue": 0.0,
+            "alpha": 0.2
+          }
+        },
+        "bevy_ui::ui_node::BorderColor": {
+          "LinearRgba": {
+            "red": 0.0,
+            "green": 0.0,
+            "blue": 0.0,
+            "alpha": 0.0
+          }
+        },
+        "bevy_ui::ui_node::BorderRadius": {
+          "top_left": {
+            "Px": 0.0
+          },
+          "top_right": {
+            "Px": 0.0
+          },
+          "bottom_left": {
+            "Px": 0.0
+          },
+          "bottom_right": {
+            "Px": 0.0
+          }
+        },
+        "bevy_ui::focus::FocusPolicy": "Pass",
+        "bevy_transform::components::transform::Transform": {
+          "translation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "bevy_transform::components::global_transform::GlobalTransform": [
+          {
+            "matrix3": {
+              "x_axis": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "y_axis": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+              },
+              "z_axis": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+              }
+            },
+            "translation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ],
+        "bevy_render::view::visibility::Visibility": "Inherited",
+        "bevy_render::view::visibility::InheritedVisibility": [
+          false
+        ],
+        "bevy_render::view::visibility::ViewVisibility": [
+          false
+        ],
+        "bevy_ui::ui_node::ZIndex": {
+          "Local": 0
+        },
+        "bevy_hierarchy::components::parent::Parent": [
+          4294967298
+        ],
+        "bevy_hierarchy::components::children::Children": [
+          [
+            4294967302
+          ]
+        ]
+      }
+    },
+    "4294967302": {
+      "components": {
+        "bevy_text::text::Text": {
+          "sections": [
+            {
+              "value": "User> ",
+              "style": {
+                "font": {
+                  "Weak": {
+                    "Uuid": {
+                      "uuid": "97128bb1-2588-480b-bdc6-87b4adbec477"
+                    }
+                  }
+                },
+                "font_size": 32.0,
+                "color": {
+                  "LinearRgba": {
+                    "red": 1.0,
+                    "green": 1.0,
+                    "blue": 1.0,
+                    "alpha": 1.0
+                  }
+                }
+              }
+            },
+            {
+              "value": "",
+              "style": {
+                "font": {
+                  "Weak": {
+                    "Uuid": {
+                      "uuid": "97128bb1-2588-480b-bdc6-87b4adbec477"
+                    }
+                  }
+                },
+                "font_size": 32.0,
+                "color": {
+                  "LinearRgba": {
+                    "red": 1.0,
+                    "green": 1.0,
+                    "blue": 1.0,
+                    "alpha": 1.0
+                  }
+                }
+              }
+            }
+          ],
+          "justify": "Left",
+          "linebreak_behavior": "WordBoundary"
+        },
+        "bevy_ui::ui_node::Node": {
+          "stack_index": 0,
+          "calculated_size": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "outline_width": 0.0,
+          "outline_offset": 0.0,
+          "unrounded_size": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "bevy_ui::ui_node::Style": {
+          "display": "Flex",
+          "position_type": "Relative",
+          "overflow": {
+            "x": "Visible",
+            "y": "Visible"
+          },
+          "direction": "Inherit",
+          "left": "Auto",
+          "right": "Auto",
+          "top": "Auto",
+          "bottom": "Auto",
+          "width": "Auto",
+          "height": "Auto",
+          "min_width": "Auto",
+          "min_height": "Auto",
+          "max_width": "Auto",
+          "max_height": "Auto",
+          "aspect_ratio": null,
+          "align_items": "Default",
+          "justify_items": "Default",
+          "align_self": "Auto",
+          "justify_self": "Auto",
+          "align_content": "Default",
+          "justify_content": "Default",
+          "margin": {
+            "left": {
+              "Px": 0.0
+            },
+            "right": {
+              "Px": 0.0
+            },
+            "top": {
+              "Px": 0.0
+            },
+            "bottom": {
+              "Px": 0.0
+            }
+          },
+          "padding": {
+            "left": {
+              "Px": 0.0
+            },
+            "right": {
+              "Px": 0.0
+            },
+            "top": {
+              "Px": 0.0
+            },
+            "bottom": {
+              "Px": 0.0
+            }
+          },
+          "border": {
+            "left": {
+              "Px": 0.0
+            },
+            "right": {
+              "Px": 0.0
+            },
+            "top": {
+              "Px": 0.0
+            },
+            "bottom": {
+              "Px": 0.0
+            }
+          },
+          "flex_direction": "Row",
+          "flex_wrap": "NoWrap",
+          "flex_grow": 0.0,
+          "flex_shrink": 1.0,
+          "flex_basis": "Auto",
+          "row_gap": {
+            "Px": 0.0
+          },
+          "column_gap": {
+            "Px": 0.0
+          },
+          "grid_auto_flow": "Row",
+          "grid_template_rows": [],
+          "grid_template_columns": [],
+          "grid_auto_rows": [],
+          "grid_auto_columns": [],
+          "grid_row": {
+            "start": null,
+            "span": 1,
+            "end": null
+          },
+          "grid_column": {
+            "start": null,
+            "span": 1,
+            "end": null
+          }
+        },
+        "bevy_ui::ui_node::BackgroundColor": {
+          "LinearRgba": {
+            "red": 0.0,
+            "green": 0.0,
+            "blue": 0.0,
+            "alpha": 0.0
+          }
+        },
+        "bevy_ui::focus::FocusPolicy": "Pass",
+        "bevy_transform::components::transform::Transform": {
+          "translation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "bevy_transform::components::global_transform::GlobalTransform": [
+          {
+            "matrix3": {
+              "x_axis": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "y_axis": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+              },
+              "z_axis": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+              }
+            },
+            "translation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ],
+        "bevy_render::view::visibility::Visibility": "Inherited",
+        "bevy_render::view::visibility::InheritedVisibility": [
+          false
+        ],
+        "bevy_render::view::visibility::ViewVisibility": [
+          false
+        ],
+        "bevy_ui::ui_node::ZIndex": {
+          "Local": 0
+        },
+        "bevy_hierarchy::components::parent::Parent": [
+          4294967301
+        ],
+        "bevy_text::pipeline::TextLayoutInfo": {
+          "glyphs": [],
+          "size": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "bevy_ui::widget::text::TextFlags": {
+          "needs_new_measure_func": true,
+          "needs_recompute": true
+        },
+        "bevy_ui::measurement::ContentSize": {},
+        "beetmash_core::components::ui_terminal::InputContainer": {}
+      }
+    }
+  }
+}

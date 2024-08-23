@@ -29,14 +29,15 @@ fn main() -> Result<()> {
 	.add_scene("ground-3d", core::scenes::ground_3d)
 	.export()?;
 
-	// check empty is empty
-	assert_eq!(
-		fs::read_to_string("scenes/empty.ron")?,
-		"(
-  resources: {},
-  entities: {},
-)"
-	);
+	let empty = serde_json::from_str::<serde_json::Value>(
+		&fs::read_to_string("scenes/empty.json")?,
+	)?;
+	let expected = serde_json::json!({
+		"resources": {},
+		"entities": {}
+	});
+
+	assert_eq!(empty, expected);
 
 	Ok(())
 }

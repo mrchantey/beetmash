@@ -1,0 +1,89 @@
+{
+  "resources": {},
+  "entities": {
+    "4294967298": {
+      "components": {
+        "bevy_pbr::light::directional_light::DirectionalLight": {
+          "color": {
+            "LinearRgba": {
+              "red": 1.0,
+              "green": 1.0,
+              "blue": 1.0,
+              "alpha": 1.0
+            }
+          },
+          "illuminance": 10000.0,
+          "shadows_enabled": true,
+          "shadow_depth_bias": 0.02,
+          "shadow_normal_bias": 1.8
+        },
+        "bevy_render::primitives::CascadesFrusta": {},
+        "bevy_pbr::light::Cascades": {
+          "cascades": {}
+        },
+        "bevy_pbr::light::CascadeShadowConfig": {
+          "bounds": [
+            20.0,
+            25.198421,
+            31.748024,
+            40.0
+          ],
+          "overlap_proportion": 0.2,
+          "minimum_distance": 0.1
+        },
+        "bevy_pbr::bundle::CascadesVisibleEntities": {},
+        "bevy_transform::components::transform::Transform": {
+          "translation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "x": -0.33583632,
+            "y": 0.44293144,
+            "z": 0.18346822,
+            "w": 0.8107805
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "bevy_transform::components::global_transform::GlobalTransform": [
+          {
+            "matrix3": {
+              "x_axis": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "y_axis": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+              },
+              "z_axis": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+              }
+            },
+            "translation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ],
+        "bevy_render::view::visibility::Visibility": "Inherited",
+        "bevy_render::view::visibility::InheritedVisibility": [
+          false
+        ],
+        "bevy_render::view::visibility::ViewVisibility": [
+          false
+        ]
+      }
+    }
+  }
+}

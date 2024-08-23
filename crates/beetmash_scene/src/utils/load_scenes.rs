@@ -4,7 +4,7 @@ use bevy::prelude::*;
 
 /// Pass scene paths as arguments to load them on startup.
 /// ```sh
-/// cargo run -- path/to/scen1.ron path/to/scene2.ron
+/// cargo run -- path/to/scene1.json path/to/scene2.json
 /// ```
 pub struct CliSceneLoadPlugin;
 

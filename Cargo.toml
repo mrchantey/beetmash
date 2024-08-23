@@ -131,6 +131,7 @@ beetmash_net = { workspace = true, optional = true }
 bevy.workspace = true
 anyhow.workspace = true
 forky_bevy.workspace = true
+serde_json.workspace = true
 
 [workspace.dependencies.web-sys]
 # [target.'cfg(target_arch = "wasm32")'.dependencies.web-sys]
@@ -216,55 +217,55 @@ name = "hello-terminal"
 thumb-text = "🖥️"
 description = "Simple camera and on-screen terminal."
 app = "app"
-path = "scenes/ui-terminal-input.ron"
+path = "scenes/ui-terminal-input.json"
 include = ["camera-2d"]
 
 [[package.metadata.scene]]
 name = "ui-terminal"
 thumb-text = "🖥️"
 description = "On-screen terminal."
-path = "scenes/ui-terminal.ron"
+path = "scenes/ui-terminal.json"
 
 [[package.metadata.scene]]
 name = "ui-terminal-input"
 thumb-text = "🖥️"
 description = "On-screen terminal with support for user input."
-path = "scenes/ui-terminal-input.ron"
+path = "scenes/ui-terminal-input.json"
 
 [[package.metadata.scene]]
 name = "camera-2d"
 thumb-text = "📸"
 description = "2D camera for rendering 2D scenes."
-path = "scenes/camera-2d.ron"
+path = "scenes/camera-2d.json"
 
 [[package.metadata.scene]]
 name = "camera-3d"
 thumb-text = "📸"
 description = "3D camera for rendering 3D scenes."
-path = "scenes/camera-3d.ron"
+path = "scenes/camera-3d.json"
 
 [[package.metadata.scene]]
 name = "ground-3d"
 thumb-text = "🏝️"
 description = "A simple 3D ground plane."
-path = "scenes/ground-3d.ron"
+path = "scenes/ground-3d.json"
 
 [[package.metadata.scene]]
 name = "lighting-3d"
 thumb-text = "💡"
 description = "A directional light configured with shadows."
-path = "scenes/lighting-3d.ron"
+path = "scenes/lighting-3d.json"
 
 [[package.metadata.scene]]
 name = "space-scene"
 thumb-text = "🌌"
 description = "A starry background."
-path = "scenes/space-scene.ron"
+path = "scenes/space-scene.json"
 
 
 # [[package.metadata.scene]]
 # name = "hello-net"
 # description = "A simple behavior demonstrating triggering and reacting to network events."
 # thumb-url = "https://storage.googleapis.com/beet-examples/screenshots/hello-net.png"
-# path = "scenes/hello-net.ron"
+# path = "scenes/hello-net.json"
 # include = ["camera-2d", "ui-terminal"]

@@ -1,0 +1,10 @@
+{
+  "resources": {},
+  "entities": {
+    "4294967298": {
+      "components": {
+        "beetmash_scene::utils::bundle_placeholder::BundlePlaceholder": "Camera3d"
+      }
+    }
+  }
+}

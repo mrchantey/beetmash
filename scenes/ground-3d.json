@@ -1,0 +1,40 @@
+{
+  "resources": {},
+  "entities": {
+    "4294967298": {
+      "components": {
+        "beetmash_scene::utils::bundle_placeholder::BundlePlaceholder": {
+          "Pbr": {
+            "mesh": {
+              "Plane3d": {
+                "plane": {
+                  "normal": [
+                    0.0,
+                    1.0,
+                    0.0
+                  ],
+                  "half_size": [
+                    0.5,
+                    0.5
+                  ]
+                },
+                "width": 100.0,
+                "height": 100.0
+              }
+            },
+            "material": {
+              "Color": {
+                "Srgba": {
+                  "red": 0.3,
+                  "green": 0.5,
+                  "blue": 0.3,
+                  "alpha": 1.0
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
