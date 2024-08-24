@@ -56,7 +56,7 @@ publish-all *args:
 	just publish beetmash_net 		 {{args}} || true
 	just publish beetmash_core 		 {{args}} || true
 	just publish beetmash 				 {{args}} || true
-# just publish beetmash_template {{args}}	|| true
+	just publish beetmash_template {{args}}	|| true
 # just publish beetmash_server 	 {{args}} || true
 # just publish beetmash-cli 		 {{args}}	|| true
 

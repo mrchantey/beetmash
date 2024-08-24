@@ -31,6 +31,7 @@ bevy = { workspace = true, default-features = true }
 # yep, this is a valid scene!
 [[package.metadata.scene]]
 name = "hello-world"
+# path will default to 'scenes/hello-world.json'
 
 
 ### 🎥 2 - A base scene
@@ -42,7 +43,7 @@ name = "my-base-scene"
 description = "Simply default plugins, a light and a 3d camera with a sensible offset."
 thumb-text = "🎥"
 # here we can specify the path to the scene file
-path = "scenes/my_base_scene.json"
+path = "scenes/my-base-scene.json"
 # specifying the path to a wasm app is a great way to share a demo of your scene
 app.js-url = "https://beetmash-apps.s3.amazonaws.com/temp/beetmash_template/main.js"
 app.wasm-url = "https://beetmash-apps.s3.amazonaws.com/temp/beetmash_template/main_bg.wasm"
@@ -54,7 +55,7 @@ app.wasm-url = "https://beetmash-apps.s3.amazonaws.com/temp/beetmash_template/ma
 [[package.metadata.scene]]
 name = "my-beautiful-scene"
 description = "A beautiful cube gloriously perched upon a circular platform!"
-path = "scenes/my_beautiful_scene.json"
+path = "scenes/my-beautiful-scene.json"
 thumb-url = "https://bevyengine.org/processed_images/3d_scene.303294348e55980f.png"
 # we can specify another scene here to use its app
 app = "my-base-scene"

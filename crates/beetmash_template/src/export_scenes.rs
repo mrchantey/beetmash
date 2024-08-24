@@ -5,8 +5,9 @@ use bevy::prelude::*;
 
 fn main() {
 	SceneGroupExporter::new(register_types)
-		.add_scene("my_base_scene", spawn_simple_environment)
-		.add_scene("my_beautiful_scene", spawn_simple_scene)
+		.add_scene("hello-world", || {})
+		.add_scene("my-base-scene", spawn_simple_environment)
+		.add_scene("my-beautiful-scene", spawn_simple_scene)
 		.with_checks(DynamicSceneChecks::new().with_num_ignored_resources(6))
 		.export()
 		.unwrap();
