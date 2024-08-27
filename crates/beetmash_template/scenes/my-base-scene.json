@@ -3,6 +3,7 @@
   "entities": {
     "4294967296": {
       "components": {
+        "bevy_core::name::Name": "Light",
         "beetmash_scene::utils::bundle_placeholder::BundlePlaceholder": "PointLight",
         "bevy_transform::components::transform::Transform": {
           "translation": {
@@ -26,6 +27,7 @@
     },
     "4294967297": {
       "components": {
+        "bevy_core::name::Name": "Camera",
         "beetmash_scene::utils::bundle_placeholder::BundlePlaceholder": "Camera3d",
         "bevy_transform::components::transform::Transform": {
           "translation": {

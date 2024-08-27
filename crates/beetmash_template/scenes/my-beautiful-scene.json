@@ -3,6 +3,7 @@
   "entities": {
     "4294967296": {
       "components": {
+        "bevy_core::name::Name": "Circle",
         "beetmash_scene::utils::bundle_placeholder::BundlePlaceholder": {
           "Pbr": {
             "mesh": {
@@ -44,6 +45,7 @@
     },
     "4294967297": {
       "components": {
+        "bevy_core::name::Name": "Cube",
         "beetmash_scene::utils::bundle_placeholder::BundlePlaceholder": {
           "Pbr": {
             "mesh": {
