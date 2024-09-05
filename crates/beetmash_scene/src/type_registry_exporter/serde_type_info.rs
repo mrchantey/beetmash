@@ -13,6 +13,7 @@ use bevy::reflect::UnitVariantInfo;
 use bevy::reflect::UnnamedField;
 use bevy::reflect::ValueInfo;
 use bevy::reflect::VariantInfo;
+use bevy_reflect::SetInfo;
 use serde::Deserialize;
 use serde::Serialize;
 use ts_rs::TS;
@@ -32,6 +33,8 @@ pub enum SerdeTypeInfo {
 	Array(SerdeArrayInfo),
 	#[serde(rename = "map")]
 	Map(SerdeMapInfo),
+	#[serde(rename = "set")]
+	Set(SerdeSetInfo),
 	#[serde(rename = "enum")]
 	Enum(SerdeEnumInfo),
 	#[serde(rename = "value")]
@@ -47,6 +50,7 @@ impl From<&TypeInfo> for SerdeTypeInfo {
 			TypeInfo::List(info) => Self::List(info.into()),
 			TypeInfo::Array(info) => Self::Array(info.into()),
 			TypeInfo::Map(info) => Self::Map(info.into()),
+			TypeInfo::Set(info) => Self::Set(info.into()),
 			TypeInfo::Enum(info) => Self::Enum(info.into()),
 			TypeInfo::Value(info) => Self::Value(info.into()),
 		}
@@ -156,6 +160,20 @@ impl From<&ArrayInfo> for SerdeArrayInfo {
 		Self {
 			item_type_path: info.item_type_path_table().path().to_string(),
 			capacity: info.capacity(),
+		}
+	}
+}
+
+/// Serializable [SetInfo].
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+pub struct SerdeSetInfo {
+	value_type_path: String,
+}
+
+impl From<&SetInfo> for SerdeSetInfo {
+	fn from(info: &SetInfo) -> Self {
+		Self {
+			value_type_path: info.value_type_path_table().path().to_string(),
 		}
 	}
 }

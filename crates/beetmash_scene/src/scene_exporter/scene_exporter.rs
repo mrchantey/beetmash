@@ -48,7 +48,7 @@ impl SceneExporter {
 		// let scene = DynamicScene::from_world(world);
 		let scene = DynamicSceneBuilder::from_world(world)
 			// render plugin
-			.deny_resource::<Msaa>()
+			// .deny_resource::<Msaa>()
 			.deny_resource::<ClearColor>()
 			.deny_resource::<AmbientLight>()
 			.deny_resource::<DirectionalLightShadowMap>()
