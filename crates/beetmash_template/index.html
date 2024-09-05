@@ -23,8 +23,8 @@
 <body>
 	<canvas id="beetmash-canvas"></canvas>
 	<script type="module">
-		// import init from 'https://storage.googleapis.com/beet-examples/app_full/main.js'
-		import init from './target/wasm/main.js'
+		import init from 'https://storage.googleapis.com/beet-examples/app_full/main.js'
+		// import init from './target/wasm/main.js'
 		// init('https://storage.googleapis.com/beet-examples/app_full/main_bg.wasm')
 		init('./target/wasm/main_bg.wasm')
 			.catch((error) => {
