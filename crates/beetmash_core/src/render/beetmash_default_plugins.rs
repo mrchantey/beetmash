@@ -2,7 +2,6 @@ use beetmash_scene::utils::CliSceneLoadPlugin;
 use bevy::asset::AssetMetaCheck;
 use bevy::prelude::*;
 use bevy::window::WindowPlugin;
-use forky_bevy::systems::close_on_esc;
 
 
 const DEFAULT_ASSETS_PATH: &str = "assets";
@@ -42,6 +41,24 @@ impl Plugin for BeetmashDefaultPlugins {
 		.add_systems(Update, close_on_esc);
 	}
 }
+
+fn close_on_esc(
+	mut commands: Commands,
+	focused_windows: Query<(Entity, &Window)>,
+	input: Res<ButtonInput<KeyCode>>,
+) {
+	for (window, focus) in focused_windows.iter() {
+		if !focus.focused {
+			continue;
+		}
+
+		if input.just_pressed(KeyCode::Escape) {
+			commands.entity(window).despawn();
+		}
+	}
+}
+
+
 
 impl BeetmashDefaultPlugins {
 	pub fn new(wasm_asset_path: String) -> Self {

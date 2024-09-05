@@ -10,8 +10,6 @@ on:
         description: 'Version - in the form of v1.2.3'
         required: true
         type: string
-env:
-  GAME_EXECUTABLE_NAME: bevy_game
 permissions:
   contents: write
 jobs:
@@ -67,7 +65,7 @@ jobs:
       with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: crates/beetmash_template/wasm/main_bg.js
-          asset_name: ${{ env.GAME_EXECUTABLE_NAME }}_${{ env.VERSION }}_main_bg.js
+          asset_name: main_bg.js
           release_name: ${{ env.VERSION }}
           tag: ${{ env.VERSION }}
           overwrite: true
@@ -76,7 +74,7 @@ jobs:
       with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: crates/beetmash_template/wasm/main_bg.wasm
-          asset_name: ${{ env.GAME_EXECUTABLE_NAME }}_${{ env.VERSION }}_main_bg.wasm
+          asset_name: main_bg.wasm
           release_name: ${{ env.VERSION }}
           tag: ${{ env.VERSION }}
           overwrite: true

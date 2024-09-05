@@ -2829,9 +2829,9 @@ checksum = "aa9a19cbb55df58761df49b23516a86d432839add4af60fc256da840f66ed35b"
 
 [[package]]
 name = "forky_bevy"
-version = "0.1.51"
+version = "0.2.0-rc.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8629c979119fa3c02da24cf696606f10ab718e216e39b5574d457643c2f3f191"
+checksum = "3fb15225b8a9f8f9ce38b4668e95d564dc7c3b29d462a8f777729026412e96cb"
 dependencies = [
  "anyhow",
  "bevy 0.14.1",
@@ -2844,9 +2844,9 @@ dependencies = [
 
 [[package]]
 name = "forky_core"
-version = "0.1.51"
+version = "0.2.0-rc.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1aca450d963bb216344c12f3699c6398e8f6868c686d51bfaf9c64c281e1770d"
+checksum = "5d2ecf29c65c38b03b938277b61a44551f815046cb33ad358cd80ef733375fda"
 dependencies = [
  "anyhow",
  "extend",
@@ -2858,9 +2858,9 @@ dependencies = [
 
 [[package]]
 name = "forky_fs"
-version = "0.1.51"
+version = "0.2.0-rc.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "985c4e563a8b65705e037951754b9f232748e5d970ee591899dae8f64d5a2314"
+checksum = "8c1b3fb5f6c4a5eb3dab38080b711388b1c95c5d567cd363695a522ad36b9054"
 dependencies = [
  "anyhow",
  "clap",
@@ -2879,9 +2879,9 @@ dependencies = [
 
 [[package]]
 name = "forky_web"
-version = "0.1.51"
+version = "0.2.0-rc.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f5d12b31787e6647d119ce1eb726009838901ce15308f8c0225c7efd2ab48abd"
+checksum = "35dae42a680b2f0a66ee315c46d1831db47a09e16130fc14ac136f1e4cfb0a9a"
 dependencies = [
  "anyhow",
  "console_error_panic_hook",
@@ -2900,9 +2900,9 @@ dependencies = [
 
 [[package]]
 name = "forky_web_macros"
-version = "0.1.51"
+version = "0.2.0-rc.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5fe7a5b523f5626dbbd85e5d9cc25ed4ab6133c5df545ef6caa89d3edf9db55f"
+checksum = "57a79d27013be34fe9adcb8e112660ec657a4ea52f5d0b3e31352f08897e60aa"
 dependencies = [
  "anyhow",
  "proc-macro2",
@@ -5808,9 +5808,9 @@ dependencies = [
 
 [[package]]
 name = "sweet"
-version = "0.1.51"
+version = "0.2.0-rc.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "11d65cd593476a33ccc38f14880991b73a1647cffca575372bd3202458643596"
+checksum = "96ccaf457a0acc239682a43dd83d8deaaa2367194b547981a3c1ad295cb577f9"
 dependencies = [
  "anyhow",
  "backtrace",
@@ -5845,9 +5845,9 @@ dependencies = [
 
 [[package]]
 name = "sweet_macros"
-version = "0.1.51"
+version = "0.2.0-rc.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9c60150230fa958a3a37be484cd1e06a18e4607dd04cdf082141b0109f742675"
+checksum = "5732f3315a143103b4cae04dfbfbd62cc4e309e87c9926eacf77ad9ae873f341"
 dependencies = [
  "anyhow",
  "proc-macro2",

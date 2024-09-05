@@ -97,7 +97,7 @@ wasm-bindgen-futures = "0.4"
 # ] }
 #💡 observer reflect attributes, required until 0.14.1
 # bevy = { version = "0.14", path = "../bevy", default-features = false }
-bevy = { git = "https://github.com/jrobsonchase/bevy", branch = "pre_map_entities", default-features = false }
+bevy = { version="0.15.0-dev", git = "https://github.com/jrobsonchase/bevy", branch = "pre_map_entities", default-features = false }
 bevy_reflect = { git = "https://github.com/jrobsonchase/bevy", branch = "pre_map_entities", package = "bevy_reflect", default-features = false }
 
 # bevy_reflect = { version = "0.14", path = "../bevy/crates/bevy_reflect" }
