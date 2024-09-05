@@ -69,8 +69,8 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          # file: crates/beetmash_template/target/wasm/main_bg.js
-          file: /home/runner/work/beetmash/beetmash/crates/beetmash_template/target/wasm/main_bg.js
+          file: crates/beetmash_template/target/wasm/main.js
+          # file: /home/runner/work/beetmash/beetmash/crates/beetmash_template/target/wasm/main.js
           asset_name: main_bg.js
           release_name: ${{ env.VERSION }}
           tag: ${{ env.VERSION }}
@@ -79,8 +79,8 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          # file: crates/beetmash_template/target/wasm/main_bg.wasm
-          file: /home/runner/work/beetmash/beetmash/crates/beetmash_template/target/wasm/main_bg.wasm
+          file: crates/beetmash_template/target/wasm/main_bg.wasm
+          # file: /home/runner/work/beetmash/beetmash/crates/beetmash_template/target/wasm/main_bg.wasm
           asset_name: main_bg.wasm
           release_name: ${{ env.VERSION }}
           tag: ${{ env.VERSION }}
