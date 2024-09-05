@@ -48,16 +48,16 @@ beetmash_scene = { path = "crates/beetmash_scene", version = "0.0.6-rc.2" }
 beetmash_server = { path = "crates/beetmash_server", version = "0.0.6-rc.2" }
 
 #💡 local-relative
-forky_core = { version = "0.1.51", path = "../forky/crates/forky_core" }
-forky_bevy = { version = "0.1.51", path = "../forky/crates/forky_bevy" }
-forky_web = { version = "0.1.51", path = "../forky/crates/forky_web", default-features = false }
-sweet = { version = "0.1.51", path = "../sweet", features = ["bevy"] }
+# forky_core = { version = "0.1.51", path = "../forky/crates/forky_core" }
+# forky_bevy = { version = "0.1.51", path = "../forky/crates/forky_bevy" }
+# forky_web = { version = "0.1.51", path = "../forky/crates/forky_web", default-features = false }
+# sweet = { version = "0.1.51", path = "../sweet", features = ["bevy"] }
 
 #💡 local-published
-# forky_core = "0.1.50"
-# forky_bevy = "0.1.50"
-# forky_web = "0.1.50"
-# sweet = { version = "0.1.50", features = ["bevy"] }
+forky_core = "0.2.0-rc.1"
+forky_bevy = "0.2.0-rc.1"
+forky_web = "0.2.0-rc.1"
+sweet = { version = "0.2.0-rc.1", features = ["bevy"] }
 
 #💡 Utility
 log = "0.4"

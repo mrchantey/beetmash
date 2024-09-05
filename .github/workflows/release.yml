@@ -1,7 +1,7 @@
 name: 🌏 Release Template Builds
 on:
   push:
-    branches: [main]
+    # branches: [main]
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+*"
   workflow_dispatch:
@@ -20,7 +20,9 @@ jobs:
     steps:
       - name: Get tag
         id: tag
-        run: echo "tag=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "tag=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+          echo "tag=${GITHUB_REF#refs/tags/}"
     outputs:
       version: ${{ inputs.version || steps.tag.outputs.tag }}
   build-web:
@@ -60,7 +62,7 @@ jobs:
         version: '0.2.88'
     - name: 🔨 Build Crates
       run: cd crates/beetmash_template && just build-wasm
-    - name: Upload release JS
+    - name: ☁️ Upload release JS
       uses: svenstaro/upload-release-action@v2
       with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -69,7 +71,7 @@ jobs:
           release_name: ${{ env.VERSION }}
           tag: ${{ env.VERSION }}
           overwrite: true
-    - name: Upload release WASM
+    - name: ☁️ Upload release WASM
       uses: svenstaro/upload-release-action@v2
       with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
