@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: get-version
     env:
-      VERSION: 0.0.6-rc.2
+      VERSION: v0.0.6-rc.2
       # VERSION: ${{needs.get-version.outputs.version}}
     steps:
     - name: 📂 Checkout
@@ -63,15 +63,14 @@ jobs:
         version: '0.2.92'
     - name: 🔨 Build Crates
       run: cd crates/beetmash_template && just build-wasm
-    - name: wtf
-      run: pwd && cd crates/beetmash_template && pwd && ls -la target/wasm
+    #   run: pwd && cd crates/beetmash_template && pwd && ls -la target/wasm
     - name: ☁️ Upload release JS
       uses: svenstaro/upload-release-action@v2
       with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: crates/beetmash_template/target/wasm/main.js
           # file: /home/runner/work/beetmash/beetmash/crates/beetmash_template/target/wasm/main.js
-          asset_name: main_bg.js
+          asset_name: main.js
           release_name: ${{ env.VERSION }}
           tag: ${{ env.VERSION }}
           overwrite: true
