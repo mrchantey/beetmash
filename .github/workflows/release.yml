@@ -59,7 +59,7 @@ jobs:
       uses: baptiste0928/cargo-install@v2
       with:
         crate: wasm-bindgen-cli
-        version: '0.2.88'
+        version: '0.2.92'
     - name: 🔨 Build Crates
       run: cd crates/beetmash_template && just build-wasm
     - name: ☁️ Upload release JS
