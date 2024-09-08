@@ -1,4 +1,4 @@
-use beet_esp::prelude::*;
+use beetmash_esp::prelude::*;
 use bevy::prelude::*;
 
 pub fn main() -> anyhow::Result<()> {

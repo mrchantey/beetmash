@@ -5,6 +5,7 @@ use serde::Deserialize;
 use serde::Serialize;
 use ts_rs::TS;
 
+/// A serializable type registry
 #[derive(Serialize, Deserialize, TS)]
 pub struct SerdeTypeRegistry {
 	/// Map of a type path, aka [std::any::type_name] to its registration.

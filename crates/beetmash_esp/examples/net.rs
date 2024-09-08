@@ -1,4 +1,4 @@
-use beet_esp::prelude::*;
+use beetmash_esp::prelude::*;
 use beet_net::prelude::*;
 use bevy::prelude::*;
 use esp_idf_hal::delay::FreeRtos;

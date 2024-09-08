@@ -1,4 +1,4 @@
-use beet_esp::prelude::*;
+use beetmash_esp::prelude::*;
 use esp_idf_hal::delay::Delay;
 
 fn main() -> anyhow::Result<()> {

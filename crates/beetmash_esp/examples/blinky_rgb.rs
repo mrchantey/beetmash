@@ -9,7 +9,7 @@
 //! Datasheet (PDF) for a WS2812, which explains how the pulses are to be sent:
 //! https://cdn-shop.adafruit.com/datasheets/WS2812.pdf
 
-use beet_esp::prelude::*;
+use beetmash_esp::prelude::*;
 use esp_idf_hal::delay::FreeRtos;
 use esp_idf_hal::peripherals::Peripherals;
 use esp_idf_hal::rmt::config::TransmitConfig;
