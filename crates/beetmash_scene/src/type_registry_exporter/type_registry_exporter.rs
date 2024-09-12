@@ -2,7 +2,7 @@ use crate::prelude::*;
 use anyhow::Result;
 use bevy::app::Plugins;
 use bevy::prelude::*;
-use bevy_reflect::TypeRegistry;
+use bevy::reflect::TypeRegistry;
 use std::path::PathBuf;
 
 /// A helper for exporting the type registry.

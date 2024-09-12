@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use beetmash_scene::prelude::*;
 use bevy::prelude::*;
-use bevy::text::CosmicBuffer;
+// use bevy::text::CosmicBuffer;
 
 #[derive(Clone)]
 pub struct DefaultPlaceholderPlugin;
@@ -26,14 +26,14 @@ impl Plugin for DefaultPlaceholderPlugin {
 		.register_type::<AssetLoadBlockAppReady>();
 
 
-		// temp, something like this will probs be in 0.14.1
-		app.world_mut().register_component_hooks::<Text>().on_add(
-			|mut world, entity, _| {
-				world
-					.commands()
-					.entity(entity)
-					.insert(CosmicBuffer::default());
-			},
-		);
+		// // temp, something like this will probs be in 0.14.1
+		// app.world_mut().register_component_hooks::<Text>().on_add(
+		// 	|mut world, entity, _| {
+		// 		world
+		// 			.commands()
+		// 			.entity(entity)
+		// 			.insert(CosmicBuffer::default());
+		// 	},
+		// );
 	}
 }

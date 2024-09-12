@@ -127,7 +127,7 @@ impl DynamicSceneChecks {
 
 			for component in world.inspect_entity(dyn_entity.entity) {
 				let num_components_world =
-					world.inspect_entity(dyn_entity.entity).count();
+					world.inspect_entity(dyn_entity.entity).len();
 				let num_components_scene = dyn_entity.components.len();
 				if num_components_world != num_components_scene {
 					// issues.push(format!(

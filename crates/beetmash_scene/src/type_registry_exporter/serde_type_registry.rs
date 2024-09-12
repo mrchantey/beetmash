@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use std::collections::HashMap;
-use bevy_reflect::TypeRegistry;
+use bevy::reflect::TypeRegistry;
 use serde::Deserialize;
 use serde::Serialize;
 use ts_rs::TS;

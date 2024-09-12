@@ -1,6 +1,6 @@
 use anyhow::Result;
 use bevy::scene::ron;
-use bevy_reflect::Reflect;
+use bevy::reflect::Reflect;
 use serde::Deserialize;
 use serde::Serialize;
 

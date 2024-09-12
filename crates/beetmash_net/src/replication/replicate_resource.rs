@@ -2,7 +2,8 @@ use crate::prelude::*;
 use anyhow::Result;
 use bevy::prelude::*;
 use forky_core::ResultTEExt;
-use serde::{de::DeserializeOwned, Serialize};
+use serde::de::DeserializeOwned;
+use serde::Serialize;
 
 
 /// Functions for handling reception of [`Resource`] messages.
