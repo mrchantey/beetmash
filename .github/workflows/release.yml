@@ -1,7 +1,7 @@
 name: 🌏 Release
 on:
   push:
-    branches: [main] # uncomment for debugging
+    # branches: [main] # uncomment for debugging
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+*"
   workflow_dispatch:
