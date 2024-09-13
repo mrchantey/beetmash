@@ -31,20 +31,20 @@ jobs:
     env:
       VERSION: ${{needs.get-version.outputs.version}}
       # BEETMASH_APPS_DEPLOY_TOKEN: ${{ secrets.BEETMASH_APPS_DEPLOY_TOKEN }}
-    # defaults:
-    #   run:
-        # working-directory: beetmash
+    defaults:
+      run:
+        working-directory: beetmash
     steps:
     - name: 📂 Checkout
       uses: actions/checkout@v4
-      # with:
-      #   path: beetmash
-    # - name: 📂🗄️ Checkout Release Repo
-    #   uses: actions/checkout@v4
-    #   with:
-    #     repository: mrchantey/beetmash-apps
-    #     path: beetmash-apps
-    #     token: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        path: beetmash
+    - name: 📂🗄️ Checkout Release Repo
+      uses: actions/checkout@v4
+      with:
+        repository: mrchantey/beetmash-apps
+        path: beetmash-apps
+        # token: ${{ secrets.BEETMASH_APPS_DEPLOY_TOKEN }}
     - name: 📂 Cache
       uses: actions/cache@v4
       with:
@@ -55,6 +55,27 @@ jobs:
           ~/.cargo/git/db/
           target/
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+    - name: 📂🗄️ Checkout Release Repo
+      uses: actions/checkout@v4
+      with:
+        repository: mrchantey/beetmash-apps
+        path: beetmash-apps
+    - name: Deploy to another private repo
+      run: |
+        mkdir -p ../beetmash-apps/beetmash_template || true
+        cp crates/beetmash_template/public/* ../beetmash-apps/beetmash_template
+        cd ../beetmash-apps
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add .
+        git commit -m "Deploy from GitHub Actions"
+        git push origin main
+# git clone https://github.com/username/target-repo.git
+        # Copy files or perform deployment steps
+# git push https://$DEPLOY_TOKEN@github.com/username/target-repo.git
+      # env:
+      #   DEPLOY_TOKEN: ${{ secrets.BEETMASH_APPS_DEPLOY_TOKEN }}
+
     # - name: 🔨 Install Bevy Dependencies
     #   run: sudo apt-get update && sudo apt-get install g++ pkg-config libx11-dev libasound2-dev libudev-dev mold
     # - name: 🔨 Install Just
@@ -76,13 +97,15 @@ jobs:
     #     version: '0.2.93'
     # - name: 🔨 Build Crates
     #   run: cd crates/beetmash_template && just build-wasm && just wasm-opt
-    - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4.2.5
-      with:
-        branch: main
-        repository-name: mrchantey/beetmash-apps
-        folder: crates/beetmash_template/public
-        token: ${{ secrets.BEETMASH_APPS_DEPLOY_TOKEN }}
+
+    
+    # - name: Deploy to GitHub Pages
+    #   uses: JamesIves/github-pages-deploy-action@v4.2.5
+    #   with:
+    #     repository-name: mrchantey/beetmash-apps
+    #     branch: main
+    #     folder: crates/beetmash_template/public
+    #     token: ${{ secrets.BEETMASH_APPS_DEPLOY_TOKEN }}
     # - name: ☁️ Upload release JS
     #   uses: svenstaro/upload-release-action@v2
     #   with:
