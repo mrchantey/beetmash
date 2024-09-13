@@ -51,8 +51,8 @@ impl WebEventClient {
 impl Transport for WebEventClient {
 	fn send(&mut self, messages: &Vec<Message>) -> Result<()> {
 		let json = Message::vec_into_json(messages)?;
-		let mut init = CustomEventInit::new();
-		init.detail(&JsValue::from_str(&json));
+		let init = CustomEventInit::new();
+		init.set_detail(&JsValue::from_str(&json));
 		let event =
 			CustomEvent::new_with_event_init_dict("wasm-message", &init)
 				.anyhow()?;

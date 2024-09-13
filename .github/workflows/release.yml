@@ -24,16 +24,27 @@ jobs:
           echo "tag=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
           echo "tag=${GITHUB_REF#refs/tags/}"
     outputs:
-      version: ${{ inputs.version || steps.tag.outputs.tag }}
+      version: ${{ inputs.version || steps.tag.outputs.tag || 'v0.0.0' }}
   build-web:
     runs-on: ubuntu-latest
     needs: get-version
     env:
-      VERSION: v0.0.6-rc.2
-      # VERSION: ${{needs.get-version.outputs.version}}
+      VERSION: ${{needs.get-version.outputs.version}}
+      # BEETMASH_APPS_DEPLOY_TOKEN: ${{ secrets.BEETMASH_APPS_DEPLOY_TOKEN }}
+    # defaults:
+    #   run:
+        # working-directory: beetmash
     steps:
     - name: 📂 Checkout
       uses: actions/checkout@v4
+      # with:
+      #   path: beetmash
+    # - name: 📂🗄️ Checkout Release Repo
+    #   uses: actions/checkout@v4
+    #   with:
+    #     repository: mrchantey/beetmash-apps
+    #     path: beetmash-apps
+    #     token: ${{ secrets.GITHUB_TOKEN }}
     - name: 📂 Cache
       uses: actions/cache@v4
       with:
@@ -44,43 +55,51 @@ jobs:
           ~/.cargo/git/db/
           target/
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-    - name: 🔨 Install Bevy Dependencies
-      run: sudo apt-get update && sudo apt-get install g++ pkg-config libx11-dev libasound2-dev libudev-dev mold
-    - name: 🔨 Install Just
-      uses: extractions/setup-just@v1
-    - name: 🔨 Install Rust
-      uses: actions-rs/toolchain@v1
+    # - name: 🔨 Install Bevy Dependencies
+    #   run: sudo apt-get update && sudo apt-get install g++ pkg-config libx11-dev libasound2-dev libudev-dev mold
+    # - name: 🔨 Install Just
+    #   uses: extractions/setup-just@v1
+    # - name: 🔨 Install Rust
+    #   uses: actions-rs/toolchain@v1
+    #   with:
+    #     toolchain: nightly
+    #     override: true
+    #     default: true
+    # - name: 🔨 Install Binaryen
+    #   run: sudo apt install binaryen
+    # - name: 🔨 Install Wasm Target
+    #   run: rustup target add wasm32-unknown-unknown
+    # - name: 🔨 Install Wasm Bindgen
+    #   uses: baptiste0928/cargo-install@v2
+    #   with:
+    #     crate: wasm-bindgen-cli
+    #     version: '0.2.93'
+    # - name: 🔨 Build Crates
+    #   run: cd crates/beetmash_template && just build-wasm && just wasm-opt
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4.2.5
       with:
-        toolchain: nightly
-        override: true
-        default: true
-    - name: 🔨 Install Wasm Target
-      run: rustup target add wasm32-unknown-unknown
-    - name: 🔨 Install Wasm Bindgen
-      uses: baptiste0928/cargo-install@v2
-      with:
-        crate: wasm-bindgen-cli
-        version: '0.2.92'
-    - name: 🔨 Build Crates
-      run: cd crates/beetmash_template && just build-wasm
-    #   run: pwd && cd crates/beetmash_template && pwd && ls -la target/wasm
-    - name: ☁️ Upload release JS
-      uses: svenstaro/upload-release-action@v2
-      with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: crates/beetmash_template/target/wasm/main.js
-          # file: /home/runner/work/beetmash/beetmash/crates/beetmash_template/target/wasm/main.js
-          asset_name: main.js
-          release_name: ${{ env.VERSION }}
-          tag: ${{ env.VERSION }}
-          overwrite: true
-    - name: ☁️ Upload release WASM
-      uses: svenstaro/upload-release-action@v2
-      with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: crates/beetmash_template/target/wasm/main_bg.wasm
-          # file: /home/runner/work/beetmash/beetmash/crates/beetmash_template/target/wasm/main_bg.wasm
-          asset_name: main_bg.wasm
-          release_name: ${{ env.VERSION }}
-          tag: ${{ env.VERSION }}
-          overwrite: true
+        branch: main
+        repository-name: mrchantey/beetmash-apps
+        folder: crates/beetmash_template/public
+        token: ${{ secrets.BEETMASH_APPS_DEPLOY_TOKEN }}
+    # - name: ☁️ Upload release JS
+    #   uses: svenstaro/upload-release-action@v2
+    #   with:
+    #       repo_token: ${{ secrets.GITHUB_TOKEN }}
+    #       file: crates/beetmash_template/target/wasm/main.js
+    #       # file: /home/runner/work/beetmash/beetmash/crates/beetmash_template/target/wasm/main.js
+    #       asset_name: main.js
+    #       release_name: ${{ env.VERSION }}
+    #       tag: ${{ env.VERSION }}
+    #       overwrite: true
+    # - name: ☁️ Upload release WASM
+    #   uses: svenstaro/upload-release-action@v2
+    #   with:
+    #       repo_token: ${{ secrets.GITHUB_TOKEN }}
+    #       file: crates/beetmash_template/target/wasm/main_bg.wasm
+    #       # file: /home/runner/work/beetmash/beetmash/crates/beetmash_template/target/wasm/main_bg.wasm
+    #       asset_name: main_bg.wasm
+    #       release_name: ${{ env.VERSION }}
+    #       tag: ${{ env.VERSION }}
+    #       overwrite: true

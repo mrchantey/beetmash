@@ -30,3 +30,14 @@ deploy-wasm:
 	aws s3 sync {{wasm-dir}} \
 	s3://beetmash-apps/temp/beetmash_template \
 	--delete
+
+@wasm-opt:
+	just list-size "pre wasm-opt\t"
+	wasm-opt -Oz --output target/optimized.wasm target/wasm/main_bg.wasm
+	mv target/optimized.wasm target/wasm/main_bg.wasm
+	just list-size "post wasm-opt\t"
+
+@list-size prefix:
+	file_size_bytes=$(stat -c%s "{{wasm-dir}}/main_bg.wasm") \
+	&& file_size_mb=$(echo "scale=2; $file_size_bytes / 1024 / 1024" | bc) \
+	&& echo "{{prefix}} $file_size_mb MB"

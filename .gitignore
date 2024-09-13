@@ -1,4 +1,5 @@
 .vscode/
 assets/
+crates/beetmash_core/src/ik_solver/ik_solver.ts
 
 target/
