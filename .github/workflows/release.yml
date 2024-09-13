@@ -30,7 +30,6 @@ jobs:
     needs: get-version
     env:
       VERSION: ${{needs.get-version.outputs.version}}
-      # BEETMASH_APPS_DEPLOY_TOKEN: ${{ secrets.BEETMASH_APPS_DEPLOY_TOKEN }}
     defaults:
       run:
         working-directory: beetmash
@@ -44,7 +43,7 @@ jobs:
       with:
         repository: mrchantey/beetmash-apps
         path: beetmash-apps
-        # token: ${{ secrets.BEETMASH_APPS_DEPLOY_TOKEN }}
+        token: ${{ secrets.BEETMASH_APPS_DEPLOY_TOKEN }}
     - name: 📂 Cache
       uses: actions/cache@v4
       with:
@@ -55,15 +54,32 @@ jobs:
           ~/.cargo/git/db/
           target/
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-    - name: 📂🗄️ Checkout Release Repo
-      uses: actions/checkout@v4
+    - name: 🔨 Install Bevy Dependencies
+      run: sudo apt-get update && sudo apt-get install g++ pkg-config libx11-dev libasound2-dev libudev-dev mold
+    - name: 🔨 Install Just
+      uses: extractions/setup-just@v1
+    - name: 🔨 Install Rust
+      uses: actions-rs/toolchain@v1
       with:
-        repository: mrchantey/beetmash-apps
-        path: beetmash-apps
-        token: ${{ secrets.BEETMASH_APPS_DEPLOY_TOKEN }}
-    - name: Deploy to another private repo
+        toolchain: nightly
+        override: true
+        default: true
+    - name: 🔨 Install Binaryen
+      run: sudo apt install binaryen
+    - name: 🔨 Install Wasm Target
+      run: rustup target add wasm32-unknown-unknown
+    - name: 🔨 Install Wasm Bindgen
+      uses: baptiste0928/cargo-install@v2
+      with:
+        crate: wasm-bindgen-cli
+        version: '0.2.93'
+    - name: 🔨 Build Crates
+      run: cd crates/beetmash_template && just build-wasm && just wasm-opt
+    - name: 🌐 Deploy to Pages Repo
       run: |
+        rm -rf ../beetmash-apps/beetmash_template || true
         mkdir -p ../beetmash-apps/beetmash_template || true
+        cp crates/beetmash_template/target/wasm/* ../beetmash-apps/beetmash_template
         cp crates/beetmash_template/public/* ../beetmash-apps/beetmash_template
         cd ../beetmash-apps
         git config --global user.name "github-actions[bot]"
@@ -71,33 +87,8 @@ jobs:
         git add .
         git commit -m "Deploy from GitHub Actions"
         git push origin main
-# git clone https://github.com/username/target-repo.git
-        # Copy files or perform deployment steps
-# git push https://$DEPLOY_TOKEN@github.com/username/target-repo.git
 
-    # - name: 🔨 Install Bevy Dependencies
-    #   run: sudo apt-get update && sudo apt-get install g++ pkg-config libx11-dev libasound2-dev libudev-dev mold
-    # - name: 🔨 Install Just
-    #   uses: extractions/setup-just@v1
-    # - name: 🔨 Install Rust
-    #   uses: actions-rs/toolchain@v1
-    #   with:
-    #     toolchain: nightly
-    #     override: true
-    #     default: true
-    # - name: 🔨 Install Binaryen
-    #   run: sudo apt install binaryen
-    # - name: 🔨 Install Wasm Target
-    #   run: rustup target add wasm32-unknown-unknown
-    # - name: 🔨 Install Wasm Bindgen
-    #   uses: baptiste0928/cargo-install@v2
-    #   with:
-    #     crate: wasm-bindgen-cli
-    #     version: '0.2.93'
-    # - name: 🔨 Build Crates
-    #   run: cd crates/beetmash_template && just build-wasm && just wasm-opt
 
-    
     # - name: Deploy to GitHub Pages
     #   uses: JamesIves/github-pages-deploy-action@v4.2.5
     #   with:
