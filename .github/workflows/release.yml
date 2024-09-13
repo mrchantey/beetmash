@@ -80,9 +80,9 @@ jobs:
         rm -rf ../beetmash-apps/beetmash_template || true
         mkdir -p ../beetmash-apps/beetmash_template || true
         mkdir -p ../beetmash-apps/beetmash_template/wasm
-        cp crates/beetmash_template/target/wasm ../beetmash-apps/beetmash_template
-        cp crates/beetmash_template/scenes ../beetmash-apps/beetmash_template/scenes
-        cp crates/beetmash_template/public/* ../beetmash-apps/beetmash_template
+        cp -r crates/beetmash_template/target/wasm ../beetmash-apps/beetmash_template
+        cp -r crates/beetmash_template/scenes ../beetmash-apps/beetmash_template
+        cp -r crates/beetmash_template/public/* ../beetmash-apps/beetmash_template
         cd ../beetmash-apps
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"

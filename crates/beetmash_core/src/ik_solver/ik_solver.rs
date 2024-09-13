@@ -73,10 +73,10 @@ pub fn solve_ik_3d(
 		extent_max,
 	}: IkOptions3d,
 ) -> Result<(Mat4, Mat4, Mat4)> {
-	let right = Vec3::normalize(target - origin);
+	let right = (target - origin).normalize();
 	let forward = Vec3::cross(right, up).normalize();
 	if forward.is_nan() {
-		return Err(anyhow::anyhow!("forward is nan"));
+		anyhow::bail!("forward is nan");
 	}
 	let local_to_world = Mat4::look_to_rh(origin, forward, up);
 	let world_to_local = local_to_world.inverse();
@@ -184,9 +184,7 @@ mod test {
 	use crate::prelude::*;
 	use anyhow::Result;
 	use bevy::prelude::*;
-	use forky_bevy::prelude::Vec3Ext;
 	use std::f32::consts::TAU;
-	use sweet::*;
 
 	#[test]
 	fn works() -> Result<()> {
@@ -195,7 +193,7 @@ mod test {
 			let x = theta.cos();
 			let y = theta.sin();
 
-			let (mat1, mat2, mat3) = solve_ik_3d(IkOptions3d {
+			let (_mat1, _mat2, mat3) = solve_ik_3d(IkOptions3d {
 				target: Vec3::new(x, 0., y),
 				// target: Vec3::new(0., 100., 0.1),
 				len_a: 10.,
@@ -205,8 +203,8 @@ mod test {
 				..default()
 			})?;
 
-			let (_, _, pos1) = mat1.to_scale_rotation_translation();
-			let (_, _, pos2) = mat2.to_scale_rotation_translation();
+			// let (_, _, pos1) = mat1.to_scale_rotation_translation();
+			// let (_, _, pos2) = mat2.to_scale_rotation_translation();
 			let (_, _, pos3) = mat3.to_scale_rotation_translation();
 
 			// println!(
