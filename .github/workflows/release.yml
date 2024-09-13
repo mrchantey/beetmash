@@ -73,8 +73,8 @@ jobs:
 # git clone https://github.com/username/target-repo.git
         # Copy files or perform deployment steps
 # git push https://$DEPLOY_TOKEN@github.com/username/target-repo.git
-      # env:
-      #   DEPLOY_TOKEN: ${{ secrets.BEETMASH_APPS_DEPLOY_TOKEN }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.BEETMASH_APPS_DEPLOY_TOKEN }}
 
     # - name: 🔨 Install Bevy Dependencies
     #   run: sudo apt-get update && sudo apt-get install g++ pkg-config libx11-dev libasound2-dev libudev-dev mold
