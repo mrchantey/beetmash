@@ -6,10 +6,117 @@
 	<title>A Cool Site</title>
 	<meta name="description" content="An amazing website">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		body {
+			margin: 0;
+			background-color: black;
+			overflow: hidden;
+		}
+
+		/* canvas {
+			width: 100dvw;
+			height: 100dvh;
+		} */
+	</style>
 </head>
 
 <body>
-	<div>hello world</div>
+	<canvas id="beetmash-canvas"></canvas>
+	<script type="module">
+		import init from './wasm/main.js'
+		init('./wasm/main_bg.wasm')
+			.catch((error) => {
+				if (!error.message.startsWith("Using exceptions for control flow,"))
+					throw error
+			})
+		// .then(() => console.log('Wasm initialized'))
+
+		const replicationRegistry =
+		{
+			"beetmash_net::events::common_events::AppStartup": 0,
+			"beetmash_net::events::common_events::AppReady": 1,
+			"beetmash_net::events::common_events::OnUserMessage": 2,
+			"beetmash_net::events::common_events::OnAppMessage": 3,
+			"beetmash_scene::utils::spawn_scene_file::SpawnSceneFile": 4,
+			"beetmash_scene::utils::spawn_scene_file::SpawnSceneFileResponse": 5,
+			"beetmash_core::render::screenshot::SaveScreenshot": 6
+		}
+
+
+		function sendUserMessage(message) {
+			sendMessage("beetmash_net::events::common_events::OnUserMessage", message)
+		}
+
+		async function sendMessage(key, payload, awaitKey) {
+			let reg_id = replicationRegistry[key]
+			if (reg_id === undefined) {
+				console.error('Unknown RegId key:', key)
+				return
+			}
+			const message = {
+				SendEvent: {
+					reg_id: replicationRegistry[key],
+					payload: {
+						Json: JSON.stringify(payload)
+					}
+				}
+			}
+			let awaiter = awaitKey
+				? awaitMessage(awaitKey)
+				: null
+			window.dispatchEvent(new CustomEvent('js-message', {
+				detail: JSON.stringify([message])
+			}))
+			if (awaiter) {
+				return await awaiter
+			}
+		}
+
+		function awaitMessage(key) {
+			return new Promise((resolve) => {
+				const listener = (event) => {
+					const messages = JSON.parse(event.detail)
+					for (const message of messages) {
+						if (message?.SendEvent?.reg_id === replicationRegistry[key]) {
+							resolve(message.SendEvent.payload.Json)
+							window.removeEventListener('wasm-message', listener)
+						}
+					}
+				}
+				window.addEventListener('wasm-message', listener)
+			})
+		}
+
+		window.addEventListener('wasm-message', async (event) => {
+			const messages = JSON.parse(event.detail)
+			for (const message of messages) {
+				if (message?.SendObserver?.reg_id === replicationRegistry["beetmash_net::events::common_events::AppStartup"]) {
+					console.log('AppStartup')
+					await loadScene('scenes/my-base-scene.json')
+					await loadScene('scenes/my-beautiful-scene.json')
+					console.log('All scenes sent')
+					sendUserMessage('loud and clear')
+				}
+			}
+		})
+
+		async function loadScene(name) {
+			console.log('loading scene', name)
+			const response = await fetch(`${name}`)
+			const json = await response.text()
+			const spawnPayload = {
+				format: "Json",
+				payload: json
+			}
+			let hashmap = await sendMessage(
+				"beetmash_scene::utils::spawn_scene_file::SpawnSceneFile",
+				spawnPayload,
+				"beetmash_scene::utils::spawn_scene_file::SpawnSceneFileResponse"
+			)
+			console.log('hashmap received:', hashmap)
+		}
+
+	</script>
 </body>
 
 </html>

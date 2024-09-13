@@ -38,7 +38,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         path: beetmash
-    - name: 📂🗄️ Checkout Release Repo
+    - name: 📂🌐 Checkout Pages Repo
       uses: actions/checkout@v4
       with:
         repository: mrchantey/beetmash-apps
@@ -79,7 +79,9 @@ jobs:
       run: |
         rm -rf ../beetmash-apps/beetmash_template || true
         mkdir -p ../beetmash-apps/beetmash_template || true
-        cp crates/beetmash_template/target/wasm/* ../beetmash-apps/beetmash_template
+        mkdir -p ../beetmash-apps/beetmash_template/wasm
+        cp crates/beetmash_template/target/wasm ../beetmash-apps/beetmash_template
+        cp crates/beetmash_template/scenes ../beetmash-apps/beetmash_template/scenes
         cp crates/beetmash_template/public/* ../beetmash-apps/beetmash_template
         cd ../beetmash-apps
         git config --global user.name "github-actions[bot]"
@@ -87,15 +89,6 @@ jobs:
         git add .
         git commit -m "Deploy from GitHub Actions"
         git push origin main
-
-
-    # - name: Deploy to GitHub Pages
-    #   uses: JamesIves/github-pages-deploy-action@v4.2.5
-    #   with:
-    #     repository-name: mrchantey/beetmash-apps
-    #     branch: main
-    #     folder: crates/beetmash_template/public
-    #     token: ${{ secrets.BEETMASH_APPS_DEPLOY_TOKEN }}
     # - name: ☁️ Upload release JS
     #   uses: svenstaro/upload-release-action@v2
     #   with:
