@@ -1,6 +1,6 @@
 use anyhow::Result;
 use bevy::prelude::*;
-use forky_bevy::prelude::Vec3Ext;
+use forky::prelude::*;
 use std::f32::consts::PI;
 
 const DEFAULT_EXTENT_MIN: f32 = 0.05;

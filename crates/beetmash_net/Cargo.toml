@@ -18,7 +18,7 @@ tokio = ["dep:tokio", "dep:tokio-tungstenite", "dep:futures-util"]
 # bevy_replicon = ["dep:bevy_replicon"]
 
 [dependencies]
-forky_core.workspace = true
+forky.workspace = true
 log.workspace = true
 anyhow.workspace = true
 extend.workspace = true
@@ -48,7 +48,7 @@ futures-util = { workspace = true, optional = true }
 
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
-forky_web.workspace = true
+forky.workspace = true
 web-sys.workspace = true
 js-sys.workspace = true
 wasm-bindgen.workspace = true

@@ -2,7 +2,7 @@ use super::native_client::NativeWsClient;
 use crate::prelude::*;
 use bevy::prelude::*;
 use bevy::tasks::block_on;
-use forky_core::ResultTEExt;
+use forky::prelude::ResultTEExt;
 
 pub struct NativeClientPlugin {
 	pub address: String,

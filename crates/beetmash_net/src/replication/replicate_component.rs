@@ -2,7 +2,7 @@ use crate::prelude::*;
 use anyhow::Result;
 use bevy::ecs::system::EntityCommands;
 use bevy::prelude::*;
-use forky_core::ResultTEExt;
+use forky::prelude::ResultTEExt;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 

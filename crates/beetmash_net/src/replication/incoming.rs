@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use bevy::prelude::*;
-use forky_core::ResultTEExt;
+use forky::prelude::ResultTEExt;
 
 
 pub fn handle_incoming_commands(

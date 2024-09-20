@@ -1,9 +1,9 @@
 use crate::prelude::*;
 use anyhow::Result;
 use flume::Receiver;
-use forky_core::ResultTEExt;
-use forky_web::HtmlEventListener;
-use forky_web::ResultTJsValueExt;
+use forky::prelude::ResultTEExt;
+use forky::web::HtmlEventListener;
+use forky::web::ResultTJsValueExt;
 use js_sys::ArrayBuffer;
 use js_sys::JsString;
 use js_sys::Uint8Array;

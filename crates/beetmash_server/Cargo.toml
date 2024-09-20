@@ -1,28 +1,28 @@
 [package]
 name = "beetmash_server"
-publish = { workspace = true }
-version = { workspace = true }
-edition = { workspace = true }
-repository = { workspace = true }
-readme = { workspace = true }
-description = { workspace = true }
-documentation = { workspace = true }
+publish.workspace = true
+version.workspace = true
+edition.workspace = true
+repository.workspace = true
+readme.workspace = true
+description.workspace = true
+documentation.workspace = true
 
 # [dependencies]
 # get rust-analyzer to stop complaining by specifying not wasm
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-forky_core = { workspace = true }
-beetmash_net = { workspace = true }
+forky.workspace = true
+beetmash_net.workspace = true
 
-extend = { workspace = true }
-anyhow = { workspace = true }
-serde = { workspace = true }
-log = { workspace = true }
-pretty_env_logger = { workspace = true }
+extend.workspace = true
+anyhow.workspace = true
+serde.workspace = true
+log.workspace = true
+pretty_env_logger.workspace = true
 
-tokio = { workspace = true }
-futures = { workspace = true }
-futures-util = { workspace = true }
+tokio.workspace = true
+futures.workspace = true
+futures-util.workspace = true
 axum = { version = "0.7", features = ["ws"] }
 axum-extra = { version = "0.9", features = ["typed-header"] }
 

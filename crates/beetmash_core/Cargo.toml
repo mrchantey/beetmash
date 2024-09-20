@@ -18,8 +18,7 @@ scene = ["bevy/bevy_scene", "bevy/serialize", "dep:beetmash_scene"]
 test = ["dep:sweet"]
 
 [dependencies]
-forky_bevy.workspace = true
-forky_core.workspace = true
+forky.workspace = true
 beetmash_net.workspace = true
 beetmash_scene = { workspace = true, optional = true }
 bevy.workspace = true

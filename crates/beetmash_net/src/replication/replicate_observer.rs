@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use anyhow::Result;
 use bevy::prelude::*;
-use forky_core::ResultTEExt;
+use forky::prelude::ResultTEExt;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 
@@ -49,8 +49,8 @@ fn outgoing_send<T: Event + Serialize>(
 mod test {
 	use crate::prelude::*;
 	use anyhow::Result;
-	use beetmash_scene::test::*;
 	use beetmash_scene::prelude::*;
+	use beetmash_scene::test::*;
 	use bevy::prelude::*;
 	use serde::Deserialize;
 	use serde::Serialize;

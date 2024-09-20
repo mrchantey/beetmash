@@ -2,7 +2,7 @@ use bevy::input::keyboard::KeyboardInput;
 use bevy::prelude::*;
 use bevy::render::view::screenshot::ScreenshotManager;
 use bevy::window::PrimaryWindow;
-use forky_core::ResultTEExt;
+use forky::prelude::*;
 use serde::Deserialize;
 use serde::Serialize;
 

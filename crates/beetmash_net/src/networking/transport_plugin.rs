@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use bevy::prelude::*;
 use bevy::time::common_conditions::on_timer;
-use forky_core::ResultTEExt;
+use forky::prelude::ResultTEExt;
 use std::time::Duration;
 
 pub const DEFAULT_TRANSPORT_INTERVAL: Duration = Duration::from_millis(100);

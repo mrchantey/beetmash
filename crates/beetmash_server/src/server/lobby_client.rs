@@ -1,7 +1,7 @@
 use super::*;
 use anyhow::Result;
 use axum::extract::ws;
-use forky_core::prelude::*;
+use forky::prelude::*;
 use futures::SinkExt;
 use futures_util::stream::SplitSink;
 use futures_util::StreamExt;

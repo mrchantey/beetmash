@@ -4,7 +4,7 @@ use bevy::ecs::entity::EntityHashMap;
 use bevy::ecs::system::SystemState;
 use bevy::prelude::*;
 use bevy::scene::serde::SceneDeserializer;
-use forky_core::ResultTEExt;
+use forky::prelude::*;
 use serde::de::DeserializeSeed;
 use serde::Deserialize;
 use serde::Deserializer;

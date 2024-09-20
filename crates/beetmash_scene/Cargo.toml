@@ -29,7 +29,7 @@ test = ["dep:sweet"]
 
 [dependencies]
 ts-rs = { version = "9.0.1", optional = true }
-forky_core.workspace = true
+forky.workspace = true
 bevy.workspace = true
 bevy_reflect = { workspace = true, optional = true }
 log.workspace = true

@@ -55,16 +55,15 @@ beetmash_scene = { path = "crates/beetmash_scene", version = "0.0.6-rc.5" }
 beetmash_server = { path = "crates/beetmash_server", version = "0.0.6-rc.5" }
 
 #💡 local-relative
-# forky_core = { version = "0.1.51", path = "../forky/crates/forky_core" }
-# forky_bevy = { version = "0.1.51", path = "../forky/crates/forky_bevy" }
-# forky_web = { version = "0.1.51", path = "../forky/crates/forky_web", default-features = false }
 # sweet = { version = "0.1.51", path = "../sweet", features = ["bevy"] }
+forky = { version = "0.2.0-rc.6", features = [
+	"bevy",
+	"web",
+], path = "../forky" }
 
 #💡 local-published
-forky_core = "0.2.0-rc.3"
-forky_bevy = "0.2.0-rc.3"
-forky_web = "0.2.0-rc.3"
-sweet = { version = "0.2.0-rc.3", features = ["bevy"] }
+sweet = { path = "../sweet", version = "0.2.0-rc.3", features = ["bevy"] }
+# sweet = { version = "0.2.0-rc.3", features = ["bevy"] }
 
 #💡 Utility
 log = "0.4"
@@ -95,14 +94,12 @@ js-sys = "0.3"
 wasm-bindgen = "0.2"
 wasm-bindgen-futures = "0.4"
 
-
 #💡 Game
 # bevy = { version = "0.14", default-features = false, features = [
 # 	"bevy_scene",
 # 	"serialize",
 # 	# "bevy_color",
 # ] }
-#💡 observer reflect attributes, required until 0.14.1
 bevy = { version = "0.14", default-features = false }
 bevy_reflect = { version = "0.14" }
 # bevy = { version="0.15.0-dev", git = "https://github.com/jrobsonchase/bevy", branch = "pre_map_entities", default-features = false }
@@ -138,9 +135,9 @@ beetmash_scene = { workspace = true, optional = true }
 beetmash_net = { workspace = true, optional = true }
 
 [dev-dependencies]
+forky.workspace = true
 bevy.workspace = true
 anyhow.workspace = true
-forky_bevy.workspace = true
 serde_json.workspace = true
 
 [workspace.dependencies.web-sys]

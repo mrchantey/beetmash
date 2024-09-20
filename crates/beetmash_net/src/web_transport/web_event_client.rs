@@ -1,9 +1,9 @@
 use crate::prelude::*;
 use anyhow::Result;
 use flume::Receiver;
-use forky_core::ResultTEExt;
-use forky_web::HtmlEventListener;
-use forky_web::ResultTJsValueExt;
+use forky::prelude::ResultTEExt;
+use forky::web::HtmlEventListener;
+use forky::web::ResultTJsValueExt;
 use wasm_bindgen::JsCast;
 use wasm_bindgen::JsValue;
 use web_sys::CustomEvent;
