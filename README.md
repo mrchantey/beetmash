@@ -1,6 +1,6 @@
-# beetmash
+# Beetmash
 
-Beetmash helps you create, share and deploy your Bevy apps.
+The Beetmash crate helps you create, share and deploy your Bevy apps.
 
 ## Crates
 

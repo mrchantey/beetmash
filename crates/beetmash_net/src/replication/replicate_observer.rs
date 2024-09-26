@@ -50,7 +50,6 @@ mod test {
 	use crate::prelude::*;
 	use anyhow::Result;
 	use beetmash_scene::prelude::*;
-	use beetmash_scene::test::*;
 	use bevy::prelude::*;
 	use serde::Deserialize;
 	use serde::Serialize;

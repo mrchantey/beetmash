@@ -14,16 +14,11 @@ impl Plugin for UiTerminalPlugin {
 	fn build(&self, app: &mut App) {
 		app
 		.observe(log_user_message)
-		.observe(
-			|trigger: Trigger<OnLogMessage>,	commands: Commands,
-			terminals: Query<Entity, With<UiTerminal>>| {
-				ui_terminal_stdout(In(vec![trigger.event().0.to_string()]), commands, terminals);
-			},
-		)
-			.add_systems(Update, (
-				log_app_ready.pipe(ui_terminal_stdout),
+			.observe(log_on_message.pipe(ui_terminal_stdout))
+			.observe(log_app_ready.pipe(ui_terminal_stdout))
+			.add_systems(Update, 
 				parse_text_input
-			))
+			)
 			.add_systems(
 				PostUpdate,
 				(init_output,resize_output_container,remove_excessive_lines)
@@ -79,29 +74,28 @@ fn style() -> TextStyle {
 
 /// Pipe a system into here for the values to be printed to the terminal.
 pub fn ui_terminal_stdout(
-	values: In<Vec<String>>,
+	text: In<String>,
 	mut commands: Commands,
 	terminals: Query<Entity, With<UiTerminal>>,
 ) {
 	for entity in terminals.iter() {
-		for text in values.iter() {
-			commands.entity(entity).with_children(|parent| {
-				let mut style = style();
-				style.color.set_alpha(0.);
-				parent.spawn(
-					// AccessibilityNode(NodeBuilder::new(Role::ListItem)),
-					(OutputItem, TextBundle::from_section(text, style)),
-				);
-			});
-		}
+		commands.entity(entity).with_children(|parent| {
+			let mut style = style();
+			style.color.set_alpha(0.);
+			parent.spawn(
+				// AccessibilityNode(NodeBuilder::new(Role::ListItem)),
+				(OutputItem, TextBundle::from_section(text.clone(), style)),
+			);
+		});
 	}
 }
 
-fn log_app_ready(mut events: EventReader<AppReady>) -> Vec<String> {
-	events
-		.read()
-		.map(|_ev| format!("Event: AppReady"))
-		.collect()
+fn log_on_message(trigger: Trigger<OnLogMessage>)->String {
+	trigger.event().0.to_string()
+}
+
+fn log_app_ready(_trigger: Trigger<AppReady>) -> String {
+	format!("Event: AppReady")
 }
 
 fn get_top_pos(node: &Node, parent: &Node) -> f32 {
