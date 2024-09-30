@@ -540,6 +540,11 @@ dependencies = [
 [[package]]
 name = "beetmash-cli"
 version = "0.0.6-rc.5"
+dependencies = [
+ "anyhow",
+ "clap",
+ "forky 0.2.0-rc.6",
+]
 
 [[package]]
 name = "beetmash_core"
@@ -2479,6 +2484,7 @@ version = "0.2.0-rc.6"
 dependencies = [
  "forky_bevy",
  "forky_core 0.2.0-rc.6",
+ "forky_fs 0.2.0-rc.6",
  "forky_web 0.2.0-rc.6",
 ]
 
@@ -2489,7 +2495,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ac29aa45bd05424ca52de937458c1d5fb887192d45411f6826e51f1ac0a3d1c2"
 dependencies = [
  "forky_core 0.2.0-rc.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "forky_fs",
+ "forky_fs 0.2.0-rc.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "forky_web 0.2.0-rc.6 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -2530,6 +2536,25 @@ dependencies = [
  "log",
  "num-traits",
  "rand",
+]
+
+[[package]]
+name = "forky_fs"
+version = "0.2.0-rc.6"
+dependencies = [
+ "anyhow",
+ "clap",
+ "crossterm",
+ "extend",
+ "forky_core 0.2.0-rc.6",
+ "futures",
+ "gag",
+ "glob",
+ "hex",
+ "notify",
+ "notify-debouncer-full",
+ "sha2",
+ "tokio",
 ]
 
 [[package]]

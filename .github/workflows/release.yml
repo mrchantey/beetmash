@@ -74,7 +74,7 @@ jobs:
         crate: wasm-bindgen-cli
         version: '0.2.93'
     - name: 🔨 Build Crates
-      run: cd crates/beetmash_template && just build-wasm && just wasm-opt
+      run: cd crates/beetmash_template && just build-wasm
     - name: 🌐 Deploy to Pages Repo
       run: |
         rm -rf ../beetmash-apps/beetmash_template || true

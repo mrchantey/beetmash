@@ -4,6 +4,9 @@ set dotenv-load
 default:
 	just --list --unsorted
 
+cli *args:
+	cargo run -p beetmash-cli {{args}}
+
 export-scenes *args:
 	cargo run --example export_scenes {{args}}
 

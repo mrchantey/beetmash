@@ -11,33 +11,42 @@ run:
 pkg *args:
 	cargo package --no-verify --allow-dirty {{args}}
 
-wasm-dir:= './target/wasm'
+# build wasm mega command, upstream changest beetmash_template
+build-wasm:
+	just _build-wasm beetmash_template base_app ./target/wasm
 
-build-wasm *args:
-	cargo build --target wasm32-unknown-unknown --release {{args}}
+_build-wasm crate example wasm-dir *args:
+	cargo build \
+	--target wasm32-unknown-unknown \
+	--example {{example}} \
+	--release {{args}}
 	rm -rf {{wasm-dir}} || true
 	mkdir -p {{wasm-dir}} || true
 	wasm-bindgen \
 	--out-name main \
 	--out-dir {{wasm-dir}} \
 	--target web \
-	$CARGO_TARGET_DIR/wasm32-unknown-unknown/release/base_app.wasm \
+	$CARGO_TARGET_DIR/wasm32-unknown-unknown/release/examples/{{example}}.wasm \
 	--no-typescript
-	mkdir -p ../../../beetmash-api/target/storage/apps/beetmash_template || true
-	cp -r {{wasm-dir}}/* ../../../beetmash-api/target/storage/apps/beetmash_template
+	mkdir -p /home/pete/me/beetmash-api/target/storage/apps/{{crate}} || true
+	cp -r {{wasm-dir}}/* /home/pete/me/beetmash-api/target/storage/apps/{{crate}}
+	just wasm-opt {{wasm-dir}}
 
-deploy-wasm:
-	aws s3 sync {{wasm-dir}} \
-	s3://beetmash-apps/temp/beetmash_template \
-	--delete
-
-@wasm-opt:
-	just list-size "pre wasm-opt\t"
+@wasm-opt wasm-dir:
+	just list-size {{wasm-dir}} "pre wasm-opt\t"
 	wasm-opt -Oz --output target/optimized.wasm target/wasm/main_bg.wasm
 	mv target/optimized.wasm target/wasm/main_bg.wasm
-	just list-size "post wasm-opt\t"
+	just list-size {{wasm-dir}} "post wasm-opt\t"
 
-@list-size prefix:
+@list-size wasm-dir prefix:
 	file_size_bytes=$(stat -c%s "{{wasm-dir}}/main_bg.wasm") \
 	&& file_size_mb=$(echo "scale=2; $file_size_bytes / 1024 / 1024" | bc) \
 	&& echo "{{prefix}} $file_size_mb MB"
+
+
+
+
+# deploy-wasm:
+# 	aws s3 sync {{wasm-dir}} \
+# 	s3://beetmash-apps/temp/beetmash_template \
+# 	--delete

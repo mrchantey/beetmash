@@ -12,16 +12,6 @@ keywords.workspace = true
 categories.workspace = true
 publish = true
 
-default-run = "base_app"
-
-[[bin]]
-name = "base_app"
-path = "src/base_app.rs"
-
-[[bin]]
-name = "export_scenes"
-path = "src/export_scenes.rs"
-
 [dependencies]
 beetmash.workspace = true
 bevy = { workspace = true, default-features = true }
@@ -32,7 +22,6 @@ bevy = { workspace = true, default-features = true }
 [[package.metadata.scene]]
 name = "hello-world"
 # path will default to 'scenes/hello-world.json'
-
 
 ### 🎥 2 - A base scene
 
@@ -45,11 +34,8 @@ thumb-text = "🎥"
 # here we can specify the path to the scene file
 path = "scenes/my-base-scene.json"
 # specifying the path to a wasm app is a great way to share a demo of your scene
-app.js-url = "https://mrchantey.github.io/beetmash-apps/beetmash_template/wasm/main.js"
-app.wasm-url = "https://mrchantey.github.io/beetmash-apps/beetmash_template/wasm/main_bg.wasm"
-# app.js-url = "https://beetmash-apps.s3.amazonaws.com/temp/beetmash_template/main.js"
-# app.wasm-url = "https://beetmash-apps.s3.amazonaws.com/temp/beetmash_template/main_bg.wasm"
-
+app.js-url = "https://mrchantey.github.io/beetmash-apps/beetmash_template/main.js"
+app.wasm-url = "https://mrchantey.github.io/beetmash-apps/beetmash_template/main_bg.wasm"
 
 ### 🚀 3 - A demo scene
 

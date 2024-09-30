@@ -11,3 +11,9 @@ license.workspace = true
 keywords.workspace = true
 categories.workspace = true
 publish = true
+
+
+[dependencies]
+anyhow.workspace = true
+forky = { workspace = true, features = ["fs"] }
+clap = { version = "4.5", features = [] }
