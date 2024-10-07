@@ -1,7 +1,7 @@
 {
   "resources": {},
   "entities": {
-    "4294967298": {
+"4294967299": {
       "components": {
         "bevy_pbr::light::directional_light::DirectionalLight": {
           "color": {

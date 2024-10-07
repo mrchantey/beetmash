@@ -30,8 +30,6 @@ categories = [
 	"wasm",
 	"embedded",
 ]
-publish = false
-
 
 [workspace]
 resolver = "2"

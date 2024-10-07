@@ -6,8 +6,8 @@ use bevy::prelude::*;
 use std::path::PathBuf;
 
 
-/// A helper for exporting scenes.
-/// By default this **will clear the target directory**.
+/// A helper for exporting scenes. The default output directory is `scenes`
+/// and by default it will be cleared on export.
 pub struct SceneGroupExporter<P, M, Q = ()> {
 	plugin: P,
 	scenes: Vec<SceneExporter>,
@@ -26,7 +26,8 @@ impl<P: Clone + Plugins<M>, M> SceneGroupExporter<P, M, ()> {
 	}
 }
 impl<P: Clone + Plugins<M>, M, Q: QueryFilter> SceneGroupExporter<P, M, Q> {
-	pub fn with_query<Q2: QueryFilter>(self) -> SceneGroupExporter<P, M, Q2> {
+	/// Specify the `[QueryFilter]` for the entities that will be exported.
+	pub fn with_filter<Q2: QueryFilter>(self) -> SceneGroupExporter<P, M, Q2> {
 		SceneGroupExporter {
 			plugin: self.plugin,
 			config: self.config,

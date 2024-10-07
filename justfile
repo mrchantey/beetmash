@@ -30,12 +30,12 @@ app *scenes:
 
 app-terminal:
 	just app \
-	crates/beetmash_core/scenes/camera-2d.json \
-	crates/beetmash_core/scenes/ui-terminal-input.json \
+	scenes/camera-2d.json \
+	scenes/ui-terminal-input.json \
 app-space:
 	just app \
-	crates/beetmash_core/scenes/camera-2d.json \
-	crates/beetmash_core/scenes/space-scene.json	\
+	scenes/camera-2d.json \
+	scenes/space-scene.json	\
 
 
 test *args:

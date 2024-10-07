@@ -1,6 +1,10 @@
 use anyhow::Result;
+use bevy::audio::DefaultSpatialScale;
 use bevy::ecs::query::QueryFilter;
+use bevy::pbr::DirectionalLightShadowMap;
+use bevy::pbr::PointLightShadowMap;
 use bevy::prelude::*;
+use bevy::time::TimeUpdateStrategy;
 use std::path::Path;
 
 
@@ -22,6 +26,8 @@ pub struct DynamicSceneChecks {
 	pub num_ignored_resources: usize,
 	/// List of components that are allowed to be missing
 	pub allowed_ignores: Vec<String>,
+
+	pub on_build: fn(DynamicSceneBuilder) -> DynamicSceneBuilder,
 }
 impl Default for DynamicSceneChecks {
 	fn default() -> Self {
@@ -30,19 +36,46 @@ impl Default for DynamicSceneChecks {
 			entity_checks: true,
 			component_checks: true,
 			// hacky way to ignore resources pulled in by [DefaultPlugins]
-			num_ignored_resources: 138,
+			num_ignored_resources: 139,
 			allowed_ignores: vec![
 				"bevy_text::text::CosmicBuffer".to_string(),
 				"beet_flow::observers::action_observer_map::ActionObserverMap"
 					.to_string(),
 				"bevy_ecs::observer::entity_observer::ObservedBy".to_string(),
 			],
+			on_build: |builder| {
+				builder
+					// render
+					.deny_resource::<Msaa>()
+					.deny_resource::<ClearColor>()
+					.deny_resource::<AmbientLight>()
+					.deny_resource::<DirectionalLightShadowMap>()
+					.deny_resource::<PointLightShadowMap>()
+					.deny_resource::<GlobalVolume>()
+					// time
+					.deny_resource::<Time>()
+					.deny_resource::<Time<Real>>()
+					.deny_resource::<Time<Virtual>>()
+					.deny_resource::<Time<Fixed>>()
+					.deny_resource::<TimeUpdateStrategy>()
+					// other
+					.deny_resource::<DefaultSpatialScale>()
+					.deny_resource::<GizmoConfigStore>()
+			},
 		}
 	}
 }
 
 impl DynamicSceneChecks {
 	pub fn new() -> Self { Self::default() }
+
+	pub fn on_build(
+		mut self,
+		on_build: fn(DynamicSceneBuilder) -> DynamicSceneBuilder,
+	) -> Self {
+		self.on_build = on_build;
+		self
+	}
 
 	pub fn with_asset_checks(mut self, checks: bool) -> Self {
 		self.resource_checks = checks;
@@ -66,6 +99,11 @@ impl DynamicSceneChecks {
 	pub fn with_num_ignored_resources(mut self, num: usize) -> Self {
 		self.num_ignored_resources = num;
 		self
+	}
+
+	pub fn filtered_builder<'w>(&self, world: &'w mut World) -> DynamicSceneBuilder<'w> {
+		let builder = DynamicSceneBuilder::from_world(world);
+		(self.on_build)(builder)
 	}
 
 	pub fn assert_scene_match<Q: QueryFilter>(

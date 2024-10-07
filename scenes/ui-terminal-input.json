@@ -1,7 +1,7 @@
 {
   "resources": {},
   "entities": {
-    "4294967298": {
+    "4294967299": {
       "components": {
         "bevy_ui::ui_node::Node": {
           "stack_index": 0,
@@ -14,6 +14,12 @@
           "unrounded_size": {
             "x": 0.0,
             "y": 0.0
+          },
+          "border_radius": {
+            "top_left": 0.0,
+            "top_right": 0.0,
+            "bottom_left": 0.0,
+            "bottom_right": 0.0
           }
         },
         "bevy_ui::ui_node::Style": {
@@ -201,13 +207,13 @@
         },
         "bevy_hierarchy::components::children::Children": [
           [
-            4294967299,
-            4294967301
+            4294967300,
+            4294967302
           ]
         ]
       }
     },
-    "4294967299": {
+    "4294967300": {
       "components": {
         "bevy_ui::ui_node::Node": {
           "stack_index": 0,
@@ -220,6 +226,12 @@
           "unrounded_size": {
             "x": 0.0,
             "y": 0.0
+          },
+          "border_radius": {
+            "top_left": 0.0,
+            "top_right": 0.0,
+            "bottom_left": 0.0,
+            "bottom_right": 0.0
           }
         },
         "bevy_ui::ui_node::Style": {
@@ -407,16 +419,16 @@
         },
         "beetmash_core::components::ui_terminal::OutputContainer": {},
         "bevy_hierarchy::components::parent::Parent": [
-          4294967298
+          4294967299
         ],
         "bevy_hierarchy::components::children::Children": [
           [
-            4294967300
+            4294967301
           ]
         ]
       }
     },
-    "4294967300": {
+    "4294967301": {
       "components": {
         "beetmash_core::components::ui_terminal::UiTerminal": {},
         "bevy_ui::ui_node::Node": {
@@ -430,6 +442,12 @@
           "unrounded_size": {
             "x": 0.0,
             "y": 0.0
+          },
+          "border_radius": {
+            "top_left": 0.0,
+            "top_right": 0.0,
+            "bottom_left": 0.0,
+            "bottom_right": 0.0
           }
         },
         "bevy_ui::ui_node::Style": {
@@ -612,11 +630,11 @@
           "Local": 0
         },
         "bevy_hierarchy::components::parent::Parent": [
-          4294967299
+          4294967300
         ]
       }
     },
-    "4294967301": {
+    "4294967302": {
       "components": {
         "bevy_ui::ui_node::Node": {
           "stack_index": 0,
@@ -629,6 +647,12 @@
           "unrounded_size": {
             "x": 0.0,
             "y": 0.0
+          },
+          "border_radius": {
+            "top_left": 0.0,
+            "top_right": 0.0,
+            "bottom_left": 0.0,
+            "bottom_right": 0.0
           }
         },
         "bevy_ui::ui_node::Style": {
@@ -815,65 +839,17 @@
           "Local": 0
         },
         "bevy_hierarchy::components::parent::Parent": [
-          4294967298
+          4294967299
         ],
         "bevy_hierarchy::components::children::Children": [
           [
-            4294967302
+            4294967303
           ]
         ]
       }
     },
-    "4294967302": {
+    "4294967303": {
       "components": {
-        "bevy_text::text::Text": {
-          "sections": [
-            {
-              "value": "User> ",
-              "style": {
-                "font": {
-                  "Weak": {
-                    "Uuid": {
-                      "uuid": "97128bb1-2588-480b-bdc6-87b4adbec477"
-                    }
-                  }
-                },
-                "font_size": 32.0,
-                "color": {
-                  "LinearRgba": {
-                    "red": 1.0,
-                    "green": 1.0,
-                    "blue": 1.0,
-                    "alpha": 1.0
-                  }
-                }
-              }
-            },
-            {
-              "value": "",
-              "style": {
-                "font": {
-                  "Weak": {
-                    "Uuid": {
-                      "uuid": "97128bb1-2588-480b-bdc6-87b4adbec477"
-                    }
-                  }
-                },
-                "font_size": 32.0,
-                "color": {
-                  "LinearRgba": {
-                    "red": 1.0,
-                    "green": 1.0,
-                    "blue": 1.0,
-                    "alpha": 1.0
-                  }
-                }
-              }
-            }
-          ],
-          "justify": "Left",
-          "linebreak_behavior": "WordBoundary"
-        },
         "bevy_ui::ui_node::Node": {
           "stack_index": 0,
           "calculated_size": {
@@ -885,6 +861,12 @@
           "unrounded_size": {
             "x": 0.0,
             "y": 0.0
+          },
+          "border_radius": {
+            "top_left": 0.0,
+            "top_right": 0.0,
+            "bottom_left": 0.0,
+            "bottom_right": 0.0
           }
         },
         "bevy_ui::ui_node::Style": {
@@ -1045,11 +1027,59 @@
           "Local": 0
         },
         "bevy_hierarchy::components::parent::Parent": [
-          4294967301
+          4294967302
         ],
+        "bevy_text::text::Text": {
+          "sections": [
+            {
+              "value": "User> ",
+              "style": {
+                "font": {
+                  "Weak": {
+                    "Uuid": {
+                      "uuid": "97128bb1-2588-480b-bdc6-87b4adbec477"
+                    }
+                  }
+                },
+                "font_size": 32.0,
+                "color": {
+                  "LinearRgba": {
+                    "red": 1.0,
+                    "green": 1.0,
+                    "blue": 1.0,
+                    "alpha": 1.0
+                  }
+                }
+              }
+            },
+            {
+              "value": "",
+              "style": {
+                "font": {
+                  "Weak": {
+                    "Uuid": {
+                      "uuid": "97128bb1-2588-480b-bdc6-87b4adbec477"
+                    }
+                  }
+                },
+                "font_size": 32.0,
+                "color": {
+                  "LinearRgba": {
+                    "red": 1.0,
+                    "green": 1.0,
+                    "blue": 1.0,
+                    "alpha": 1.0
+                  }
+                }
+              }
+            }
+          ],
+          "justify": "Left",
+          "linebreak_behavior": "WordBoundary"
+        },
         "bevy_text::pipeline::TextLayoutInfo": {
           "glyphs": [],
-          "size": {
+          "logical_size": {
             "x": 0.0,
             "y": 0.0
           }

@@ -1,6 +1,5 @@
 [package]
 name = "beetmash_server"
-publish.workspace = true
 version.workspace = true
 edition.workspace = true
 repository.workspace = true

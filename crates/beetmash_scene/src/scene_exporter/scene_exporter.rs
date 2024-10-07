@@ -1,14 +1,10 @@
 use crate::prelude::*;
 use anyhow::Result;
 use bevy::app::Plugins;
-use bevy::audio::DefaultSpatialScale;
 use bevy::ecs::query::QueryFilter;
 use bevy::ecs::schedule::SystemConfigs;
-use bevy::pbr::DirectionalLightShadowMap;
-use bevy::pbr::PointLightShadowMap;
 use bevy::prelude::*;
 use bevy::scene::serde::SceneSerializer;
-use bevy::time::TimeUpdateStrategy;
 use std::fs;
 
 pub struct SceneExporter {
@@ -46,22 +42,9 @@ impl SceneExporter {
 
 		let entities = get_save_entities::<Q>(world);
 		// let scene = DynamicScene::from_world(world);
-		let scene = DynamicSceneBuilder::from_world(world)
-			// render plugin
-			// .deny_resource::<Msaa>()
-			.deny_resource::<ClearColor>()
-			.deny_resource::<AmbientLight>()
-			.deny_resource::<DirectionalLightShadowMap>()
-			.deny_resource::<PointLightShadowMap>()
-			.deny_resource::<GlobalVolume>()
-			.deny_resource::<DefaultSpatialScale>()
-			.deny_resource::<GizmoConfigStore>()
-			// time plugin
-			.deny_resource::<Time>()
-			.deny_resource::<Time<Real>>()
-			.deny_resource::<Time<Virtual>>()
-			.deny_resource::<Time<Fixed>>()
-			.deny_resource::<TimeUpdateStrategy>()
+		let scene = config
+			.checks
+			.filtered_builder(world)
 			.extract_entities(entities.into_iter())
 			.extract_resources()
 			.build();

@@ -1,11 +1,7 @@
 use anyhow::Result;
 use beetmash::core;
 use beetmash::prelude::*;
-use bevy::ecs::observer::ObserverState;
-use bevy::prelude::*;
 use std::fs;
-
-const DIR: &str = "scenes";
 
 fn main() -> Result<()> {
 	SceneGroupExporter::new((
@@ -13,9 +9,7 @@ fn main() -> Result<()> {
 		DefaultPlaceholderPlugin,
 		UiTerminalPlugin,
 	))
-	.with_query::<(Without<ObserverState>, Without<Observer<OnLogMessage, ()>>)>(
-	)
-	.with_dir(DIR)
+	.with_filter::<DefaultSceneExportFilter>()
 	.add_scene("empty", || {})
 	// ui
 	.add_scene("ui-terminal", core::scenes::ui_terminal)
