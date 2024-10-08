@@ -28,10 +28,10 @@ impl Plugin for DefaultReplicatePlugin {
 		// .replicate_event_incoming::<SomeCustomEvent>()
 
 		#[cfg(feature="render")]
-			app.add_event::<SaveScreenshot>()
-			.replicate_event_incoming::<SaveScreenshot>()
-			.add_systems(Update,screenshot_on_event.run_if(run_if_rendering))
-			.add_systems(Update,screenshot_on_keypress.run_if(run_if_rendering))
+			app
+			.replicate_observer_incoming::<SaveScreenshot>()
+			.observe(screenshot_on_event)
+			.add_systems(Update,screenshot_on_keypress)
 			// .observe(screenshot_on_event)
 			// .observe(screenshot_on_keypress)
 				/*-*/;

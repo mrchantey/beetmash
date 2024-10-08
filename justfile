@@ -4,6 +4,9 @@ set dotenv-load
 default:
 	just --list --unsorted
 
+run example *args:
+	cargo run --example {{example}} {{args}}
+
 cli *args:
 	cargo run -p beetmash-cli {{args}}
 

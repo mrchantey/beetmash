@@ -3,7 +3,6 @@
   "entities": {
     "4294967296": {
       "components": {
-        "bevy_core::name::Name": "Circle",
         "beetmash_scene::utils::bundle_placeholder::BundlePlaceholder": {
           "Pbr": {
             "mesh": {
@@ -23,29 +22,43 @@
             }
           }
         },
+        "bevy_core::name::Name": "Circle",
+        "bevy_transform::components::global_transform::GlobalTransform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
         "bevy_transform::components::transform::Transform": {
-          "translation": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "rotation": {
-            "x": -0.70710677,
-            "y": 0.0,
-            "z": 0.0,
-            "w": 0.70710677
-          },
-          "scale": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
-          }
+          "translation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            -0.70710677,
+            0.0,
+            0.0,
+            0.70710677
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
         }
       }
     },
     "4294967297": {
       "components": {
-        "bevy_core::name::Name": "Cube",
         "beetmash_scene::utils::bundle_placeholder::BundlePlaceholder": {
           "Pbr": {
             "mesh": {
@@ -67,23 +80,38 @@
             }
           }
         },
+        "bevy_core::name::Name": "Cube",
+        "bevy_transform::components::global_transform::GlobalTransform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
         "bevy_transform::components::transform::Transform": {
-          "translation": {
-            "x": 0.0,
-            "y": 0.5,
-            "z": 0.0
-          },
-          "rotation": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0,
-            "w": 1.0
-          },
-          "scale": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
-          }
+          "translation": [
+            0.0,
+            0.5,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
         }
       }
     }

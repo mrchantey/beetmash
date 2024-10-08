@@ -1,6 +1,7 @@
 use anyhow::Result;
 use bevy::audio::DefaultSpatialScale;
 use bevy::ecs::query::QueryFilter;
+use bevy::pbr::DefaultOpaqueRendererMethod;
 use bevy::pbr::DirectionalLightShadowMap;
 use bevy::pbr::PointLightShadowMap;
 use bevy::prelude::*;
@@ -12,6 +13,7 @@ pub fn get_save_entities<Q: QueryFilter>(world: &mut World) -> Vec<Entity> {
 	// TODO removed ,Without<Observer<OnUserMessage,()>>), check thats ok
 	world.query_filtered::<Entity, Q>().iter(world).collect()
 }
+
 
 #[derive(Debug, Clone)]
 pub struct DynamicSceneChecks {
@@ -36,7 +38,8 @@ impl Default for DynamicSceneChecks {
 			entity_checks: true,
 			component_checks: true,
 			// hacky way to ignore resources pulled in by [DefaultPlugins]
-			num_ignored_resources: 139,
+			// this should be synced the number of resources denied in `on_build`
+			num_ignored_resources: 155,
 			allowed_ignores: vec![
 				"bevy_text::text::CosmicBuffer".to_string(),
 				"beet_flow::observers::action_observer_map::ActionObserverMap"
@@ -46,12 +49,13 @@ impl Default for DynamicSceneChecks {
 			on_build: |builder| {
 				builder
 					// render
-					.deny_resource::<Msaa>()
+					// .deny_resource::<Msaa>()
 					.deny_resource::<ClearColor>()
 					.deny_resource::<AmbientLight>()
 					.deny_resource::<DirectionalLightShadowMap>()
 					.deny_resource::<PointLightShadowMap>()
 					.deny_resource::<GlobalVolume>()
+					.deny_resource::<DefaultOpaqueRendererMethod>()
 					// time
 					.deny_resource::<Time>()
 					.deny_resource::<Time<Real>>()
@@ -61,6 +65,10 @@ impl Default for DynamicSceneChecks {
 					// other
 					.deny_resource::<DefaultSpatialScale>()
 					.deny_resource::<GizmoConfigStore>()
+					.deny_resource::<UiScale>()
+					.deny_resource::<PointerInputPlugin>()
+					.deny_resource::<PickingPlugin>()
+					.deny_resource::<bevy::a11y::Focus>()
 			},
 		}
 	}
@@ -101,7 +109,10 @@ impl DynamicSceneChecks {
 		self
 	}
 
-	pub fn filtered_builder<'w>(&self, world: &'w mut World) -> DynamicSceneBuilder<'w> {
+	pub fn filtered_builder<'w>(
+		&self,
+		world: &'w mut World,
+	) -> DynamicSceneBuilder<'w> {
 		let builder = DynamicSceneBuilder::from_world(world);
 		(self.on_build)(builder)
 	}
@@ -165,7 +176,7 @@ impl DynamicSceneChecks {
 
 			for component in world.inspect_entity(dyn_entity.entity) {
 				let num_components_world =
-					world.inspect_entity(dyn_entity.entity).len();
+					world.inspect_entity(dyn_entity.entity).count();
 				let num_components_scene = dyn_entity.components.len();
 				if num_components_world != num_components_scene {
 					// issues.push(format!(
@@ -209,12 +220,14 @@ impl DynamicSceneChecks {
 			.count()
 			.checked_sub(self.num_ignored_resources)
 		else {
-			return vec!["DynamicSceneChecks::num_ignored_resources exeeds those found in the World".to_string()];
+			return vec!["Resource count mismatch, `DynamicSceneChecks::num_ignored_resources` exeeds those found in the World".to_string()];
 		};
 		let num_resources_scene = scene.resources.len();
 		if num_resources_world != num_resources_scene {
+			let delta = num_resources_world as i32 - num_resources_scene as i32;
 			issues.push(
-			format!("Resource count mismatch: Expected {num_resources_world}, got {num_resources_scene}\nRemember to update NUM_IGNORED_RESOURCES when registering assets, events etc."));
+			format!(r#"Resource count mismatch, received is off by {delta}.
+If this was intentional add {delta} to `DynamicSceneChecks::num_ignored_resources`."#));
 		}
 		// for (resource, _) in world.iter_resources() {
 		// 	let resource_scene = scene.resources.iter().find(|r| {

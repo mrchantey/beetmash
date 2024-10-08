@@ -93,15 +93,10 @@ wasm-bindgen = "0.2"
 wasm-bindgen-futures = "0.4"
 
 #💡 Game
-# bevy = { version = "0.14", default-features = false, features = [
-# 	"bevy_scene",
-# 	"serialize",
-# 	# "bevy_color",
-# ] }
-bevy = { version = "0.14", default-features = false }
-bevy_reflect = { version = "0.14" }
-# bevy = { version="0.15.0-dev", git = "https://github.com/jrobsonchase/bevy", branch = "pre_map_entities", default-features = false }
-# bevy_reflect = { git = "https://github.com/jrobsonchase/bevy", branch = "pre_map_entities", package = "bevy_reflect", default-features = false }
+# bevy = { version = "0.14", default-features = false }
+# bevy_reflect = { version = "0.14" }
+bevy = { git = "https://github.com/bevyengine/bevy", rev = "0c959f77007c29eead7f902bddd3342a1ecbca20", default-features = false }
+bevy_reflect = { git = "https://github.com/bevyengine/bevy", rev = "0c959f77007c29eead7f902bddd3342a1ecbca20" }
 
 
 [package]

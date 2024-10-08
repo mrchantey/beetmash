@@ -1,8 +1,7 @@
 use bevy::input::keyboard::KeyboardInput;
 use bevy::prelude::*;
-use bevy::render::view::screenshot::ScreenshotManager;
-use bevy::window::PrimaryWindow;
-use forky::prelude::*;
+use bevy::render::view::screenshot::save_to_disk;
+use bevy::render::view::screenshot::Screenshot;
 use serde::Deserialize;
 use serde::Serialize;
 
@@ -11,35 +10,24 @@ pub struct SaveScreenshot {
 	pub filename: String,
 }
 
-pub fn run_if_rendering(
-	screenshot_manager: Option<Res<ScreenshotManager>>,
-	main_window: Query<(), With<PrimaryWindow>>,
-) -> bool {
-	screenshot_manager.is_some() && main_window.iter().count() > 0
-}
 
 pub fn screenshot_on_event(
-	// trigger: Trigger<SaveScreenshot>,
-	mut events: EventReader<SaveScreenshot>,
-	main_window: Query<Entity, With<PrimaryWindow>>,
-	mut screenshot_manager: ResMut<ScreenshotManager>,
+	trigger: Trigger<SaveScreenshot>,
+	mut commands: Commands,
 ) {
-	let Some(event) = events.read().next() else {
-		return;
-	};
-	screenshot_manager
-		.save_screenshot_to_disk(main_window.single(), &event.filename)
-		.ok_or(|e| log::error!("{e}"));
-	log::info!("Saved screenshot to {}", event.filename);
+	let filename = trigger.event().filename.clone();
+	log::info!("Saved screenshot to {}", filename);
+	commands
+		.spawn(Screenshot::primary_window())
+		.observe(save_to_disk(filename));
 }
 
 /// Take a screenshot when ctrl+s is pressed
 pub fn screenshot_on_keypress(
+	mut commands: Commands,
 	// _trigger: Trigger<KeyboardInput>,
 	mut events: EventReader<KeyboardInput>,
 	keys: Res<ButtonInput<KeyCode>>,
-	main_window: Query<Entity, With<PrimaryWindow>>,
-	mut screenshot_manager: ResMut<ScreenshotManager>,
 	mut counter: Local<u32>,
 ) {
 	if events.read().count() == 0 {
@@ -55,9 +43,9 @@ pub fn screenshot_on_keypress(
 		#[cfg(target_arch = "wasm32")]
 		let path = format!("screenshot-{}.png", *counter);
 		*counter += 1;
-		screenshot_manager
-			.save_screenshot_to_disk(main_window.single(), &path)
-			.ok_or(|e| log::error!("{e}"));
 		log::info!("Saved screenshot to {}", path);
+		commands
+			.spawn(Screenshot::primary_window())
+			.observe(save_to_disk(path));
 	}
 }

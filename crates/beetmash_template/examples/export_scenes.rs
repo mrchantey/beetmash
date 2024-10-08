@@ -8,6 +8,7 @@ fn main() {
 		.add_scene("hello-world", || {})
 		.add_scene("my-base-scene", spawn_simple_environment)
 		.add_scene("my-beautiful-scene", spawn_simple_scene)
+		.with_filter::<DefaultSceneExportFilter>()
 		.with_checks(DynamicSceneChecks::new().with_num_ignored_resources(6))
 		.export()
 		.unwrap();
@@ -20,6 +21,7 @@ fn main() {
 fn register_types(app: &mut App) {
 	app.register_type::<Name>()
 		.register_type::<Transform>()
+		.register_type::<GlobalTransform>()
 		.register_type::<BundlePlaceholder>();
 }
 

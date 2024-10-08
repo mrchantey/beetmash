@@ -21,23 +21,22 @@ pub fn ground_3d(mut commands: Commands) {
 
 pub fn lighting_3d(mut commands: Commands) {
 	// Light
-	commands.spawn(DirectionalLightBundle {
-		transform: Transform::from_rotation(Quat::from_euler(
+	commands.spawn((
+		DirectionalLight {
+			shadows_enabled: true,
+			..default()
+		},
+		Transform::from_rotation(Quat::from_euler(
 			EulerRot::ZYX,
 			0.0,
 			1.0,
 			-PI / 4.,
 		)),
-		directional_light: DirectionalLight {
-			shadows_enabled: true,
-			..default()
-		},
-		cascade_shadow_config: CascadeShadowConfigBuilder {
+		CascadeShadowConfigBuilder {
 			first_cascade_far_bound: 20.0,
 			maximum_distance: 40.0,
 			..default()
 		}
-		.into(),
-		..default()
-	});
+		.build(),
+	));
 }

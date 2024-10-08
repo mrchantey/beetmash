@@ -3,10 +3,10 @@ default:
 	just --list --unsorted
 
 export-scenes:
-	cargo run --bin export_scenes
+	cargo run --example export_scenes
 
 run:
-	cargo run scenes/my_base_scene.json scenes/my_beautiful_scene.json
+	cargo run --example base_app -- scenes/my-base-scene.json scenes/my-beautiful-scene.json
 
 pkg *args:
 	cargo package --no-verify --allow-dirty {{args}}

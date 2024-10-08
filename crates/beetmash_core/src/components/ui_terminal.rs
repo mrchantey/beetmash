@@ -1,4 +1,5 @@
 use beetmash_net::prelude::*;
+use beetmash_scene::utils::BundlePlaceholder;
 use bevy::input::keyboard::Key;
 use bevy::input::keyboard::KeyboardInput;
 use bevy::input::ButtonState;
@@ -258,7 +259,7 @@ pub fn spawn_ui_terminal(mut commands: Commands, user_input: bool) {
 					})
 					.with_children(|input_area| {
 						input_area.spawn((
-							TextBundle::from_sections([
+							BundlePlaceholder::Text(vec![
 								TextSection::new("User> ", style()),
 								TextSection::new("", style()),
 							]),

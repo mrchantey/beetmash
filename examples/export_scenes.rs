@@ -8,6 +8,7 @@ fn main() -> Result<()> {
 		MostDefaultPlugins,
 		DefaultPlaceholderPlugin,
 		UiTerminalPlugin,
+		temp_patches,
 	))
 	.with_filter::<DefaultSceneExportFilter>()
 	.add_scene("empty", || {})

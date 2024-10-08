@@ -1,3 +1,4 @@
+#![feature(trait_upcasting)]
 pub mod extensions;
 pub mod scene_exporter;
 #[cfg(any(test, feature = "test"))]

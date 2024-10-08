@@ -76,6 +76,7 @@ pub enum BundlePlaceholder {
 	Camera2d,
 	Camera3d,
 	PointLight,
+	Text(Vec<TextSection>),
 	Sprite(String),
 	Scene(String),
 	Pbr {
@@ -106,26 +107,24 @@ fn init_bundle(
 
 		match placeholder.clone() {
 			BundlePlaceholder::Camera2d => {
-				entity_commands.insert(Camera2dBundle {
-					transform,
-					..default()
-				});
+				entity_commands.insert((Camera2d::default(), transform));
 			}
 			BundlePlaceholder::Camera3d => {
-				entity_commands.insert(Camera3dBundle {
-					transform,
-					..default()
-				});
+				entity_commands.insert((Camera3d::default(), transform));
 			}
 			BundlePlaceholder::PointLight => {
-				entity_commands.insert(PointLightBundle {
-					point_light: PointLight {
+				entity_commands.insert((
+					PointLight {
 						shadows_enabled: true,
 						..default()
 					},
 					transform,
-					..default()
-				});
+				));
+			}
+			BundlePlaceholder::Text(sections) => {
+				let mut bundle = TextBundle::from_sections(sections);
+				bundle.transform = transform;
+				entity_commands.insert(bundle);
 			}
 			BundlePlaceholder::Sprite(path) => {
 				entity_commands.insert(SpriteBundle {
@@ -135,19 +134,15 @@ fn init_bundle(
 				});
 			}
 			BundlePlaceholder::Scene(path) => {
-				entity_commands.insert(SceneBundle {
-					scene: asset_server.load(path),
-					transform,
-					..default()
-				});
+				entity_commands
+					.insert((SceneRoot(asset_server.load(path)), transform));
 			}
 			BundlePlaceholder::Pbr { mesh, material } => {
-				entity_commands.insert(PbrBundle {
-					mesh: meshes.add(mesh),
-					material: materials.add(material),
+				entity_commands.insert((
+					Mesh3d(meshes.add(mesh)),
+					MeshMaterial3d(materials.add(material)),
 					transform,
-					..default()
-				});
+				));
 			}
 		}
 	}

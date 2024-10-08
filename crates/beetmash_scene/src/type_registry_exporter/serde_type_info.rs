@@ -3,6 +3,8 @@ use bevy::reflect::EnumInfo;
 use bevy::reflect::ListInfo;
 use bevy::reflect::MapInfo;
 use bevy::reflect::NamedField;
+use bevy::reflect::OpaqueInfo;
+use bevy::reflect::SetInfo;
 use bevy::reflect::StructInfo;
 use bevy::reflect::StructVariantInfo;
 use bevy::reflect::TupleInfo;
@@ -11,9 +13,7 @@ use bevy::reflect::TupleVariantInfo;
 use bevy::reflect::TypeInfo;
 use bevy::reflect::UnitVariantInfo;
 use bevy::reflect::UnnamedField;
-use bevy::reflect::ValueInfo;
 use bevy::reflect::VariantInfo;
-// use bevy::reflect::SetInfo;
 use serde::Deserialize;
 use serde::Serialize;
 use ts_rs::TS;
@@ -33,12 +33,12 @@ pub enum SerdeTypeInfo {
 	Array(SerdeArrayInfo),
 	#[serde(rename = "map")]
 	Map(SerdeMapInfo),
-	// #[serde(rename = "set")]
-	// Set(SerdeSetInfo),
+	#[serde(rename = "set")]
+	Set(SerdeSetInfo),
 	#[serde(rename = "enum")]
 	Enum(SerdeEnumInfo),
-	#[serde(rename = "value")]
-	Value(SerdeValueInfo),
+	#[serde(rename = "opaque")]
+	Opaque(SerdeOpaqueInfo),
 }
 
 impl From<&TypeInfo> for SerdeTypeInfo {
@@ -50,9 +50,9 @@ impl From<&TypeInfo> for SerdeTypeInfo {
 			TypeInfo::List(info) => Self::List(info.into()),
 			TypeInfo::Array(info) => Self::Array(info.into()),
 			TypeInfo::Map(info) => Self::Map(info.into()),
-			// TypeInfo::Set(info) => Self::Set(info.into()),
+			TypeInfo::Set(info) => Self::Set(info.into()),
 			TypeInfo::Enum(info) => Self::Enum(info.into()),
-			TypeInfo::Value(info) => Self::Value(info.into()),
+			TypeInfo::Opaque(info) => Self::Opaque(info.into()),
 		}
 	}
 }
@@ -143,7 +143,7 @@ pub struct SerdeListInfo {
 impl From<&ListInfo> for SerdeListInfo {
 	fn from(info: &ListInfo) -> Self {
 		Self {
-			item_type_path: info.item_type_path_table().path().to_string(),
+			item_type_path: info.item_ty().path().to_string(),
 		}
 	}
 }
@@ -158,26 +158,25 @@ pub struct SerdeArrayInfo {
 impl From<&ArrayInfo> for SerdeArrayInfo {
 	fn from(info: &ArrayInfo) -> Self {
 		Self {
-			item_type_path: info.item_type_path_table().path().to_string(),
+			item_type_path: info.item_ty().path().to_string(),
 			capacity: info.capacity(),
 		}
 	}
 }
 
-// /// Serializable [SetInfo].
-// #[derive(Debug, Clone, Serialize, Deserialize, TS)]
-// pub struct SerdeSetInfo {
-// 	value_type_path: String,
-// }
+/// Serializable [SetInfo].
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+pub struct SerdeSetInfo {
+	value_type_path: String,
+}
 
-// impl From<&SetInfo> for SerdeSetInfo {
-// 	fn from(info: &SetInfo) -> Self {
-// 		todo!();
-// 		Self {
-// 			value_type_path: info.value_type_path_table().path().to_string(),
-// 		}
-// 	}
-// }
+impl From<&SetInfo> for SerdeSetInfo {
+	fn from(info: &SetInfo) -> Self {
+		Self {
+			value_type_path: info.value_ty().type_path_table().path().to_string(),
+		}
+	}
+}
 
 /// Serializable [MapInfo].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
@@ -189,20 +188,20 @@ pub struct SerdeMapInfo {
 impl From<&MapInfo> for SerdeMapInfo {
 	fn from(info: &MapInfo) -> Self {
 		Self {
-			key_type_path: info.key_type_path_table().path().to_string(),
-			value_type_path: info.value_type_path_table().path().to_string(),
+			key_type_path: info.key_ty().type_path_table().path().to_string(),
+			value_type_path: info.value_ty().type_path_table().path().to_string(),
 		}
 	}
 }
 
 /// Serializable [ValueInfo].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
-pub struct SerdeValueInfo {
+pub struct SerdeOpaqueInfo {
 	item_type_path: String,
 }
 
-impl From<&ValueInfo> for SerdeValueInfo {
-	fn from(info: &ValueInfo) -> Self {
+impl From<&OpaqueInfo> for SerdeOpaqueInfo {
+	fn from(info: &OpaqueInfo) -> Self {
 		Self {
 			item_type_path: info.type_path().to_string(),
 		}

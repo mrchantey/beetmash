@@ -3,49 +3,77 @@
   "entities": {
     "4294967296": {
       "components": {
-        "bevy_core::name::Name": "Light",
         "beetmash_scene::utils::bundle_placeholder::BundlePlaceholder": "PointLight",
+        "bevy_core::name::Name": "Light",
+        "bevy_transform::components::global_transform::GlobalTransform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
         "bevy_transform::components::transform::Transform": {
-          "translation": {
-            "x": 4.0,
-            "y": 8.0,
-            "z": 4.0
-          },
-          "rotation": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0,
-            "w": 1.0
-          },
-          "scale": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
-          }
+          "translation": [
+            4.0,
+            8.0,
+            4.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
         }
       }
     },
     "4294967297": {
       "components": {
-        "bevy_core::name::Name": "Camera",
         "beetmash_scene::utils::bundle_placeholder::BundlePlaceholder": "Camera3d",
+        "bevy_core::name::Name": "Camera",
+        "bevy_transform::components::global_transform::GlobalTransform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
         "bevy_transform::components::transform::Transform": {
-          "translation": {
-            "x": -2.5,
-            "y": 4.5,
-            "z": 9.0
-          },
-          "rotation": {
-            "x": -0.22055435,
-            "y": -0.13167094,
-            "z": -0.030063398,
-            "w": 0.9659786
-          },
-          "scale": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
-          }
+          "translation": [
+            -2.5,
+            4.5,
+            9.0
+          ],
+          "rotation": [
+            -0.22055435,
+            -0.13167094,
+            -0.030063398,
+            0.9659786
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
         }
       }
     }

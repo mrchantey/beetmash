@@ -24,45 +24,40 @@ fn setup(
 	mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
 	// light
-	commands.spawn(PointLightBundle {
-		point_light: PointLight {
+	commands.spawn((
+		PointLight {
 			shadows_enabled: true,
 			..default()
 		},
-		transform: Transform::from_xyz(4.0, 8.0, 4.0),
-		..default()
-	});
+		Transform::from_xyz(4.0, 8.0, 4.0),
+	));
 	// camera
-	commands.spawn(Camera3dBundle {
-		transform: Transform::from_xyz(-2.5, 4.5, 9.0)
-			.looking_at(Vec3::ZERO, Vec3::Y),
-		..default()
-	});
+	commands.spawn((
+		Camera3d::default(),
+		Transform::from_xyz(-2.5, 4.5, 9.0).looking_at(Vec3::ZERO, Vec3::Y),
+	));
 
 	// cube
 	let pos_a = commands
-		.spawn(PbrBundle {
-			mesh: meshes.add(Cuboid::new(1.0, 1.0, 1.0)),
-			material: materials.add(Color::srgb_u8(255, 0, 255)),
-			transform: Transform::from_xyz(0.0, 0., 0.0),
-			..default()
-		})
+		.spawn((
+			Mesh3d(meshes.add(Cuboid::new(1.0, 1.0, 1.0))),
+			MeshMaterial3d(materials.add(Color::srgb_u8(255, 0, 255))),
+			Transform::from_xyz(0.0, 0., 0.0),
+		))
 		.id();
 	let pos_b = commands
-		.spawn(PbrBundle {
-			mesh: meshes.add(Cuboid::new(1.0, 1.0, 1.0)),
-			material: materials.add(Color::srgb_u8(255, 255, 0)),
-			transform: Transform::from_xyz(0.0, 0.5, 0.0),
-			..default()
-		})
+		.spawn((
+			Mesh3d(meshes.add(Cuboid::new(1.0, 1.0, 1.0))),
+			MeshMaterial3d(materials.add(Color::srgb_u8(255, 255, 0))),
+			Transform::from_xyz(0.0, 0.5, 0.0),
+		))
 		.id();
 	let pos_c = commands
-		.spawn(PbrBundle {
-			mesh: meshes.add(Cuboid::new(1.0, 1.0, 1.0)),
-			material: materials.add(Color::srgb_u8(0, 255, 255)),
-			transform: Transform::from_xyz(0.5, 0.5, 0.0),
-			..default()
-		})
+		.spawn((
+			Mesh3d(meshes.add(Cuboid::new(1.0, 1.0, 1.0))),
+			MeshMaterial3d(materials.add(Color::srgb_u8(0, 255, 255))),
+			Transform::from_xyz(0.5, 0.5, 0.0),
+		))
 		.id();
 
 	commands.insert_resource(Entities {

@@ -6,13 +6,13 @@ use bevy::prelude::*;
 use std::borrow::Cow;
 
 fn main() -> Result<()> {
-	SceneGroupExporter::new(plugin)
+	SceneGroupExporter::new(register_types)
 		.with_checks(
 			DynamicSceneChecks::default().with_num_ignored_resources(6),
 		)
 		.add_scene("test_scene", scene)
 		.export()?;
-	TypeRegistryExporter::new(plugin)
+	TypeRegistryExporter::new(register_types)
 		.with_name("test_scene_registry")
 		.export()?;
 
@@ -58,7 +58,7 @@ fn scene(mut commands: Commands) {
 }
 
 
-fn plugin(app: &mut App) {
+fn register_types(app: &mut App) {
 	app
 	/*-*/
 	.register_type::<Name>()

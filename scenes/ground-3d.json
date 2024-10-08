@@ -1,7 +1,7 @@
 {
   "resources": {},
   "entities": {
-    "4294967299": {
+    "4294967320": {
       "components": {
         "beetmash_scene::utils::bundle_placeholder::BundlePlaceholder": {
           "Pbr": {
