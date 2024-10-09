@@ -1,6 +1,7 @@
 [package]
 name = "beetmash-cli"
-version.workspace = true
+# version.workspace = true
+version = "0.0.6-rc.2"
 edition.workspace = true
 description = "CLI tools for managing Beetmash projects."
 documentation.workspace = true
@@ -11,6 +12,10 @@ license.workspace = true
 keywords.workspace = true
 categories.workspace = true
 publish = true
+
+[[bin]]
+name = "beetmash"
+path = "src/main.rs"
 
 
 [dependencies]

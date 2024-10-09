@@ -1,9 +1,8 @@
-use anyhow::Result;
 use forky::prelude::Subcommand;
+use subcommands::*;
 mod subcommands;
 
 fn main() { Cli.run_with_cli_args().unwrap(); }
-
 
 struct Cli;
 
@@ -15,11 +14,7 @@ impl Subcommand for Cli {
 		command.subcommand_required(true)
 	}
 
-	fn subcommands(&self) -> Vec<Box<dyn Subcommand>> { vec![] }
-
-	fn run(&self, _args: &clap::ArgMatches) -> Result<()> {
-		println!("Hello, Beetmash!");
-
-		Ok(())
+	fn subcommands(&self) -> Vec<Box<dyn Subcommand>> {
+		vec![Box::new(BuildBeetmashWeb)]
 	}
 }

@@ -64,7 +64,7 @@ jobs:
         toolchain: nightly
         override: true
         default: true
-    - name: 🔨 Install Binaryen
+    - name: 🔨 Install Binaryen (wasm-opt)
       run: sudo apt install binaryen
     - name: 🔨 Install Wasm Target
       run: rustup target add wasm32-unknown-unknown
@@ -73,22 +73,13 @@ jobs:
       with:
         crate: wasm-bindgen-cli
         version: '0.2.93'
+    - name: 🔨 Install Beetmash cli
+      uses: baptiste0928/cargo-install@v2
+      with:
+        crate: beetmash-cli
+        version: '0.0.6-rc.2'
     - name: 🔨 Build Crates
-      run: cd crates/beetmash_template && just build-wasm
-    - name: 🌐 Deploy to Pages Repo
-      run: |
-        rm -rf ../beetmash-apps/beetmash_template || true
-        mkdir -p ../beetmash-apps/beetmash_template || true
-        mkdir -p ../beetmash-apps/beetmash_template/wasm
-        cp -r crates/beetmash_template/target/wasm ../beetmash-apps/beetmash_template
-        cp -r crates/beetmash_template/scenes ../beetmash-apps/beetmash_template
-        cp -r crates/beetmash_template/public/* ../beetmash-apps/beetmash_template
-        cd ../beetmash-apps
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git add .
-        git commit -m "Deploy from GitHub Actions"
-        git push origin main
+      run: just build-wasm-ci
     # - name: ☁️ Upload release JS
     #   uses: svenstaro/upload-release-action@v2
     #   with:

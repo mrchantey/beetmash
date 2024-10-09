@@ -9,14 +9,14 @@ use std::path::PathBuf;
 /// A helper for exporting scenes. The default output directory is `scenes`
 /// and by default it will be cleared on export.
 pub struct SceneGroupExporter<P, M, Q = ()> {
-	plugin: P,
-	scenes: Vec<SceneExporter>,
-	phantom: std::marker::PhantomData<(M, Q)>,
-	config: SceneExportConfig,
+	pub plugin: P,
+	pub scenes: Vec<SceneExporter>,
+	pub phantom: std::marker::PhantomData<(M, Q)>,
+	pub config: SceneExportConfig,
 }
 
 impl<P: Clone + Plugins<M>, M> SceneGroupExporter<P, M, ()> {
-	pub fn new(plugin: P) -> Self {
+	pub fn new_no_filter(plugin: P) -> Self {
 		Self {
 			plugin,
 			config: Default::default(),

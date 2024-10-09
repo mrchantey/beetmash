@@ -8,7 +8,7 @@ run example *args:
 	cargo run --example {{example}} {{args}}
 
 cli *args:
-	cargo run -p beetmash-cli {{args}}
+	cargo run -p beetmash-cli -- {{args}}
 
 export-scenes *args:
 	cargo run --example export_scenes {{args}}
@@ -23,6 +23,27 @@ export-typescript *args:
 	rm -rf ../beetmash-site/packages/editor/src/serdeTypes || true
 	mkdir -p ../beetmash-site/packages/editor/src/serdeTypes
 	cp -r target/typescript/* ../beetmash-site/packages/editor/src/serdeTypes
+
+install-cli *args:
+	cargo install --path ./crates/cli {{args}}
+
+build-wasm *args:
+	beetmash build \
+	-p beetmash_template --example app \
+	--release {{args}}
+
+build-wasm-ci:
+	just build-wasm	\
+	--copy-local ../beetmash-apps \
+	--copy-scenes crates/beetmash_template/scenes \
+	--commit-local \
+
+build-wasm-test:
+	just cli build \
+	-p beetmash_template --example app \
+	--release	\
+	--copy-local ../beetmash-apps \
+	--copy-scenes crates/beetmash_template/scenes \
 
 export-test-scene:
 	cargo run -p beetmash_scene --example export_test_scene

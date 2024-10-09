@@ -10,7 +10,6 @@ fn main() -> Result<()> {
 		UiTerminalPlugin,
 		temp_patches,
 	))
-	.with_filter::<DefaultSceneExportFilter>()
 	.add_scene("empty", || {})
 	// ui
 	.add_scene("ui-terminal", core::scenes::ui_terminal)

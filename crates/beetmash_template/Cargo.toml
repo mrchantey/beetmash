@@ -34,8 +34,8 @@ thumb-text = "🎥"
 # here we can specify the path to the scene file
 path = "scenes/my-base-scene.json"
 # specifying the path to a wasm app is a great way to share a demo of your scene
-app.js-url = "https://mrchantey.github.io/beetmash-apps/beetmash_template/main.js"
-app.wasm-url = "https://mrchantey.github.io/beetmash-apps/beetmash_template/main_bg.wasm"
+app.js-url = "https://mrchantey.github.io/beetmash-apps/beetmash_template/app.js"
+app.wasm-url = "https://mrchantey.github.io/beetmash-apps/beetmash_template/app_bg.wasm"
 
 ### 🚀 3 - A demo scene
 

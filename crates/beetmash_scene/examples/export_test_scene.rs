@@ -6,7 +6,7 @@ use bevy::prelude::*;
 use std::borrow::Cow;
 
 fn main() -> Result<()> {
-	SceneGroupExporter::new(register_types)
+	SceneGroupExporter::new_no_filter(register_types)
 		.with_checks(
 			DynamicSceneChecks::default().with_num_ignored_resources(6),
 		)
