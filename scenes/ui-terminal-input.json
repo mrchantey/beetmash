@@ -840,50 +840,147 @@
       "components": {
         "beetmash_core::components::ui_terminal::InputContainer": {},
         "beetmash_scene::utils::bundle_placeholder::BundlePlaceholder": {
-          "Text": [
-            {
-              "value": "User> ",
-              "style": {
-                "font": {
-                  "Weak": {
-                    "Uuid": {
-                      "uuid": "97128bb1-2588-480b-bdc6-87b4adbec477"
+          "Text": {
+            "sections": [
+              {
+                "value": "User> ",
+                "style": {
+                  "font": {
+                    "Weak": {
+                      "Uuid": {
+                        "uuid": "97128bb1-2588-480b-bdc6-87b4adbec477"
+                      }
+                    }
+                  },
+                  "font_size": 32.0,
+                  "color": {
+                    "LinearRgba": {
+                      "red": 1.0,
+                      "green": 1.0,
+                      "blue": 1.0,
+                      "alpha": 1.0
                     }
                   }
-                },
-                "font_size": 32.0,
-                "color": {
-                  "LinearRgba": {
-                    "red": 1.0,
-                    "green": 1.0,
-                    "blue": 1.0,
-                    "alpha": 1.0
+                }
+              },
+              {
+                "value": "",
+                "style": {
+                  "font": {
+                    "Weak": {
+                      "Uuid": {
+                        "uuid": "97128bb1-2588-480b-bdc6-87b4adbec477"
+                      }
+                    }
+                  },
+                  "font_size": 32.0,
+                  "color": {
+                    "LinearRgba": {
+                      "red": 1.0,
+                      "green": 1.0,
+                      "blue": 1.0,
+                      "alpha": 1.0
+                    }
                   }
                 }
+              }
+            ],
+            "style": {
+              "display": "Flex",
+              "position_type": "Relative",
+              "overflow": {
+                "x": "Visible",
+                "y": "Visible"
+              },
+              "left": "Auto",
+              "right": "Auto",
+              "top": "Auto",
+              "bottom": "Auto",
+              "width": "Auto",
+              "height": "Auto",
+              "min_width": "Auto",
+              "min_height": "Auto",
+              "max_width": "Auto",
+              "max_height": "Auto",
+              "aspect_ratio": null,
+              "align_items": "Default",
+              "justify_items": "Default",
+              "align_self": "Auto",
+              "justify_self": "Auto",
+              "align_content": "Default",
+              "justify_content": "Default",
+              "margin": {
+                "left": {
+                  "Px": 0.0
+                },
+                "right": {
+                  "Px": 0.0
+                },
+                "top": {
+                  "Px": 0.0
+                },
+                "bottom": {
+                  "Px": 0.0
+                }
+              },
+              "padding": {
+                "left": {
+                  "Px": 0.0
+                },
+                "right": {
+                  "Px": 0.0
+                },
+                "top": {
+                  "Px": 0.0
+                },
+                "bottom": {
+                  "Px": 0.0
+                }
+              },
+              "border": {
+                "left": {
+                  "Px": 0.0
+                },
+                "right": {
+                  "Px": 0.0
+                },
+                "top": {
+                  "Px": 0.0
+                },
+                "bottom": {
+                  "Px": 0.0
+                }
+              },
+              "flex_direction": "Row",
+              "flex_wrap": "NoWrap",
+              "flex_grow": 0.0,
+              "flex_shrink": 1.0,
+              "flex_basis": "Auto",
+              "row_gap": {
+                "Px": 0.0
+              },
+              "column_gap": {
+                "Px": 0.0
+              },
+              "grid_auto_flow": "Row",
+              "grid_template_rows": [],
+              "grid_template_columns": [],
+              "grid_auto_rows": [],
+              "grid_auto_columns": [],
+              "grid_row": {
+                "start": null,
+                "span": 1,
+                "end": null
+              },
+              "grid_column": {
+                "start": null,
+                "span": 1,
+                "end": null
               }
             },
-            {
-              "value": "",
-              "style": {
-                "font": {
-                  "Weak": {
-                    "Uuid": {
-                      "uuid": "97128bb1-2588-480b-bdc6-87b4adbec477"
-                    }
-                  }
-                },
-                "font_size": 32.0,
-                "color": {
-                  "LinearRgba": {
-                    "red": 1.0,
-                    "green": 1.0,
-                    "blue": 1.0,
-                    "alpha": 1.0
-                  }
-                }
-              }
-            }
-          ]
+            "visibility": "Inherited",
+            "linebreak": null
+          }
         },
         "bevy_hierarchy::components::parent::Parent": [
           4294967323

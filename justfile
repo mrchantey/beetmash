@@ -28,6 +28,7 @@ install-cli *args:
 	cargo install --path ./crates/cli {{args}}
 
 build-wasm *args:
+	just export-scenes
 	beetmash build \
 	--example app \
 	--release \
