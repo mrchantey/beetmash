@@ -29,21 +29,24 @@ install-cli *args:
 
 build-wasm *args:
 	beetmash build \
+	--example app \
+	--release \
+	--copy-local ../beetmash-apps \
+	--copy-scenes scenes
+	beetmash build \
 	-p beetmash_template --example app \
-	--release {{args}}
-
-build-wasm-ci:
-	just build-wasm	\
+	--release \
 	--copy-local ../beetmash-apps \
 	--copy-scenes crates/beetmash_template/scenes \
-	--commit-local \
+	{{args}}
 
-build-wasm-test:
+build-wasm-test *args:
 	just cli build \
 	-p beetmash_template --example app \
 	--release	\
 	--copy-local ../beetmash-apps \
 	--copy-scenes crates/beetmash_template/scenes \
+	{{args}}
 
 export-test-scene:
 	cargo run -p beetmash_scene --example export_test_scene

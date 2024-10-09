@@ -259,7 +259,7 @@ pub fn spawn_ui_terminal(mut commands: Commands, user_input: bool) {
 					})
 					.with_children(|input_area| {
 						input_area.spawn((
-							BundlePlaceholder::Text(vec![
+							BundlePlaceholder::text_from_sections(vec![
 								TextSection::new("User> ", style()),
 								TextSection::new("", style()),
 							]),

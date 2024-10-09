@@ -12,7 +12,13 @@ pub struct BuildBeetmashWeb;
 impl Subcommand for BuildBeetmashWeb {
 	fn name(&self) -> &'static str { "build" }
 
-	fn about(&self) -> &'static str { "Build an app for Beetmash Web" }
+	fn about(&self) -> &'static str {
+		r#"
+Build an app for Beetmash Web.
+This tool is similar to trunk but with a focus on binaries and scenes
+instead of html and other web assets.
+"#
+	}
 
 	fn append_command(&self, command: clap::Command) -> clap::Command {
 		command
@@ -66,13 +72,13 @@ impl Subcommand for BuildBeetmashWeb {
 					.action(ArgAction::Set)
 					.help("Copy scenes to directory specified by copy-local"),
 			)
-			.arg(
-				clap::Arg::new("commit-local")
-					.long("commit-local")
-					.required(false)
-					.action(ArgAction::SetTrue)
-					.help("Commit all and push in directory specified by copy-local"),
-			)
+			// .arg(
+			// 	clap::Arg::new("commit-local")
+			// 		.long("commit-local")
+			// 		.required(false)
+			// 		.action(ArgAction::SetTrue)
+			// 		.help("Commit all and push in directory specified by copy-local"),
+			// )
 	}
 
 	// untested, i prefer justfile
@@ -85,7 +91,7 @@ impl Subcommand for BuildBeetmashWeb {
 		run_wasm_bindgen(&args)?;
 		run_wasm_opt(&args)?;
 		run_copy_local(&args)?;
-		run_commit_local(&args)?;
+		// run_commit_local(&args)?;
 
 		println!("Build Succeeded");
 		Ok(())
@@ -94,14 +100,14 @@ impl Subcommand for BuildBeetmashWeb {
 
 #[derive(Debug, Clone)]
 struct Args {
-	example: Option<String>,
 	crate_name: Option<String>,
-	out_dir: String,
-	release: bool,
+	example: Option<String>,
 	app_name: String,
+	release: bool,
+	out_dir: String,
 	copy_local: Option<String>,
 	copy_scenes: Option<String>,
-	commit_local: bool,
+	// commit_local: bool,
 	skip_build: bool,
 }
 
@@ -115,7 +121,7 @@ impl Args {
 		let app_name = example.clone().unwrap_or_else(|| "main".into());
 		let copy_local = args.get_one::<String>("copy-local").cloned();
 		let copy_scenes = args.get_one::<String>("copy-scenes").cloned();
-		let commit_local = args.get_flag("commit-local");
+		// let commit_local = args.get_flag("commit-local");
 
 		Self {
 			example,
@@ -126,7 +132,7 @@ impl Args {
 			app_name,
 			copy_local,
 			copy_scenes,
-			commit_local,
+			// commit_local,
 		}
 	}
 	fn cargo_build_wasm_path(&self) -> String {
@@ -275,28 +281,44 @@ fn run_copy_local(args: &Args) -> Result<()> {
 	Ok(())
 }
 
-fn run_commit_local(args: &Args) -> Result<()> {
-	if !args.commit_local {
-		return Ok(());
-	}
+// fn run_commit_local(args: &Args) -> Result<()> {
+// 	if !args.commit_local {
+// 		return Ok(());
+// 	}
 
-	let Some(target_dir) = &args.copy_local else {
-		anyhow::bail!("copy-local is required for commit-local");
-	};
+// 	let Some(target_dir) = &args.copy_local else {
+// 		anyhow::bail!("copy-local is required for commit-local");
+// 	};
 
-	let status = Command::new("git")
-    .current_dir(target_dir)
-		.args(&[
-			"config --global user.name \"github-actions[bot]\"",
-			"&& git config --global user.email \"github-actions[bot]@users.noreply.github.com\"",
-			"&& git add .",
-			"&& git commit -m \"Deploy from GitHub Actions\"",
-			"&& git push origin main",
-		])
-		.status()?;
-	if !status.success() {
-		anyhow::bail!("commit failed");
-	}
+// 	let target_dir = PathBuf::from(target_dir).canonicalize()?;
+// 	let target_dir = target_dir.to_string_lossy();
+// 	let target_dir_cmd = format!("cd {}", target_dir);
 
-	Ok(())
-}
+// 	let commands = vec![
+// 		&target_dir_cmd,
+// 		"&& git config --global user.name \"github-actions[bot]\"",
+// 		"&& git config --global user.email \"github-actions[bot]@users.noreply.github.com\"",
+// 		"&& git add .",
+// 		"&& git commit -m \"Deploy from GitHub Actions\"",
+// 		"&& git push origin main",
+// 	];
+
+// 	println!("Running commands: {:#?}", target_dir);
+
+// 	let status = parse_commands(commands).status()?;
+// 	if !status.success() {
+// 		anyhow::bail!("commit failed");
+// 	}
+
+// 	Ok(())
+// }
+
+
+// fn parse_commands(commands: Vec<&str>) -> Command {
+// 	let mut command = Command::new(&commands[0]);
+// 	for c in commands.iter().skip(1) {
+// 		let split_cmd = c.split_whitespace().collect::<Vec<&str>>();
+// 		command.args(split_cmd);
+// 	}
+// 	command
+// }

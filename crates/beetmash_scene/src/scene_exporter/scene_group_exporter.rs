@@ -49,6 +49,11 @@ impl<P: Clone + Plugins<M>, M, Q: QueryFilter> SceneGroupExporter<P, M, Q> {
 		self.config.checks = checks;
 		self
 	}
+	/// Increment the number of ignored resources by `count`.
+	pub fn add_ignored_resources(mut self, count: usize) -> Self {
+		self.config.checks.num_ignored_resources += count;
+		self
+	}
 
 	pub fn with_config(mut self, config: SceneExportConfig) -> Self {
 		self.config = config;

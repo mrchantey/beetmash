@@ -36,6 +36,7 @@ impl SceneExporter {
 		Schedule::default()
 			.add_systems(self.system)
 			.run(app.world_mut());
+		app.world_mut().flush();
 
 
 		let world = app.world_mut();

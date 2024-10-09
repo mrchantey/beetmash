@@ -1,54 +1,36 @@
 use bevy::prelude::*;
+use bevy::text::LineBreak;
 
 
 #[derive(Debug, Clone, Reflect)]
 pub enum MeshPlaceholder {
-	Plane3d {
-		plane: Plane3d,
-		width: f32,
-		height: f32,
-	},
-	Circle {
-		radius: f32,
-	},
-	Cuboid {
-		width: f32,
-		height: f32,
-		depth: f32,
-	},
+	Circle(Circle),
+	Cuboid(Cuboid),
+	Cylinder(Cylinder),
+	Plane3d(Plane3d),
 }
 
 impl From<Circle> for MeshPlaceholder {
-	fn from(circle: Circle) -> Self {
-		MeshPlaceholder::Circle {
-			radius: circle.radius,
-		}
-	}
+	fn from(circle: Circle) -> Self { MeshPlaceholder::Circle(circle) }
 }
 impl From<Cuboid> for MeshPlaceholder {
-	fn from(cuboid: Cuboid) -> Self {
-		MeshPlaceholder::Cuboid {
-			width: cuboid.half_size.x * 2.,
-			height: cuboid.half_size.y * 2.,
-			depth: cuboid.half_size.z * 2.,
-		}
-	}
+	fn from(cuboid: Cuboid) -> Self { MeshPlaceholder::Cuboid(cuboid) }
 }
+impl From<Cylinder> for MeshPlaceholder {
+	fn from(cylinder: Cylinder) -> Self { MeshPlaceholder::Cylinder(cylinder) }
+}
+impl From<Plane3d> for MeshPlaceholder {
+	fn from(plane: Plane3d) -> Self { MeshPlaceholder::Plane3d(plane) }
+}
+
 
 impl Into<Mesh> for MeshPlaceholder {
 	fn into(self) -> Mesh {
 		match self {
-			MeshPlaceholder::Plane3d {
-				plane,
-				width,
-				height,
-			} => plane.mesh().size(width, height).into(),
-			MeshPlaceholder::Circle { radius } => Circle::new(radius).into(),
-			MeshPlaceholder::Cuboid {
-				width,
-				height,
-				depth,
-			} => Cuboid::new(width, height, depth).into(),
+			MeshPlaceholder::Circle(circle) => circle.into(),
+			MeshPlaceholder::Cuboid(cuboid) => cuboid.into(),
+			MeshPlaceholder::Cylinder(cylinder) => cylinder.into(),
+			MeshPlaceholder::Plane3d(plane) => plane.into(),
 		}
 	}
 }
@@ -56,12 +38,20 @@ impl Into<Mesh> for MeshPlaceholder {
 #[derive(Debug, Clone, Reflect)]
 pub enum MaterialPlaceholder {
 	Color(Color),
+	StandardMaterial { base_color: Color, unlit: bool },
 }
 
 impl Into<StandardMaterial> for MaterialPlaceholder {
 	fn into(self) -> StandardMaterial {
 		match self {
 			MaterialPlaceholder::Color(color) => color.into(),
+			MaterialPlaceholder::StandardMaterial { base_color, unlit } => {
+				StandardMaterial {
+					base_color,
+					unlit,
+					..Default::default()
+				}
+			}
 		}
 	}
 }
@@ -76,13 +66,29 @@ pub enum BundlePlaceholder {
 	Camera2d,
 	Camera3d,
 	PointLight,
-	Text(Vec<TextSection>),
+	Text {
+		sections: Vec<TextSection>,
+		style: Style,
+		visibility: Visibility,
+		linebreak: Option<LineBreak>,
+	},
 	Sprite(String),
 	Scene(String),
 	Pbr {
 		mesh: MeshPlaceholder,
 		material: MaterialPlaceholder,
 	},
+}
+
+impl BundlePlaceholder {
+	pub fn text_from_sections(sections: Vec<TextSection>) -> Self {
+		BundlePlaceholder::Text {
+			sections,
+			style: default(),
+			visibility: default(),
+			linebreak: default(),
+		}
+	}
 }
 
 pub fn bundle_placeholder_plugin(app: &mut App) {
@@ -121,8 +127,18 @@ fn init_bundle(
 					transform,
 				));
 			}
-			BundlePlaceholder::Text(sections) => {
-				let mut bundle = TextBundle::from_sections(sections);
+			BundlePlaceholder::Text {
+				sections,
+				style,
+				visibility: visible,
+				linebreak: line_break,
+			} => {
+				let mut bundle =
+					TextBundle::from_sections(sections).with_style(style);
+				bundle.visibility = visible;
+				if let Some(linebreak) = line_break {
+					bundle.text.linebreak = linebreak;
+				}
 				bundle.transform = transform;
 				entity_commands.insert(bundle);
 			}

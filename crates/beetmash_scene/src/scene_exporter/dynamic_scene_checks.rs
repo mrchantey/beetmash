@@ -139,9 +139,10 @@ impl DynamicSceneChecks {
 
 		if issues.len() > 0 {
 			anyhow::bail!(
-				"{}: issues found:\n{}",
+				"{}\n{}: {} issues found",
+				issues.join("\n"),
 				path.display(),
-				issues.join("\n")
+				issues.len(),
 			)
 		} else {
 			Ok(())
@@ -201,7 +202,7 @@ impl DynamicSceneChecks {
 						.any(|i| component.name().starts_with(i))
 				{
 					issues.push(format!(
-						"Component missing: {}",
+						"Unregistered component: {}",
 						component.name()
 					));
 				}

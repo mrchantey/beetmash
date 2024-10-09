@@ -9,6 +9,5 @@ pub fn base_app_plugin(app: &mut App) {
 		BeetmashDefaultPlugins::default(),
 		DefaultPlaceholderPlugin,
 		DefaultReplicatePlugin,
-		
 	));
 }

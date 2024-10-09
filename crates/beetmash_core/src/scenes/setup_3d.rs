@@ -9,12 +9,8 @@ pub fn camera_3d(mut commands: Commands) {
 
 pub fn ground_3d(mut commands: Commands) {
 	commands.spawn(BundlePlaceholder::Pbr {
-		mesh: MeshPlaceholder::Plane3d {
-			plane: Plane3d::default(),
-			width: 100.,
-			height: 100.,
-		},
-		material: MaterialPlaceholder::Color(Color::srgb(0.3, 0.5, 0.3)),
+		mesh: Plane3d::new(Vec3::Y, Vec2::splat(50.)).into(),
+		material: Color::srgb(0.3, 0.5, 0.3).into(),
 	});
 }
 

@@ -1,10 +1,15 @@
 use beetmash_scene::prelude::*;
 use bevy::app::Plugins;
 use bevy::ecs::observer::ObserverState;
+use bevy::ecs::system::SystemIdMarker;
 use bevy::prelude::*;
 
 /// A common filter to use when exporting scenes.
-pub type DefaultSceneExportFilter = (Without<ObserverState>, Without<Observer>);
+pub type DefaultSceneExportFilter = (
+	Without<ObserverState>,
+	Without<Observer>,
+	Without<SystemIdMarker>,
+);
 
 
 /// Various fixes for unstable bevy stuff.
