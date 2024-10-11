@@ -1,7 +1,7 @@
 {
   "resources": {},
   "entities": {
-    "4294967320": {
+    "4294967326": {
       "components": {
         "beetmash_core::render::block_app_ready::AssetLoadBlockAppReady": {},
         "beetmash_scene::utils::bundle_placeholder::BundlePlaceholder": {

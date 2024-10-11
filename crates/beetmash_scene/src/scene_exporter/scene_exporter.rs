@@ -17,17 +17,20 @@ impl Into<Vec<SceneExporter>> for SceneExporter {
 }
 
 impl SceneExporter {
-	pub fn new<M>(name: String, system: impl IntoSystemConfigs<M>) -> Self {
+	pub fn new<M>(
+		name: impl Into<String>,
+		system: impl IntoSystemConfigs<M>,
+	) -> Self {
 		Self {
-			name,
+			name: name.into(),
 			system: system.into_configs(),
 		}
 	}
-	pub fn export<Q: QueryFilter, M>(
+	pub fn export_to_string<Q: QueryFilter, M>(
 		self,
 		plugins: impl Plugins<M>,
 		config: &SceneExportConfig,
-	) -> Result<()> {
+	) -> Result<String> {
 		let mut app = App::new();
 		app.add_plugins(plugins).finish();
 
@@ -50,11 +53,9 @@ impl SceneExporter {
 			.extract_resources()
 			.build();
 
-		let filename = format!("{}.{}", self.name, config.format.extension());
-		let path = config.dir.join(filename);
 		config
 			.checks
-			.assert_scene_match::<Q>(&path, world, &scene)?;
+			.assert_scene_match::<Q>(&self.name, world, &scene)?;
 
 		let type_registry = world.resource::<AppTypeRegistry>();
 		let type_registry = type_registry.read();
@@ -62,11 +63,23 @@ impl SceneExporter {
 
 		let scene_str = config.format.to_string(&serializer)?;
 
+		Ok(scene_str)
+	}
+
+	pub fn export_to_file<Q: QueryFilter, M>(
+		self,
+		plugins: impl Plugins<M>,
+		config: &SceneExportConfig,
+	) -> Result<()> {
+		let filename = format!("{}.{}", self.name, config.format.extension());
+		
+		let scene_str = self.export_to_string::<Q, M>(plugins, config)?;
+
+		let path = config.dir.join(filename);
 		if let Some(dir_path) = path.parent() {
 			fs::create_dir_all(dir_path)?;
 		}
 		fs::write(path, scene_str)?;
-
 		Ok(())
 	}
 }

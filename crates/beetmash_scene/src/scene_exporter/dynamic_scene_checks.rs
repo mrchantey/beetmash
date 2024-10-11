@@ -6,8 +6,6 @@ use bevy::pbr::DirectionalLightShadowMap;
 use bevy::pbr::PointLightShadowMap;
 use bevy::prelude::*;
 use bevy::time::TimeUpdateStrategy;
-use std::path::Path;
-
 
 pub fn get_save_entities<Q: QueryFilter>(world: &mut World) -> Vec<Entity> {
 	// TODO removed ,Without<Observer<OnUserMessage,()>>), check thats ok
@@ -39,7 +37,7 @@ impl Default for DynamicSceneChecks {
 			component_checks: true,
 			// hacky way to ignore resources pulled in by [DefaultPlugins]
 			// this should be synced the number of resources denied in `on_build`
-			num_ignored_resources: 155,
+			num_ignored_resources: 160,
 			allowed_ignores: vec![
 				"bevy_text::text::CosmicBuffer".to_string(),
 				"beet_flow::observers::action_observer_map::ActionObserverMap"
@@ -119,7 +117,7 @@ impl DynamicSceneChecks {
 
 	pub fn assert_scene_match<Q: QueryFilter>(
 		&self,
-		path: &Path,
+		name: &str,
 		world: &mut World,
 		scene: &DynamicScene,
 	) -> Result<()> {
@@ -141,7 +139,7 @@ impl DynamicSceneChecks {
 			anyhow::bail!(
 				"{}\n{}: {} issues found",
 				issues.join("\n"),
-				path.display(),
+				name,
 				issues.len(),
 			)
 		} else {
@@ -216,16 +214,13 @@ impl DynamicSceneChecks {
 		scene: &DynamicScene,
 	) -> Vec<String> {
 		let mut issues = Vec::new();
-		let Some(num_resources_world) = world
-			.iter_resources()
-			.count()
-			.checked_sub(self.num_ignored_resources)
-		else {
-			return vec!["Resource count mismatch, `DynamicSceneChecks::num_ignored_resources` exeeds those found in the World".to_string()];
-		};
-		let num_resources_scene = scene.resources.len();
+
+		let num_resources_world = world.iter_resources().count() as i32
+			- self.num_ignored_resources as i32;
+
+		let num_resources_scene = scene.resources.len() as i32;
 		if num_resources_world != num_resources_scene {
-			let delta = num_resources_world as i32 - num_resources_scene as i32;
+			let delta = num_resources_world - num_resources_scene;
 			issues.push(
 			format!(r#"Resource count mismatch, received is off by {delta}.
 If this was intentional add {delta} to `DynamicSceneChecks::num_ignored_resources`."#));

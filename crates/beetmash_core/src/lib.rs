@@ -3,7 +3,7 @@ pub mod ik_solver;
 pub mod net;
 #[cfg(feature = "render")]
 pub mod render;
-pub mod scene_utils;
+pub mod export;
 #[cfg(feature = "render")]
 pub mod scenes;
 
@@ -13,5 +13,5 @@ pub mod prelude {
 	pub use crate::net::*;
 	#[cfg(feature = "render")]
 	pub use crate::render::*;
-	pub use crate::scene_utils::*;
+	pub use crate::export::*;
 }

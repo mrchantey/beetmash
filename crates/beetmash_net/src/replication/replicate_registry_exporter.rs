@@ -17,11 +17,17 @@ impl<P: Clone + Plugins<M>, M> ReplicateRegistryExporter<P, M> {
 	pub fn new(plugin: P) -> Self {
 		Self {
 			plugin,
-			path: PathBuf::from("target/type_registries/replication_registry.json"),
+			path: PathBuf::from(
+				"target/type_registries/replication_registry.json",
+			),
 			phantom: std::marker::PhantomData,
 		}
 	}
 
+	pub fn with_name(mut self, name: &str) -> Self {
+		self.path.set_file_name(name);
+		self
+	}
 	/// Build a replication registry and write it to a file.
 	/// Expects the app to have a ReplicateRegistry resource.
 	/// # Errors
@@ -41,9 +47,9 @@ impl<P: Clone + Plugins<M>, M> ReplicateRegistryExporter<P, M> {
 		}
 		fs::write(&self.path, json)?;
 		println!(
-			"Exported replicate registry:\nPath: {}\nItems:\n{}",
+			"Exported replicate registry:\nPath: {}",
 			self.path.display(),
-			registry.types_to_json()
+			// registry.types_to_json()
 		);
 		Ok(())
 	}

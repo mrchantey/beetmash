@@ -3,15 +3,14 @@ use beetmash_net::prelude::*;
 use beetmash_scene::prelude::*;
 use bevy::prelude::*;
 
-/// Includes default transports for native and wasm targets, as well as
+/// Includes default transports for native and wasm targets,
+/// as well as common replication events.
 #[derive(Debug, Clone)]
 pub struct DefaultReplicatePlugin;
 
 
 impl Plugin for DefaultReplicatePlugin {
 	fn build(&self, app: &mut App) {
-		let _ = app;
-
 		app.add_plugins((
 			ReplicatePlugin,
 			CommonEventsPlugin,
@@ -31,7 +30,7 @@ impl Plugin for DefaultReplicatePlugin {
 			app
 			.replicate_observer_incoming::<SaveScreenshot>()
 			.observe(screenshot_on_event)
-			.add_systems(Update,screenshot_on_keypress)
+			.add_systems(Update, screenshot_on_keypress)
 			// .observe(screenshot_on_event)
 			// .observe(screenshot_on_keypress)
 				/*-*/;

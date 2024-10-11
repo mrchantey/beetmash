@@ -12,6 +12,7 @@ cli *args:
 
 export-scenes *args:
 	cargo run --example export_scenes {{args}}
+	cd crates/beetmash_template && cargo run --example export_scenes {{args}}
 
 export-type-registry *args:
 	cargo run --example export_type_registry

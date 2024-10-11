@@ -1,11 +1,11 @@
 {
   "resources": {},
   "entities": {
-    "4294967320": {
+    "4294967326": {
       "components": {
         "bevy_hierarchy::components::children::Children": [
           [
-            4294967321
+            4294967327
           ]
         ],
         "bevy_render::view::visibility::InheritedVisibility": [
@@ -209,16 +209,16 @@
         ]
       }
     },
-    "4294967321": {
+    "4294967327": {
       "components": {
         "beetmash_core::components::ui_terminal::OutputContainer": {},
         "bevy_hierarchy::components::children::Children": [
           [
-            4294967322
+            4294967328
           ]
         ],
         "bevy_hierarchy::components::parent::Parent": [
-          4294967320
+          4294967326
         ],
         "bevy_render::view::visibility::InheritedVisibility": [
           false
@@ -421,11 +421,11 @@
         ]
       }
     },
-    "4294967322": {
+    "4294967328": {
       "components": {
         "beetmash_core::components::ui_terminal::UiTerminal": {},
         "bevy_hierarchy::components::parent::Parent": [
-          4294967321
+          4294967327
         ],
         "bevy_render::view::visibility::InheritedVisibility": [
           false

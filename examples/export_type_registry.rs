@@ -1,5 +1,4 @@
 use anyhow::Result;
-use beetmash::prelude::TypeRegistryExporter;
 use beetmash::prelude::*;
 
 fn main() -> Result<()> {
@@ -8,7 +7,6 @@ fn main() -> Result<()> {
 		DefaultPlaceholderPlugin,
 		UiTerminalPlugin,
 	))
-	.with_name("all_types")
 	.export()?;
 
 	ReplicateRegistryExporter::new(DefaultReplicatePlugin).export()?;

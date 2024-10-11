@@ -46,7 +46,7 @@ pub(crate) fn transport_incoming<T: Transport>(
 ) {
 	if let Some(messages) = transport.recv().ok_or(|e| log::error!("foo {e}")) {
 		for message in messages {
-			log::info!("<<< MESSAGE: {:?}", message);
+			// log::info!("<<< MESSAGE: {:?}", message);
 			events.push(message);
 		}
 	}

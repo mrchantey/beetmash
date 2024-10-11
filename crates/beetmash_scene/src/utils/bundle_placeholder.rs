@@ -71,6 +71,7 @@ pub enum BundlePlaceholder {
 		style: Style,
 		visibility: Visibility,
 		linebreak: Option<LineBreak>,
+		background_color: Option<Color>,
 	},
 	Sprite(String),
 	Scene(String),
@@ -87,6 +88,7 @@ impl BundlePlaceholder {
 			style: default(),
 			visibility: default(),
 			linebreak: default(),
+			background_color: default(),
 		}
 	}
 }
@@ -130,14 +132,18 @@ fn init_bundle(
 			BundlePlaceholder::Text {
 				sections,
 				style,
-				visibility: visible,
-				linebreak: line_break,
+				visibility,
+				linebreak,
+				background_color,
 			} => {
 				let mut bundle =
 					TextBundle::from_sections(sections).with_style(style);
-				bundle.visibility = visible;
-				if let Some(linebreak) = line_break {
+				bundle.visibility = visibility;
+				if let Some(linebreak) = linebreak {
 					bundle.text.linebreak = linebreak;
+				}
+				if let Some(backgrond_color) = background_color {
+					bundle.background_color = backgrond_color.into();
 				}
 				bundle.transform = transform;
 				entity_commands.insert(bundle);

@@ -8,9 +8,8 @@ use std::path::PathBuf;
 /// A helper for exporting the type registry.
 /// By default this **will clear the target directory**.
 pub struct TypeRegistryExporter<P, M> {
-	plugin: P,
-	name: String,
-	dir: PathBuf,
+	pub plugin: P,
+	pub path: PathBuf,
 	phantom: std::marker::PhantomData<M>,
 }
 
@@ -18,14 +17,13 @@ impl<P: Clone + Plugins<M>, M> TypeRegistryExporter<P, M> {
 	pub fn new(plugin: P) -> Self {
 		Self {
 			plugin,
-			name: "type_registry".to_string(),
-			dir: PathBuf::from("target/type_registries"),
+			path: PathBuf::from("target/type_registries/type_registry.json"),
 			phantom: std::marker::PhantomData,
 		}
 	}
 
 	pub fn with_name(mut self, name: &str) -> Self {
-		self.name = name.to_string();
+		self.path.set_file_name(name);
 		self
 	}
 
@@ -38,16 +36,17 @@ impl<P: Clone + Plugins<M>, M> TypeRegistryExporter<P, M> {
 		let registry: &TypeRegistry = &registry;
 		let serde_registry: SerdeTypeRegistry = registry.into();
 
-		let registry_path = self.dir.join(&format!("{}.json", self.name));
 		let bytes = serde_json::to_string_pretty(&serde_registry)?;
 		let num_bytes = bytes.len();
 		let num_kilobytes = num_bytes as i64 / 1024;
-		std::fs::create_dir_all(&self.dir).ok();
-		std::fs::write(&registry_path, bytes)?;
+		if let Some(parent) = self.path.parent() {
+			std::fs::create_dir_all(parent).ok();
+		}
+		std::fs::write(&self.path, bytes)?;
 
 		println!(
-			"type registry exported\npath: {}\nsize: {}KB",
-			registry_path.display(),
+			"Exported type registry\nPath: {}\nsize: {}KB",
+			self.path.display(),
 			num_kilobytes
 		);
 		Ok(())
