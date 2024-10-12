@@ -14,11 +14,13 @@ export-scenes *args:
 	cargo run --example export_scenes {{args}}
 	cd crates/beetmash_template && cargo run --example export_scenes {{args}}
 
+ts-dst:= '../beetmash-site/packages/editor/src/serdeTypes/generated'
+
 export-typescript *args:
 	cargo run --example export_typescript
-	rm -rf ../beetmash-site/packages/editor/src/serdeTypes || true
-	mkdir -p ../beetmash-site/packages/editor/src/serdeTypes
-	cp -r target/typescript/* ../beetmash-site/packages/editor/src/serdeTypes
+	rm -rf {{ts-dst}} || true
+	mkdir -p {{ts-dst}}
+	cp -r target/typescript/* {{ts-dst}}
 
 install-cli *args:
 	cargo install --path ./crates/cli {{args}}
