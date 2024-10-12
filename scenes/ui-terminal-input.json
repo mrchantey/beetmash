@@ -979,7 +979,8 @@
               }
             },
             "visibility": "Inherited",
-            "linebreak": null
+            "linebreak": null,
+            "background_color": null
           }
         },
         "bevy_hierarchy::components::parent::Parent": [

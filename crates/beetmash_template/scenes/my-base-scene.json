@@ -1,7 +1,7 @@
 {
   "resources": {},
   "entities": {
-    "4294967296": {
+    "4294967302": {
       "components": {
         "beetmash_scene::utils::bundle_placeholder::BundlePlaceholder": "PointLight",
         "bevy_core::name::Name": "Light",
@@ -39,7 +39,7 @@
         }
       }
     },
-    "4294967297": {
+    "4294967303": {
       "components": {
         "beetmash_scene::utils::bundle_placeholder::BundlePlaceholder": "Camera3d",
         "bevy_core::name::Name": "Camera",

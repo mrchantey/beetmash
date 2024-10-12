@@ -17,11 +17,17 @@ impl<P: Clone + Plugins<M>, M> TypeRegistryExporter<P, M> {
 	pub fn new(plugin: P) -> Self {
 		Self {
 			plugin,
-			path: PathBuf::from("target/type_registries/type_registry.json"),
+			path: PathBuf::from("target/registries/type_registry.json"),
 			phantom: std::marker::PhantomData,
 		}
 	}
 
+	pub fn with_dir(mut self, dir: &str) -> Self {
+		self.path = PathBuf::from(dir).join(self.path.file_name().unwrap());
+		self
+	}
+
+	/// Override the default `type_registry.json` file name.
 	pub fn with_name(mut self, name: &str) -> Self {
 		self.path.set_file_name(name);
 		self

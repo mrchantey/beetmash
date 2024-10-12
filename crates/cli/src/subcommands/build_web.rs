@@ -72,13 +72,21 @@ instead of html and other web assets.
 					.action(ArgAction::Set)
 					.help("Copy scenes to directory specified by copy-local"),
 			)
-			// .arg(
-			// 	clap::Arg::new("commit-local")
-			// 		.long("commit-local")
-			// 		.required(false)
-			// 		.action(ArgAction::SetTrue)
-			// 		.help("Commit all and push in directory specified by copy-local"),
-			// )
+			.arg(
+				clap::Arg::new("copy-registries")
+					.long("copy-registries")
+					.action(ArgAction::Set)
+					.help(
+						"Copy registries to directory specified by copy-local",
+					),
+			)
+		// .arg(
+		// 	clap::Arg::new("commit-local")
+		// 		.long("commit-local")
+		// 		.required(false)
+		// 		.action(ArgAction::SetTrue)
+		// 		.help("Commit all and push in directory specified by copy-local"),
+		// )
 	}
 
 	// untested, i prefer justfile
@@ -86,7 +94,7 @@ instead of html and other web assets.
 		let args = Args::from_args(args);
 
 		println!("Building Beetmash Web app...\n{:#?}", args);
-
+		
 		run_cargo_build(&args)?;
 		run_wasm_bindgen(&args)?;
 		run_wasm_opt(&args)?;
@@ -107,6 +115,7 @@ struct Args {
 	out_dir: String,
 	copy_local: Option<String>,
 	copy_scenes: Option<String>,
+	copy_registries: Option<String>,
 	// commit_local: bool,
 	skip_build: bool,
 }
@@ -121,6 +130,8 @@ impl Args {
 		let app_name = example.clone().unwrap_or_else(|| "main".into());
 		let copy_local = args.get_one::<String>("copy-local").cloned();
 		let copy_scenes = args.get_one::<String>("copy-scenes").cloned();
+		let copy_registries =
+			args.get_one::<String>("copy-registries").cloned();
 		// let commit_local = args.get_flag("commit-local");
 
 		Self {
@@ -132,6 +143,7 @@ impl Args {
 			app_name,
 			copy_local,
 			copy_scenes,
+			copy_registries,
 			// commit_local,
 		}
 	}
@@ -275,6 +287,12 @@ fn run_copy_local(args: &Args) -> Result<()> {
 		forky::fs::utility::fs::copy_recursive(
 			scenes_dir_src,
 			target_dir.join("scenes"),
+		)?;
+	}
+	if let Some(registries_dir_src) = &args.copy_registries {
+		forky::fs::utility::fs::copy_recursive(
+			registries_dir_src,
+			target_dir.join("registries"),
 		)?;
 	}
 

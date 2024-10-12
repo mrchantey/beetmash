@@ -36,6 +36,8 @@ path = "scenes/my-base-scene.json"
 # specifying the path to a wasm app is a great way to share a demo of your scene
 app.js-url = "https://mrchantey.github.io/beetmash-apps/beetmash_template/app.js"
 app.wasm-url = "https://mrchantey.github.io/beetmash-apps/beetmash_template/app_bg.wasm"
+app.type-registry-url = "https://mrchantey.github.io/beetmash-apps/beetmash_template/registries/type_registry.json"
+app.replication-registry-url = "https://mrchantey.github.io/beetmash-apps/beetmash_template/registries/replication_registry.json"
 
 ### 🚀 3 - A demo scene
 

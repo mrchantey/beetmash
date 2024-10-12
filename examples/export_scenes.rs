@@ -22,7 +22,7 @@ fn main() -> Result<()> {
 	.add_scene("camera-3d", core::scenes::camera_3d)
 	.add_scene("lighting-3d", core::scenes::lighting_3d)
 	.add_scene("ground-3d", core::scenes::ground_3d)
-	.export()?;
+	.export_with_registries()?;
 
 	Ok(())
 }

@@ -2,9 +2,9 @@ use crate::prelude::*;
 use bevy::prelude::ReflectComponent;
 use bevy::prelude::ReflectDefault;
 use bevy::prelude::ReflectResource;
+use bevy::reflect::serde::ReflectSerializer;
 use bevy::reflect::TypePathTable;
 use bevy::reflect::TypeRegistration;
-use bevy::reflect::serde::ReflectSerializer;
 use bevy::reflect::TypeRegistry;
 use serde::Deserialize;
 use serde::Serialize;
@@ -53,14 +53,9 @@ fn map_default(
 		ReflectSerializer::new(default.as_ref(), &registry);
 
 	match serde_json::to_string(&reflect_serializer) {
-		Err(_err) => {
-			// eprintln!(
-			// 	"Failed to serialize default value for type: {:?}\nError: {:?}",
-			// 	reg.type_info().type_path_table().path(),
-			// 	err
-			// );
+		Err(err) => {
 			eprintln!(
-				"Failed to serialize default value for type: {}",
+				"Failed to serialize default value for type: {}\nError: {err}",
 				reg.type_info().type_path_table().path(),
 			);
 			None

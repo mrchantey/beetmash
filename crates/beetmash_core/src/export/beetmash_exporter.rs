@@ -4,6 +4,7 @@ use beetmash_scene::prelude::*;
 use bevy::app::Plugins;
 use bevy::ecs::query::QueryFilter;
 
+
 /// Export all required elements of your app,
 /// 1. [SceneGroupExporter]
 /// 2. [TypeRegistryExporter]
@@ -28,6 +29,29 @@ impl<P: Clone + Plugins<M>, M, Q: QueryFilter> BeetmashExporter<P, M, Q> {
 		self.scene_group_exporter.export()?;
 		self.type_registry.export()?;
 		self.replicate_registry.export()?;
+		Ok(())
+	}
+}
+
+
+#[extend::ext(name=SceneGroupExporterrExt)]
+pub impl<P: Clone + Plugins<M>, M, Q: QueryFilter> SceneGroupExporter<P, M, Q> {
+	fn export_with_registries(self) -> Result<()> {
+		self.export_with_registries_and_options("target/registries")
+	}
+	fn export_with_registries_and_options(
+		self,
+		registries_dir: &str,
+	) -> Result<()> {
+		TypeRegistryExporter::new(self.plugin.clone())
+			.with_dir(registries_dir)
+			.export()?;
+
+		ReplicateRegistryExporter::new(self.plugin.clone())
+			.with_dir(registries_dir)
+			.export()?;
+
+		self.export()?;
 		Ok(())
 	}
 }

@@ -14,11 +14,6 @@ export-scenes *args:
 	cargo run --example export_scenes {{args}}
 	cd crates/beetmash_template && cargo run --example export_scenes {{args}}
 
-export-type-registry *args:
-	cargo run --example export_type_registry
-	cp ./target/type_registries/replication_registry.json \
-	../beetmash-site/packages/comp-solid/src/demo/default-replication-registry.json
-
 export-typescript *args:
 	cargo run --example export_typescript
 	rm -rf ../beetmash-site/packages/editor/src/serdeTypes || true
@@ -29,18 +24,22 @@ install-cli *args:
 	cargo install --path ./crates/cli {{args}}
 
 build-wasm *args:
+	@echo "exporting beetmash"
 	just export-scenes
 	beetmash build \
 	--example app \
 	--release \
 	--copy-local ../beetmash-apps \
-	--copy-scenes scenes
+	--copy-scenes scenes \
+	--copy-registries target/registries {{args}}
+	@echo "exporting beet"
+	cd crates/beetmash_template && just export-scenes
 	beetmash build \
 	-p beetmash_template --example app \
 	--release \
 	--copy-local ../beetmash-apps \
 	--copy-scenes crates/beetmash_template/scenes \
-	{{args}}
+	--copy-registries crates/beetmash_template/target/registries {{args}}
 
 build-wasm-test *args:
 	just cli build \
@@ -48,6 +47,7 @@ build-wasm-test *args:
 	--release	\
 	--copy-local ../beetmash-apps \
 	--copy-scenes crates/beetmash_template/scenes \
+	--copy-registries target/registries \
 	{{args}}
 
 export-test-scene:
