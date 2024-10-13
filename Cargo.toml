@@ -14,7 +14,7 @@ opt-level = 1
 opt-level = 3
 
 [workspace.package]
-version = "0.0.6-rc.6"
+version = "0.0.6-rc.7"
 edition = "2021"
 description = "The number one bevy scene registry."
 documentation = "https://beetmash.com/docs/beetmash"
@@ -46,11 +46,11 @@ exclude = ["crates/beetmash_esp"]
 
 [workspace.dependencies]
 #💡 internal
-beetmash = { path = "./", version = "0.0.6-rc.6" }
-beetmash_core = { path = "crates/beetmash_core", version = "0.0.6-rc.6" }
-beetmash_net = { path = "crates/beetmash_net", version = "0.0.6-rc.6" }
-beetmash_scene = { path = "crates/beetmash_scene", version = "0.0.6-rc.6" }
-beetmash_server = { path = "crates/beetmash_server", version = "0.0.6-rc.6" }
+beetmash = { path = "./", version = "0.0.6-rc.7" }
+beetmash_core = { path = "crates/beetmash_core", version = "0.0.6-rc.7" }
+beetmash_net = { path = "crates/beetmash_net", version = "0.0.6-rc.7" }
+beetmash_scene = { path = "crates/beetmash_scene", version = "0.0.6-rc.7" }
+beetmash_server = { path = "crates/beetmash_server", version = "0.0.6-rc.7" }
 
 #💡 local-relative
 # sweet = { version = "0.1.51", path = "../sweet", features = ["bevy"] }
@@ -93,10 +93,10 @@ wasm-bindgen = "0.2"
 wasm-bindgen-futures = "0.4"
 
 #💡 Game
-# bevy = { version = "0.14", default-features = false }
-# bevy_reflect = { version = "0.14" }
-bevy = { git = "https://github.com/bevyengine/bevy", rev = "0c959f77007c29eead7f902bddd3342a1ecbca20", default-features = false }
-bevy_reflect = { git = "https://github.com/bevyengine/bevy", rev = "0c959f77007c29eead7f902bddd3342a1ecbca20" }
+bevy = { version = "0.14", default-features = false }
+bevy_reflect = { version = "0.14" }
+# bevy = { git = "https://github.com/bevyengine/bevy", rev = "0c959f77007c29eead7f902bddd3342a1ecbca20", default-features = false }
+# bevy_reflect = { git = "https://github.com/bevyengine/bevy", rev = "0c959f77007c29eead7f902bddd3342a1ecbca20" }
 
 
 [package]
