@@ -41,6 +41,15 @@ pub enum MaterialPlaceholder {
 	StandardMaterial { base_color: Color, unlit: bool },
 }
 
+impl MaterialPlaceholder {
+	pub fn unlit(base_color: impl Into<Color>) -> Self {
+		MaterialPlaceholder::StandardMaterial {
+			base_color: base_color.into(),
+			unlit: true,
+		}
+	}
+}
+
 impl Into<StandardMaterial> for MaterialPlaceholder {
 	fn into(self) -> StandardMaterial {
 		match self {
@@ -58,6 +67,11 @@ impl Into<StandardMaterial> for MaterialPlaceholder {
 
 impl Into<MaterialPlaceholder> for Color {
 	fn into(self) -> MaterialPlaceholder { MaterialPlaceholder::Color(self) }
+}
+impl Into<MaterialPlaceholder> for Srgba {
+	fn into(self) -> MaterialPlaceholder {
+		MaterialPlaceholder::Color(self.into())
+	}
 }
 
 #[derive(Debug, Clone, Component, Reflect)]
