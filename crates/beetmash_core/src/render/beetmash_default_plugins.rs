@@ -80,7 +80,9 @@ impl BeetmashDefaultPlugins {
 	pub fn with_beetmash_assets() -> Self {
 		Self {
 			wasm_asset_path:
-				"https://storage.googleapis.com/beet-examples/assets".into(),
+				"https://beetmash-public.s3.us-west-2.amazonaws.com/assets"
+					.into(),
+			// "https://storage.googleapis.com/beet-examples/assets".into(),
 			assert_local_assets: true,
 		}
 	}
@@ -100,12 +102,12 @@ Welcome! Beetmash examples use large assets that are stored remotely.
 
 Windows:
 
-1. Download https://storage.googleapis.com/beet-misc/assets.tar.gz
+1. Download https://beetmash-public.s3.us-west-2.amazonaws.com/assets.tar.gz
 2. Unzip into `./assets`
 
 Linux/MacOS:
 
-curl -o ./assets.tar.gz https://storage.googleapis.com/beet-misc/assets.tar.gz
+curl -o ./assets.tar.gz https://beetmash-public.s3.us-west-2.amazonaws.com/assets.tar.gz
 tar -xzvf ./assets.tar.gz
 rm ./assets.tar.gz
 

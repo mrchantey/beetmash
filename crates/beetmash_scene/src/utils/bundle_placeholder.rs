@@ -6,31 +6,36 @@ use bevy::text::LineBreak;
 pub enum MeshPlaceholder {
 	Circle(Circle),
 	Cuboid(Cuboid),
+	Sphere(Sphere),
 	Cylinder(Cylinder),
 	Plane3d(Plane3d),
 }
 
 impl From<Circle> for MeshPlaceholder {
-	fn from(circle: Circle) -> Self { MeshPlaceholder::Circle(circle) }
+	fn from(shape: Circle) -> Self { MeshPlaceholder::Circle(shape) }
 }
 impl From<Cuboid> for MeshPlaceholder {
-	fn from(cuboid: Cuboid) -> Self { MeshPlaceholder::Cuboid(cuboid) }
+	fn from(shape: Cuboid) -> Self { MeshPlaceholder::Cuboid(shape) }
 }
 impl From<Cylinder> for MeshPlaceholder {
-	fn from(cylinder: Cylinder) -> Self { MeshPlaceholder::Cylinder(cylinder) }
+	fn from(shape: Cylinder) -> Self { MeshPlaceholder::Cylinder(shape) }
 }
 impl From<Plane3d> for MeshPlaceholder {
-	fn from(plane: Plane3d) -> Self { MeshPlaceholder::Plane3d(plane) }
+	fn from(shape: Plane3d) -> Self { MeshPlaceholder::Plane3d(shape) }
+}
+impl From<Sphere> for MeshPlaceholder {
+	fn from(shape: Sphere) -> Self { MeshPlaceholder::Sphere(shape) }
 }
 
 
 impl Into<Mesh> for MeshPlaceholder {
 	fn into(self) -> Mesh {
 		match self {
-			MeshPlaceholder::Circle(circle) => circle.into(),
-			MeshPlaceholder::Cuboid(cuboid) => cuboid.into(),
-			MeshPlaceholder::Cylinder(cylinder) => cylinder.into(),
-			MeshPlaceholder::Plane3d(plane) => plane.into(),
+			MeshPlaceholder::Circle(shape) => shape.into(),
+			MeshPlaceholder::Cuboid(shape) => shape.into(),
+			MeshPlaceholder::Cylinder(shape) => shape.into(),
+			MeshPlaceholder::Sphere(shape) => shape.into(),
+			MeshPlaceholder::Plane3d(shape) => shape.into(),
 		}
 	}
 }
@@ -89,6 +94,7 @@ pub enum BundlePlaceholder {
 	},
 	Sprite(String),
 	Scene(String),
+	Gltf(String),
 	Pbr {
 		mesh: MeshPlaceholder,
 		material: MaterialPlaceholder,
@@ -125,23 +131,21 @@ fn init_bundle(
 	for (entity, transform, placeholder) in query.iter() {
 		let mut entity_commands = commands.entity(entity);
 		entity_commands.remove::<BundlePlaceholder>();
+		// still required for textBundle
 		let transform = transform.cloned().unwrap_or_default();
 
 		match placeholder.clone() {
 			BundlePlaceholder::Camera2d => {
-				entity_commands.insert((Camera2d::default(), transform));
+				entity_commands.insert(Camera2d::default());
 			}
 			BundlePlaceholder::Camera3d => {
-				entity_commands.insert((Camera3d::default(), transform));
+				entity_commands.insert(Camera3d::default());
 			}
 			BundlePlaceholder::PointLight => {
-				entity_commands.insert((
-					PointLight {
-						shadows_enabled: true,
-						..default()
-					},
-					transform,
-				));
+				entity_commands.insert(PointLight {
+					shadows_enabled: true,
+					..default()
+				});
 			}
 			BundlePlaceholder::Text {
 				sections,
@@ -170,14 +174,18 @@ fn init_bundle(
 				});
 			}
 			BundlePlaceholder::Scene(path) => {
-				entity_commands
-					.insert((SceneRoot(asset_server.load(path)), transform));
+				entity_commands.insert(SceneRoot(asset_server.load(path)));
+			}
+			BundlePlaceholder::Gltf(path) => {
+				entity_commands.insert(SceneRoot(
+					asset_server
+						.load(GltfAssetLabel::Scene(0).from_asset(path)),
+				));
 			}
 			BundlePlaceholder::Pbr { mesh, material } => {
 				entity_commands.insert((
 					Mesh3d(meshes.add(mesh)),
 					MeshMaterial3d(materials.add(material)),
-					transform,
 				));
 			}
 		}
