@@ -14,10 +14,10 @@ impl Default for Foxie {
 		let mut graph = AnimationGraphPlaceholder::default();
 
 		let idle_clip =
-			AssetPlaceholder::<AnimationClip>::new("Fox.glb#Animation0");
+			AssetPlaceholder::<AnimationClip>::new("misc/Fox.glb#Animation0");
 		let idle_index = graph.add_clip(idle_clip.clone(), 1.0, graph.root);
 		let walk_clip =
-			AssetPlaceholder::<AnimationClip>::new("Fox.glb#Animation1");
+			AssetPlaceholder::<AnimationClip>::new("misc/Fox.glb#Animation1");
 		let walk_index = graph.add_clip(walk_clip.clone(), 1.0, graph.root);
 
 		Self {

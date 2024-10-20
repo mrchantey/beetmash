@@ -43,7 +43,15 @@ impl Into<Mesh> for MeshPlaceholder {
 #[derive(Debug, Clone, Reflect)]
 pub enum MaterialPlaceholder {
 	Color(Color),
-	StandardMaterial { base_color: Color, unlit: bool },
+	StandardMaterial {
+		base_color: Color,
+		unlit: bool,
+	},
+	Texture {
+		path: String,
+		unlit: bool,
+		alpha_mode: AlphaMode,
+	},
 }
 
 impl MaterialPlaceholder {
@@ -53,10 +61,8 @@ impl MaterialPlaceholder {
 			unlit: true,
 		}
 	}
-}
 
-impl Into<StandardMaterial> for MaterialPlaceholder {
-	fn into(self) -> StandardMaterial {
+	pub fn into_material(self, asset_server: &AssetServer) -> StandardMaterial {
 		match self {
 			MaterialPlaceholder::Color(color) => color.into(),
 			MaterialPlaceholder::StandardMaterial { base_color, unlit } => {
@@ -66,6 +72,17 @@ impl Into<StandardMaterial> for MaterialPlaceholder {
 					..Default::default()
 				}
 			}
+			MaterialPlaceholder::Texture {
+				path,
+				unlit,
+				alpha_mode,
+			} => StandardMaterial {
+				base_color: Color::WHITE,
+				unlit,
+				alpha_mode,
+				base_color_texture: Some(asset_server.load(path).clone()),
+				..Default::default()
+			},
 		}
 	}
 }
@@ -185,7 +202,9 @@ fn init_bundle(
 			BundlePlaceholder::Pbr { mesh, material } => {
 				entity_commands.insert((
 					Mesh3d(meshes.add(mesh)),
-					MeshMaterial3d(materials.add(material)),
+					MeshMaterial3d(
+						materials.add(material.into_material(&asset_server)),
+					),
 				));
 			}
 		}

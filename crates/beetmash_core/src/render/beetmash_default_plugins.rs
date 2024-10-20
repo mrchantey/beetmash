@@ -10,13 +10,16 @@ const DEFAULT_ASSETS_PATH: &str = "assets";
 /// and uploading to [beetmash.com](https://beetmash.com)
 pub struct BeetmashDefaultPlugins {
 	#[allow(unused)]
-	wasm_asset_path: String,
-	assert_local_assets: bool,
+	pub default_asset_path: String,
+	#[allow(unused)]
+	pub wasm_asset_path: String,
+	pub assert_local_assets: bool,
 }
 
 impl Default for BeetmashDefaultPlugins {
 	fn default() -> Self {
 		Self {
+			default_asset_path: DEFAULT_ASSETS_PATH.into(),
 			wasm_asset_path: DEFAULT_ASSETS_PATH.into(),
 			assert_local_assets: false,
 		}
@@ -64,7 +67,7 @@ impl BeetmashDefaultPlugins {
 	pub fn new(wasm_asset_path: String) -> Self {
 		Self {
 			wasm_asset_path,
-			assert_local_assets: false,
+			..default()
 		}
 	}
 
@@ -74,7 +77,7 @@ impl BeetmashDefaultPlugins {
 		// return "https://demo.beetmash.com/wasm/assets".into();
 		return self.wasm_asset_path.clone();
 		#[cfg(not(target_arch = "wasm32"))]
-		return DEFAULT_ASSETS_PATH.into();
+		return self.default_asset_path.clone();
 	}
 
 	pub fn with_beetmash_assets() -> Self {
@@ -84,6 +87,7 @@ impl BeetmashDefaultPlugins {
 					.into(),
 			// "https://storage.googleapis.com/beet-examples/assets".into(),
 			assert_local_assets: true,
+			..default()
 		}
 	}
 
