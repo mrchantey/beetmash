@@ -68,7 +68,7 @@ pub fn init_animation_asset(
 
 		commands
 			.entity(entity)
-			.insert(HandleWrapper(graphs.add(graph)))
+			.insert(AnimationGraphHandle(graphs.add(graph)))
 			.remove::<AnimationGraphPlaceholder>();
 	}
 }
