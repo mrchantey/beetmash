@@ -7,6 +7,9 @@ pub use self::asset_placeholder::*;
 pub mod bundle_placeholder;
 #[allow(unused_imports)]
 pub use self::bundle_placeholder::*;
+pub mod handle_wrapper;
+#[allow(unused_imports)]
+pub use self::handle_wrapper::*;
 pub mod load_scenes;
 #[allow(unused_imports)]
 pub use self::load_scenes::*;

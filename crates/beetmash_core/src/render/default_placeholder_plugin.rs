@@ -10,6 +10,8 @@ impl Plugin for DefaultPlaceholderPlugin {
 	fn build(&self, app: &mut App) {
 		app.add_plugins((
 			bundle_placeholder_plugin,
+			// scenes
+			ReadyOnAssetLoadPlugin::<Scene>::default(),
 			// sprites
 			AssetPlaceholderPlugin::<Image>::default(),
 			ReadyOnAssetLoadPlugin::<Image>::default(),

@@ -23,7 +23,7 @@ impl ObserverFns {
 }
 
 pub fn register_observer_outgoing<T: Event + Serialize>(app: &mut App) {
-	app.world_mut().observe(outgoing_send::<T>);
+	app.world_mut().add_observer(outgoing_send::<T>);
 }
 
 fn outgoing_send<T: Event + Serialize>(

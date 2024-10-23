@@ -46,8 +46,8 @@ impl Plugin for ReplicatePlugin {
 				),
 			);
 
-		app.world_mut().observe(outgoing_spawn);
-		app.world_mut().observe(outgoing_despawn);
+		app.world_mut().add_observer(outgoing_spawn);
+		app.world_mut().add_observer(outgoing_despawn);
 	}
 }
 

@@ -1,6 +1,4 @@
 use bevy::prelude::*;
-use bevy::text::LineBreak;
-
 
 #[derive(Debug, Clone, Reflect)]
 pub enum MeshPlaceholder {
@@ -103,10 +101,10 @@ pub enum BundlePlaceholder {
 	Camera3d,
 	PointLight,
 	Text {
-		sections: Vec<TextSection>,
-		style: Style,
+		sections: Vec<String>,
+		node: Node,
 		visibility: Visibility,
-		linebreak: Option<LineBreak>,
+		layout: TextLayout,
 		background_color: Option<Color>,
 	},
 	Sprite(String),
@@ -119,12 +117,12 @@ pub enum BundlePlaceholder {
 }
 
 impl BundlePlaceholder {
-	pub fn text_from_sections(sections: Vec<TextSection>) -> Self {
+	pub fn text(sections: Vec<String>) -> Self {
 		BundlePlaceholder::Text {
 			sections,
-			style: default(),
+			node: default(),
 			visibility: default(),
-			linebreak: default(),
+			layout: default(),
 			background_color: default(),
 		}
 	}
@@ -140,17 +138,11 @@ fn init_bundle(
 	mut meshes: ResMut<Assets<Mesh>>,
 	mut materials: ResMut<Assets<StandardMaterial>>,
 	mut commands: Commands,
-	query: Query<
-		(Entity, Option<&Transform>, &BundlePlaceholder),
-		Added<BundlePlaceholder>,
-	>,
+	query: Query<(Entity, &BundlePlaceholder), Added<BundlePlaceholder>>,
 ) {
-	for (entity, transform, placeholder) in query.iter() {
+	for (entity, placeholder) in query.iter() {
 		let mut entity_commands = commands.entity(entity);
 		entity_commands.remove::<BundlePlaceholder>();
-		// still required for textBundle
-		let transform = transform.cloned().unwrap_or_default();
-
 		match placeholder.clone() {
 			BundlePlaceholder::Camera2d => {
 				entity_commands.insert(Camera2d::default());
@@ -166,29 +158,30 @@ fn init_bundle(
 			}
 			BundlePlaceholder::Text {
 				sections,
-				style,
+				node,
 				visibility,
-				linebreak,
+				layout,
 				background_color,
 			} => {
-				let mut bundle =
-					TextBundle::from_sections(sections).with_style(style);
-				bundle.visibility = visibility;
-				if let Some(linebreak) = linebreak {
-					bundle.text.linebreak = linebreak;
+				// create a tree if more than one section
+				if sections.len() == 1 {
+					entity_commands.insert(Text::new(sections[0].clone()));
+				} else {
+					entity_commands.insert(TextLayout::default());
+					for section in sections {
+						entity_commands.with_children(|parent| {
+							parent.spawn(TextSpan::new(section.clone()));
+						});
+					}
 				}
-				if let Some(backgrond_color) = background_color {
-					bundle.background_color = backgrond_color.into();
+				entity_commands.insert((node, visibility, layout));
+				if let Some(background_color) = background_color {
+					entity_commands.insert(BackgroundColor(background_color));
 				}
-				bundle.transform = transform;
-				entity_commands.insert(bundle);
 			}
 			BundlePlaceholder::Sprite(path) => {
-				entity_commands.insert(SpriteBundle {
-					texture: asset_server.load(path),
-					transform,
-					..default()
-				});
+				entity_commands
+					.insert(Sprite::from_image(asset_server.load(path)));
 			}
 			BundlePlaceholder::Scene(path) => {
 				entity_commands.insert(SceneRoot(asset_server.load(path)));

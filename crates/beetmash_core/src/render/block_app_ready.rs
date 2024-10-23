@@ -1,4 +1,5 @@
 use beetmash_net::prelude::*;
+use beetmash_scene::utils::HandleWrapper;
 use bevy::prelude::*;
 use std::marker::PhantomData;
 
@@ -23,7 +24,7 @@ impl<A: Asset> Plugin for ReadyOnAssetLoadPlugin<A> {
 pub fn ready_on_asset_load<A: Asset>(
 	mut asset_events: EventReader<AssetEvent<A>>,
 	mut commands: Commands,
-	query: Query<(Entity, &Handle<A>), With<AssetLoadBlockAppReady>>,
+	query: Query<(Entity, &HandleWrapper<A>), With<AssetLoadBlockAppReady>>,
 	all_blocks: Query<Entity, With<AssetLoadBlockAppReady>>,
 ) {
 	let mut total_ready = 0;

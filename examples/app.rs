@@ -2,14 +2,4 @@
 use beetmash::prelude::*;
 use bevy::prelude::*;
 
-fn main() {
-	App::new()
-		.add_plugins((
-			BeetmashDefaultPlugins::with_beetmash_assets(),
-			DefaultPlaceholderPlugin,
-			DefaultReplicatePlugin,
-			UiTerminalPlugin,
-			temp_patches,
-		))
-		.run();
-}
+fn main() { App::new().add_plugins(beetmash_full_plugins).run(); }

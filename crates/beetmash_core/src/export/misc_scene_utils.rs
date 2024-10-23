@@ -3,6 +3,6 @@ use bevy::prelude::*;
 
 
 /// Various fixes for unstable bevy stuff.
-pub fn temp_patches(app: &mut App) {
-	app.register_type::<ScrollPosition>(); // temp https://github.com/bevyengine/bevy/pull/15721
+pub fn temp_patches(_app: &mut App) {
+	// as of 0.15 nothing to do here
 }

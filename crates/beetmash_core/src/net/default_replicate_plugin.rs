@@ -29,7 +29,7 @@ impl Plugin for DefaultReplicatePlugin {
 		#[cfg(feature="render")]
 			app
 			.replicate_observer_incoming::<SaveScreenshot>()
-			.observe(screenshot_on_event)
+			.add_observer(screenshot_on_event)
 			.add_systems(Update, screenshot_on_keypress)
 			// .observe(screenshot_on_event)
 			// .observe(screenshot_on_keypress)

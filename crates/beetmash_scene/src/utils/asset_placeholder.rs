@@ -2,6 +2,8 @@ use bevy::prelude::*;
 use bevy::utils::HashMap;
 use std::marker::PhantomData;
 
+use super::HandleWrapper;
+
 #[derive(Debug, Clone, Component, Reflect)]
 #[reflect(Component)]
 pub struct AssetPlaceholder<A> {
@@ -61,7 +63,7 @@ fn init_asset<A: Asset>(
 		let handle = lookup.get_or_create(&mut asset_server, &placeholder.path);
 		commands
 			.entity(entity)
-			.insert(handle)
+			.insert(HandleWrapper(handle))
 			.remove::<AssetPlaceholder<A>>();
 		// placeholder used for readyOnPlaceholder
 	}

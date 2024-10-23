@@ -4,6 +4,21 @@ set dotenv-load
 default:
 	just --list --unsorted
 
+
+app *scenes:
+	cargo run --example app -- {{scenes}}
+
+
+app-terminal:
+	just app \
+	scenes/camera-2d.json \
+	scenes/ui-terminal-input.json \
+app-space:
+	just app \
+	scenes/camera-2d.json \
+	scenes/space-scene.json	\
+
+
 run example *args:
 	cargo run --example {{example}} {{args}}
 
@@ -54,19 +69,6 @@ build-wasm-test *args:
 
 export-test-scene:
 	cargo run -p beetmash_scene --example export_test_scene
-
-app *scenes:
-	cargo run --example app -- {{scenes}}
-
-
-app-terminal:
-	just app \
-	scenes/camera-2d.json \
-	scenes/ui-terminal-input.json \
-app-space:
-	just app \
-	scenes/camera-2d.json \
-	scenes/space-scene.json	\
 
 
 test *args:

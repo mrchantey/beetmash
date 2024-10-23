@@ -105,8 +105,8 @@ fn outgoing_remove<T: Component>(
 
 pub fn register_component_outgoing<T: Component + Serialize>(app: &mut App) {
 	app.add_systems(Update, outgoing_change::<T>.in_set(MessageOutgoingSet));
-	app.world_mut().observe(outgoing_add::<T>);
-	app.world_mut().observe(outgoing_remove::<T>);
+	app.world_mut().add_observer(outgoing_add::<T>);
+	app.world_mut().add_observer(outgoing_remove::<T>);
 }
 
 #[cfg(test)]

@@ -65,11 +65,10 @@ pub fn init_animation_asset(
 				lookup.get_or_create(&mut asset_server, &clip.clip.path);
 			graph.add_clip(handle, clip.weight, clip.parent);
 		}
-		let handle = graphs.add(graph);
 
 		commands
 			.entity(entity)
-			.insert(handle)
+			.insert(HandleWrapper(graphs.add(graph)))
 			.remove::<AnimationGraphPlaceholder>();
 	}
 }

@@ -174,7 +174,7 @@ mod test {
 
 		app2.update();
 
-		expect(&app2).resource()?.to_be(&MyResource(8))?;
+		expect(app2.world()).resource()?.to_be(&MyResource(8))?;
 
 		Ok(())
 	}
