@@ -14,8 +14,7 @@ pub struct CommonEventsPlugin;
 
 impl Plugin for CommonEventsPlugin {
 	fn build(&self, app: &mut App) {
-		app
-			.replicate_observer_outgoing::<AppStartup>()
+		app.replicate_observer_outgoing::<AppStartup>()
 			.add_systems(Startup, app_startup)
 			.replicate_observer_outgoing::<AppReady>()
 			.replicate_observer_incoming::<OnUserMessage>()
@@ -36,11 +35,33 @@ pub struct AppReady;
 
 /// User messages received either internally or externally, can be treated like an StdIn.
 #[derive(
-	Debug, Clone, Deref, DerefMut, Serialize, Deserialize, Event, Reflect,
+	Debug,
+	Default,
+	Clone,
+	Deref,
+	DerefMut,
+	Serialize,
+	Deserialize,
+	Event,
+	Reflect,
 )]
 pub struct OnUserMessage(pub String);
+
+impl OnUserMessage {
+	pub fn new(s: impl Into<String>) -> Self { Self(s.into()) }
+}
+
+
 /// App messages for outputting, can be treated like an StdOut.
 #[derive(
-	Debug, Clone, Deref, DerefMut, Serialize, Deserialize, Event, Reflect,
+	Debug,
+	Default,
+	Clone,
+	Deref,
+	DerefMut,
+	Serialize,
+	Deserialize,
+	Event,
+	Reflect,
 )]
 pub struct OnAppMessage(pub String);
