@@ -1,9 +1,3 @@
 # Beetmash
 
-The Beetmash crate helps you create, share and deploy your Bevy apps.
-
-## Crates
-
-### [beetmash_template](./crates/beetmash_template/README.md)
-
-A demonstration of the workflow for publishing Bevy apps and scenes to [beetmash](https://beetmash.com).
+A collection of crates related to the [beetmash site](https://beetmash.com/docs/beetmash)
