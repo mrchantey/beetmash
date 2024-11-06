@@ -4,13 +4,13 @@ use bevy::prelude::*;
 use bevy::window::WindowPlugin;
 
 
-const DEFAULT_ASSETS_PATH: &str = "assets";
+const DEFAULT_ASSET_PATH: &str = "assets";
 
 /// Opinionated [DefaultPlugins] to work well with scene-based workflows
 /// and uploading to [beetmash.com](https://beetmash.com)
 pub struct BeetmashDefaultPlugins {
 	#[allow(unused)]
-	pub default_asset_path: String,
+	pub native_asset_path: String,
 	#[allow(unused)]
 	pub wasm_asset_path: String,
 	pub assert_local_assets: bool,
@@ -19,12 +19,16 @@ pub struct BeetmashDefaultPlugins {
 impl Default for BeetmashDefaultPlugins {
 	fn default() -> Self {
 		Self {
-			default_asset_path: DEFAULT_ASSETS_PATH.into(),
-			wasm_asset_path: DEFAULT_ASSETS_PATH.into(),
+			native_asset_path: DEFAULT_ASSET_PATH.into(),
+			wasm_asset_path: DEFAULT_ASSET_PATH.into(),
 			assert_local_assets: false,
 		}
 	}
 }
+
+
+
+
 impl Plugin for BeetmashDefaultPlugins {
 	fn build(&self, app: &mut App) {
 		self.assert_local_assets();
@@ -32,7 +36,7 @@ impl Plugin for BeetmashDefaultPlugins {
 			DefaultPlugins
 				.set(beetmash_window_plugin())
 				.set(AssetPlugin {
-					file_path: self.assets_path(),
+					file_path: self.asset_path(),
 					meta_check: AssetMetaCheck::Never,
 					..default()
 				})
@@ -45,39 +49,29 @@ impl Plugin for BeetmashDefaultPlugins {
 	}
 }
 
-fn close_on_esc(
-	mut commands: Commands,
-	focused_windows: Query<(Entity, &Window)>,
-	input: Res<ButtonInput<KeyCode>>,
-) {
-	for (window, focus) in focused_windows.iter() {
-		if !focus.focused {
-			continue;
-		}
-
-		if input.just_pressed(KeyCode::Escape) {
-			commands.entity(window).despawn();
-		}
-	}
-}
-
-
 
 impl BeetmashDefaultPlugins {
-	pub fn new(wasm_asset_path: String) -> Self {
+	pub fn with_wasm_asset_path(wasm_asset_path: impl Into<String>) -> Self {
 		Self {
-			wasm_asset_path,
+			wasm_asset_path: wasm_asset_path.into(),
 			..default()
 		}
 	}
 
-	pub fn assets_path(&self) -> String {
+	pub fn with_native_asset_path(path: impl Into<String>) -> Self {
+		Self {
+			native_asset_path: path.into(),
+			..default()
+		}
+	}
+
+	pub fn asset_path(&self) -> String {
 		#[cfg(target_arch = "wasm32")]
 		// return "/wasm/assets".into();
 		// return "https://demo.beetmash.com/wasm/assets".into();
 		return self.wasm_asset_path.clone();
 		#[cfg(not(target_arch = "wasm32"))]
-		return self.default_asset_path.clone();
+		return self.native_asset_path.clone();
 	}
 
 	pub fn with_beetmash_assets() -> Self {
@@ -104,16 +98,16 @@ impl BeetmashDefaultPlugins {
 		
 Welcome! Beetmash examples use large assets that are stored remotely. 
 
-Windows:
-
-1. Download https://beetmash-public.s3.us-west-2.amazonaws.com/assets.tar.gz
-2. Unzip into `./assets`
-
-Linux/MacOS:
+Unix three liner:
 
 curl -o ./assets.tar.gz https://beetmash-public.s3.us-west-2.amazonaws.com/assets.tar.gz
 tar -xzvf ./assets.tar.gz
 rm ./assets.tar.gz
+
+Windows / manual:
+
+1. Download https://beetmash-public.s3.us-west-2.amazonaws.com/assets.tar.gz
+2. Unzip into `./assets`
 
 🥁🥁🥁
 "#
@@ -121,6 +115,23 @@ rm ./assets.tar.gz
 		}
 	}
 }
+
+fn close_on_esc(
+	mut commands: Commands,
+	focused_windows: Query<(Entity, &Window)>,
+	input: Res<ButtonInput<KeyCode>>,
+) {
+	for (window, focus) in focused_windows.iter() {
+		if !focus.focused {
+			continue;
+		}
+
+		if input.just_pressed(KeyCode::Escape) {
+			commands.entity(window).despawn();
+		}
+	}
+}
+
 
 
 /// Ensure your app looks beautiful on beetmash.com
