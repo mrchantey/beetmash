@@ -67,6 +67,8 @@ impl Default for DynamicSceneChecks {
 					.deny_resource::<PointerInputPlugin>()
 					.deny_resource::<PickingPlugin>()
 					.deny_resource::<bevy::a11y::Focus>()
+					// bevy_picking
+					.deny_resource::<MeshPickingBackendSettings>()
 			},
 		}
 	}
