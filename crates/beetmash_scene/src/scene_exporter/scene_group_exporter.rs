@@ -92,6 +92,19 @@ impl<P: Clone + Plugins<M>, M, Q: QueryFilter> SceneGroupExporter<P, M, Q> {
 		self
 	}
 
+
+	/// Akin to a dry run, export scenes to string instead of files.
+	pub fn export_to_string(self)->Result<Vec<String>>{
+		self.assert_empty()?;
+
+		self.scenes
+			.into_iter()
+			.map(|scene| {
+				scene.export_to_string::<Q, _>(self.plugin.clone(), &self.config)
+			})
+			.collect::<Result<Vec<_>>>()
+	}
+
 	pub fn export(self) -> Result<()> {
 		self.assert_empty()?;
 
@@ -122,9 +135,38 @@ impl<P: Clone + Plugins<M>, M, Q: QueryFilter> SceneGroupExporter<P, M, Q> {
 		});
 
 		if empty != expected {
-			anyhow::bail!("Could not create empty scene:\n {:?}", empty);
+			anyhow::bail!("Could not create empty scene, this is usually due to new resources that need to be ignores:\n {:?}", empty);
 		}
 
+		Ok(())
+	}
+}
+
+
+#[cfg(test)]
+mod test {
+	use crate::prelude::*;
+	use anyhow::Result;
+	use bevy::prelude::*;
+
+	#[test]
+	fn succeeds_exporting_empty_scene() -> Result<()> {
+
+		SceneGroupExporter::new(|app: &mut App| {
+			app.add_plugins(MostDefaultPlugins);
+		})
+			.with_config(SceneExportConfig {
+				dir: "test".into(),
+				checks: DynamicSceneChecks {
+					resource_checks: false,
+					entity_checks: true,
+					component_checks: true,
+					..default()
+				},
+				..default()
+			})
+			.add_scene("app", || {})
+			.export_to_string()?;
 		Ok(())
 	}
 }

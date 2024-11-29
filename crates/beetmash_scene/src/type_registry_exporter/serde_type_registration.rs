@@ -1,11 +1,10 @@
 use crate::prelude::*;
-use bevy::prelude::ReflectComponent;
-use bevy::prelude::ReflectDefault;
-use bevy::prelude::ReflectResource;
+use bevy::prelude::*;
 use bevy::reflect::serde::ReflectSerializer;
 use bevy::reflect::TypePathTable;
 use bevy::reflect::TypeRegistration;
 use bevy::reflect::TypeRegistry;
+use bevy_reflect::GetTypeRegistration;
 use serde::Deserialize;
 use serde::Serialize;
 use ts_rs::TS;
@@ -13,30 +12,51 @@ use ts_rs::TS;
 /// A serializable form of [TypeRegistration].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeTypeRegistration {
-	info: SerdeTypeInfo,
-	path_table: SerdeTypePathTable,
-	default: Option<String>,
-	docs: Option<String>,
-	traits: SerdeTypeTraits,
+	pub info: SerdeTypeInfo,
+	pub path_table: SerdeTypePathTable,
+	/// default value encoded via [`serde_json::to_string`] string, ie `{ "foo": 42 }`.
+	pub default: Option<String>,
+	pub docs: Option<String>,
+	pub traits: SerdeTypeTraits,
 }
 
 
 impl SerdeTypeRegistration {
-	/// We need the registry for serializing the default value.
+	/// Convenience method for testing
+	pub(crate) fn from_reflect<T: GetTypeRegistration>() -> Self {
+		let mut registry = TypeRegistry::empty();
+		registry.register::<T>();
+		let registration = T::get_type_registration();
+		Self::from_type_registration(&registry, &registration)
+	}
+	/// Convenience method for testing
+	pub(crate) fn from_reflect_with_default<
+		T: Reflect + TypePath + GetTypeRegistration + Default,
+	>() -> Self {
+		let mut registry = TypeRegistry::empty();
+		registry.register::<T>();
+		registry.register_type_data::<T, ReflectDefault>();
+		let registration = registry.get(std::any::TypeId::of::<T>()).unwrap();
+		Self::from_type_registration(&registry, &registration)
+	}
+
+
+
+	/// We need the registry for serializing the default value, and any additional traits.
 	pub fn from_type_registration(
 		registry: &TypeRegistry,
-		reg: &TypeRegistration,
+		registration: &TypeRegistration,
 	) -> Self {
-		let type_info = reg.type_info();
+		let type_info = registration.type_info();
 		let docs = type_info.docs().map(|s| s.to_string());
-		let default = map_default(registry, reg);
+		let default = map_default(registry, registration);
 
 		Self {
 			info: type_info.into(),
 			path_table: type_info.type_path_table().into(),
 			docs,
 			default,
-			traits: SerdeTypeTraits::from_registration(reg),
+			traits: SerdeTypeTraits::from_registration(registration),
 		}
 	}
 }
@@ -80,14 +100,14 @@ impl SerdeTypeTraits {
 	}
 }
 
-
+/// Serializable [TypePathTable].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeTypePathTable {
-	path: String,
-	short_type_path: String,
-	ident: Option<String>,
-	crate_name: Option<String>,
-	module_path: Option<String>,
+	pub path: String,
+	pub short_type_path: String,
+	pub ident: Option<String>,
+	pub crate_name: Option<String>,
+	pub module_path: Option<String>,
 }
 
 impl From<&TypePathTable> for SerdeTypePathTable {

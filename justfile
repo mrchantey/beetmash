@@ -78,6 +78,8 @@ test-core *args:
 	just watch 'cargo test -p beetmash_core --lib -- {{args}}'
 test-net *args:
 	just watch 'cargo test -p beetmash_net --lib -- {{args}}'
+test-scene *args:
+	just watch 'cargo test -p beetmash_scene --lib -- {{args}}'
 
 
 

@@ -1,3 +1,9 @@
+pub mod into_json_schema;
+#[allow(unused_imports)]
+pub use self::into_json_schema::*;
+pub mod json_schema;
+#[allow(unused_imports)]
+pub use self::json_schema::*;
 pub mod serde_type_info;
 #[allow(unused_imports)]
 pub use self::serde_type_info::*;

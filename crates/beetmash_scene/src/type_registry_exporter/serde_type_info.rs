@@ -14,6 +14,7 @@ use bevy::reflect::TypeInfo;
 use bevy::reflect::UnitVariantInfo;
 use bevy::reflect::UnnamedField;
 use bevy::reflect::VariantInfo;
+use bevy_reflect::PartialReflect;
 use serde::Deserialize;
 use serde::Serialize;
 use ts_rs::TS;
@@ -57,12 +58,19 @@ impl From<&TypeInfo> for SerdeTypeInfo {
 	}
 }
 
+impl SerdeTypeInfo {
+	pub fn new(val: &impl PartialReflect) -> Self {
+		let info = val.get_represented_type_info().expect("Failed to get type info");
+		info.into()
+	}
+}
+
 /// Serializable [NamedField].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeNamedField {
-	name: String,
-	type_path: String,
-	docs: Option<String>,
+	pub name: String,
+	pub type_path: String,
+	pub docs: Option<String>,
 }
 
 impl From<&NamedField> for SerdeNamedField {
@@ -78,9 +86,9 @@ impl From<&NamedField> for SerdeNamedField {
 /// Serializable [UnnamedField].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeUnnamedField {
-	index: usize,
-	type_path: String,
-	docs: Option<String>,
+	pub index: usize,
+	pub type_path: String,
+	pub docs: Option<String>,
 }
 
 impl From<&UnnamedField> for SerdeUnnamedField {
@@ -97,7 +105,7 @@ impl From<&UnnamedField> for SerdeUnnamedField {
 /// Serializable [StructInfo].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeStructInfo {
-	fields: Vec<SerdeNamedField>,
+	pub fields: Vec<SerdeNamedField>,
 }
 
 impl From<&StructInfo> for SerdeStructInfo {
@@ -110,7 +118,7 @@ impl From<&StructInfo> for SerdeStructInfo {
 /// Serializable [TupleStructInfo].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeTupleStructInfo {
-	fields: Vec<SerdeUnnamedField>,
+	pub fields: Vec<SerdeUnnamedField>,
 }
 
 impl From<&TupleStructInfo> for SerdeTupleStructInfo {
@@ -123,7 +131,7 @@ impl From<&TupleStructInfo> for SerdeTupleStructInfo {
 /// Serializable [TupleInfo].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeTupleInfo {
-	fields: Vec<SerdeUnnamedField>,
+	pub fields: Vec<SerdeUnnamedField>,
 }
 
 impl From<&TupleInfo> for SerdeTupleInfo {
@@ -137,7 +145,7 @@ impl From<&TupleInfo> for SerdeTupleInfo {
 /// Serializable [ListInfo].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeListInfo {
-	item_type_path: String,
+	pub item_type_path: String,
 }
 
 impl From<&ListInfo> for SerdeListInfo {
@@ -151,8 +159,8 @@ impl From<&ListInfo> for SerdeListInfo {
 /// Serializable [ArrayInfo].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeArrayInfo {
-	item_type_path: String,
-	capacity: usize,
+	pub item_type_path: String,
+	pub capacity: usize,
 }
 
 impl From<&ArrayInfo> for SerdeArrayInfo {
@@ -167,13 +175,17 @@ impl From<&ArrayInfo> for SerdeArrayInfo {
 /// Serializable [SetInfo].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeSetInfo {
-	value_type_path: String,
+	pub value_type_path: String,
 }
 
 impl From<&SetInfo> for SerdeSetInfo {
 	fn from(info: &SetInfo) -> Self {
 		Self {
-			value_type_path: info.value_ty().type_path_table().path().to_string(),
+			value_type_path: info
+				.value_ty()
+				.type_path_table()
+				.path()
+				.to_string(),
 		}
 	}
 }
@@ -181,15 +193,19 @@ impl From<&SetInfo> for SerdeSetInfo {
 /// Serializable [MapInfo].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeMapInfo {
-	key_type_path: String,
-	value_type_path: String,
+	pub key_type_path: String,
+	pub value_type_path: String,
 }
 
 impl From<&MapInfo> for SerdeMapInfo {
 	fn from(info: &MapInfo) -> Self {
 		Self {
 			key_type_path: info.key_ty().type_path_table().path().to_string(),
-			value_type_path: info.value_ty().type_path_table().path().to_string(),
+			value_type_path: info
+				.value_ty()
+				.type_path_table()
+				.path()
+				.to_string(),
 		}
 	}
 }
@@ -197,7 +213,7 @@ impl From<&MapInfo> for SerdeMapInfo {
 /// Serializable [ValueInfo].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeOpaqueInfo {
-	item_type_path: String,
+	pub item_type_path: String,
 }
 
 impl From<&OpaqueInfo> for SerdeOpaqueInfo {
@@ -212,7 +228,7 @@ impl From<&OpaqueInfo> for SerdeOpaqueInfo {
 /// Serializable [EnumInfo].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeEnumInfo {
-	variants: Vec<SerdeVariantInfo>,
+	pub variants: Vec<SerdeVariantInfo>,
 }
 
 impl From<&EnumInfo> for SerdeEnumInfo {
@@ -247,9 +263,9 @@ impl From<&VariantInfo> for SerdeVariantInfo {
 /// Serializable [StructVariantInfo].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeStructVariantInfo {
-	name: String,
-	fields: Vec<SerdeNamedField>,
-	docs: Option<String>,
+	pub name: String,
+	pub fields: Vec<SerdeNamedField>,
+	pub docs: Option<String>,
 }
 
 impl From<&StructVariantInfo> for SerdeStructVariantInfo {
@@ -264,9 +280,9 @@ impl From<&StructVariantInfo> for SerdeStructVariantInfo {
 /// Serializable [TupleVariantInfo].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeTupleVariantInfo {
-	name: String,
-	fields: Vec<SerdeUnnamedField>,
-	docs: Option<String>,
+	pub name: String,
+	pub fields: Vec<SerdeUnnamedField>,
+	pub docs: Option<String>,
 }
 
 impl From<&TupleVariantInfo> for SerdeTupleVariantInfo {
@@ -281,8 +297,8 @@ impl From<&TupleVariantInfo> for SerdeTupleVariantInfo {
 /// Serializable [UnitVariantInfo].
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 pub struct SerdeUnitVariantInfo {
-	name: String,
-	docs: Option<String>,
+	pub name: String,
+	pub docs: Option<String>,
 }
 
 impl From<&UnitVariantInfo> for SerdeUnitVariantInfo {
