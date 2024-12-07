@@ -113,12 +113,20 @@ impl<P: Clone + Plugins<M>, M, Q: QueryFilter> SceneGroupExporter<P, M, Q> {
 			std::fs::remove_dir_all(&self.config.dir).ok();
 		}
 
+		let num_scenes = self.scenes.len();
+
 		self.scenes
 			.into_iter()
 			.map(|scene| {
 				scene.export_to_file::<Q, _>(self.plugin.clone(), &self.config)
 			})
 			.collect::<Result<Vec<_>>>()?;
+
+		println!(
+			"Exported scenes\nPath: {}\tscene count: {}KB",
+			self.config.dir.display(),
+			num_scenes
+		);
 
 		Ok(())
 	}
