@@ -107,7 +107,10 @@ pub enum BundlePlaceholder {
 		layout: TextLayout,
 		background_color: Option<Color>,
 	},
-	Sprite(String),
+	Sprite {
+		path: String,
+		image_mode: SpriteImageMode,
+	},
 	Scene(String),
 	Gltf(String),
 	Pbr {
@@ -179,9 +182,12 @@ fn init_bundle(
 					entity_commands.insert(BackgroundColor(background_color));
 				}
 			}
-			BundlePlaceholder::Sprite(path) => {
-				entity_commands
-					.insert(Sprite::from_image(asset_server.load(path)));
+			BundlePlaceholder::Sprite { path, image_mode } => {
+				entity_commands.insert(Sprite {
+					image: asset_server.load(path),
+					image_mode,
+					..default()
+				});
 			}
 			BundlePlaceholder::Scene(path) => {
 				entity_commands.insert(SceneRoot(asset_server.load(path)));

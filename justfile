@@ -1,9 +1,15 @@
 set windows-shell := ["C:/tools/cygwin/bin/sh.exe","-c"]
 set dotenv-load
 
+
 default:
 	just --list --unsorted
 
+init-repo:
+	curl -o ./assets.tar.gz https://beetmash-public.s3.us-west-2.amazonaws.com/assets.tar.gz
+	tar -xzvf ./assets.tar.gz
+	rm ./assets.tar.gz
+	just export-scenes
 
 app *scenes:
 	cargo run --example app -- {{scenes}}
@@ -13,11 +19,11 @@ app-terminal:
 	just app \
 	scenes/camera-2d.json \
 	scenes/ui-terminal-input.json \
+
 app-space:
 	just app \
 	scenes/camera-2d.json \
 	scenes/space-scene.json	\
-
 
 run example *args:
 	cargo run --example {{example}} {{args}}

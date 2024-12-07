@@ -98,7 +98,7 @@ impl BeetmashDefaultPlugins {
 		
 Welcome! Beetmash examples use large assets that are stored remotely. 
 
-Unix three liner:
+Unix:
 
 curl -o ./assets.tar.gz https://beetmash-public.s3.us-west-2.amazonaws.com/assets.tar.gz
 tar -xzvf ./assets.tar.gz
