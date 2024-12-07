@@ -54,10 +54,7 @@ beetmash_server = { path = "crates/beetmash_server", version = "0.0.7" }
 
 #💡 local-relative
 # sweet = { version = "0.1.51", path = "../sweet", features = ["bevy"] }
-forky = { version = "0.2", features = [
-	"bevy",
-	"web",
-] }
+forky = { version = "0.2", features = ["bevy", "web"] }
 
 #💡 local-published
 # sweet = { path = "../sweet", version = "0.2.0-rc.3", features = ["bevy"] }
@@ -112,6 +109,7 @@ repository.workspace = true
 license.workspace = true
 keywords.workspace = true
 categories.workspace = true
+include = ["scenes/*"]
 
 
 [features]
