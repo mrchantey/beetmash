@@ -93,7 +93,6 @@ mod test {
 	use crate::prelude::*;
 	use anyhow::Result;
 	use bevy::prelude::*;
-	use sweet::*;
 
 	#[derive(Default, Reflect)]
 	pub struct MyStruct {

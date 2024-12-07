@@ -23,6 +23,7 @@ pub struct SerdeTypeRegistration {
 
 impl SerdeTypeRegistration {
 	/// Convenience method for testing
+	#[allow(dead_code)]
 	pub(crate) fn from_reflect<T: GetTypeRegistration>() -> Self {
 		let mut registry = TypeRegistry::empty();
 		registry.register::<T>();
@@ -30,6 +31,7 @@ impl SerdeTypeRegistration {
 		Self::from_type_registration(&registry, &registration)
 	}
 	/// Convenience method for testing
+	#[allow(dead_code)]
 	pub(crate) fn from_reflect_with_default<
 		T: Reflect + TypePath + GetTypeRegistration + Default,
 	>() -> Self {

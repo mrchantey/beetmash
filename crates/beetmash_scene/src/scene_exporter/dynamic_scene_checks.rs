@@ -37,7 +37,7 @@ impl Default for DynamicSceneChecks {
 			component_checks: true,
 			// hacky way to ignore resources pulled in by [DefaultPlugins]
 			// this should be synced the number of resources denied in `on_build`
-			num_ignored_resources: 160,
+			num_ignored_resources: 176,
 			allowed_ignores: vec![
 				"bevy_text::text::CosmicBuffer".to_string(),
 				"beet_flow::observers::action_observer_map::ActionObserverMap"
@@ -68,7 +68,7 @@ impl Default for DynamicSceneChecks {
 					.deny_resource::<PickingPlugin>()
 					.deny_resource::<bevy::a11y::Focus>()
 					// bevy_picking
-					.deny_resource::<MeshPickingBackendSettings>()
+					.deny_resource::<MeshPickingSettings>()
 			},
 		}
 	}

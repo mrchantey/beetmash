@@ -94,13 +94,14 @@ impl<P: Clone + Plugins<M>, M, Q: QueryFilter> SceneGroupExporter<P, M, Q> {
 
 
 	/// Akin to a dry run, export scenes to string instead of files.
-	pub fn export_to_string(self)->Result<Vec<String>>{
+	pub fn export_to_string(self) -> Result<Vec<String>> {
 		self.assert_empty()?;
 
 		self.scenes
 			.into_iter()
 			.map(|scene| {
-				scene.export_to_string::<Q, _>(self.plugin.clone(), &self.config)
+				scene
+					.export_to_string::<Q, _>(self.plugin.clone(), &self.config)
 			})
 			.collect::<Result<Vec<_>>>()
 	}
@@ -126,7 +127,10 @@ impl<P: Clone + Plugins<M>, M, Q: QueryFilter> SceneGroupExporter<P, M, Q> {
 	/// that weren't built by the scene system.
 	fn assert_empty(&self) -> Result<()> {
 		let empty_scene = SceneExporter::new("empty", || {})
-			.export_to_string::<Q, _>(self.plugin.clone(), &self.config)?;
+			.export_to_string::<Q, _>(self.plugin.clone(), &self.config)
+			.map_err(|err| {
+				anyhow::anyhow!("Could not create empty scene: {:?}", err)
+			})?;
 
 		let empty = serde_json::from_str::<serde_json::Value>(&empty_scene)?;
 		let expected = serde_json::json!({
@@ -151,22 +155,21 @@ mod test {
 
 	#[test]
 	fn succeeds_exporting_empty_scene() -> Result<()> {
-
 		SceneGroupExporter::new(|app: &mut App| {
 			app.add_plugins(MostDefaultPlugins);
 		})
-			.with_config(SceneExportConfig {
-				dir: "test".into(),
-				checks: DynamicSceneChecks {
-					resource_checks: false,
-					entity_checks: true,
-					component_checks: true,
-					..default()
-				},
+		.with_config(SceneExportConfig {
+			dir: "test".into(),
+			checks: DynamicSceneChecks {
+				resource_checks: false,
+				entity_checks: true,
+				component_checks: true,
 				..default()
-			})
-			.add_scene("app", || {})
-			.export_to_string()?;
+			},
+			..default()
+		})
+		.add_scene("app", || {})
+		.export_to_string()?;
 		Ok(())
 	}
 }
